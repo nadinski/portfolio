@@ -1,40 +1,789 @@
-<!-- ========== FOOTER ========== -->
-<footer class="site-footer">
-  <div class="footer-grid">
-    <h3 class="footer-heading">get in touch</h3>
-    <p class="footer-intro">
-      Let's build something beautiful together.<br />
-      Available for projects worldwide.
-    </p>
-    <div class="footer-links">
-      <a href="mailto:nadyaiam@gmail.com" class="footer-link">
-        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
-        nadyaiam@gmail.com
-      </a>
-      <a href="tel:+79099737333" class="footer-link">
-        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-        +7 909 973-73-33
-      </a>
-      <a href="tel:040773677" class="footer-link">
-        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-        040 773 677
-      </a>
-      <a href="https://t.me/nadinski" target="_blank" rel="noopener" class="footer-link">
-        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5L2.5 10.5L9.5 13.5L21.5 2.5Z"/><path d="M9.5 13.5L12.5 20.5L21.5 2.5"/></svg>
-        t.me/nadinski
-      </a>
-      <a href="https://wa.me/79099737333" target="_blank" rel="noopener" class="footer-link">
-        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14.5C16 13.5 15 13 13.5 13.5C12 14 10.5 15 9 13.5C7.5 12 8.5 10.5 8 9C7.5 7.5 7 6.5 6 5C5 3.5 3.5 4 2.5 5C1.5 6 1.5 8 2.5 9.5C3.5 11 6 14.5 9 17C12 19.5 15.5 21 17 21.5C18.5 22 20 21.5 21 20.5C22 19.5 21 18 19.5 17C18 16 18.5 15.5 17.5 14.5Z"/></svg>
-        WhatsApp
-      </a>
-      <a href="https://www.behance.net/8373a5c4" target="_blank" rel="noopener" class="footer-link">
-        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M8 8h4M8 12h5M8 16h3M15 8h1M15 12h1"/></svg>
-        Behance
-      </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+  <title>WEBSITES · portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #fffbf5;
+      font-family: "Manrope", sans-serif;
+      font-weight: 400;
+      color: #493f55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .master-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 20px;
+      padding: 0 2vw;
+      margin: 0 auto;
+      position: relative;
+      width: 100%;
+    }
+
+    h1 {
+      font-family: "Manrope", sans-serif;
+      font-weight: 400;
+      font-size: 82px;
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: #493f55;
+      letter-spacing: -0.5px;
+      margin-top: 60px;
+    }
+
+    h2 {
+      font-family: "Manrope", sans-serif;
+      font-weight: 400;
+      font-size: 50px;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: #493f55;
+    }
+
+    h3 {
+      font-family: "Manrope", sans-serif;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.2;
+      text-transform: uppercase;
+      color: #493f55;
+    }
+
+    h4 {
+      font-family: "Manrope", sans-serif;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.25;
+      text-transform: uppercase;
+      color: #6d3aff;
+    }
+
+    p {
+      font-family: "Manrope", sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #493f55;
+    }
+
+    button,
+    .button {
+      background-color: #ff914d;
+      border: none;
+      color: #fffbf5;
+      font-family: "Manrope", sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      padding: 14px 28px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: 0.4px;
+      transition: background 0.25s ease, transform 0.2s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      line-height: 1;
+      min-height: 48px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    button:hover,
+    .button:hover {
+      background-color: #e07b3c;
+      transform: translateY(-2px);
+    }
+
+    button:active,
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .arrow-icon-left {
+      display: inline-block;
+      transform: rotate(180deg);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Navigation */
+    .nav-bar {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 24px;
+      padding: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      font-family: "Manrope", sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #493f55;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #6d3aff;
+      transition: width 0.25s ease;
+    }
+
+    .nav-link:hover {
+      color: #6d3aff;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: #6d3aff;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Cards */
+    .cards-container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .card {
+      flex: 1;
+      border-radius: 24px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card h4 {
+      font-size: 30px;
+      color: #6d3aff;
+    }
+
+    .card p {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Tabs */
+    .tabs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .tab-card {
+      border-radius: 20px;
+      padding: 16px 14px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #493f55;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      background: #f0ebe0;
+      line-height: 1.4;
+    }
+
+    .tab-card:hover,
+    .tab-card.active {
+      border-color: #6d3aff;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(109, 58, 255, 0.08);
+      color: #1e1b2e;
+    }
+
+    .preview-window {
+      background: #ffffff;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(73, 63, 85, 0.05);
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+    }
+
+    .preview-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: #f3ede5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: radial-gradient(circle at 20% 30%, #e5d9cc 1px, transparent 1px);
+      background-size: 18px 18px;
+      color: #b7aa9a;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .preview-content {
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .preview-content h4 {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    /* Footer */
+    .site-footer {
+      grid-column: 1 / -1;
+      border-top: 1px solid #e7e1d8;
+      padding-top: 40px;
+      margin-top: 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
+    }
+
+    .footer-heading {
+      grid-column: 1 / 2;
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      grid-column: 2 / 5;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Manrope", sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #493f55;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: #6d3aff;
+    }
+
+    .footer-icon {
+      width: 18px;
+      height: 18px;
+      opacity: 0.7;
+    }
+
+    /* Calculator */
+    .calc-field {
+      margin-bottom: 20px;
+    }
+
+    .calc-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #6d3aff;
+      margin-bottom: 6px;
+    }
+
+    .calc-field input,
+    .calc-field select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #e7e1d8;
+      border-radius: 16px;
+      font-family: "Manrope", sans-serif;
+      font-size: 15px;
+      background: #fffbf5;
+      color: #493f55;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .calc-field input:focus,
+    .calc-field select:focus {
+      border-color: #6d3aff;
+      box-shadow: 0 0 0 3px rgba(109, 58, 255, 0.06);
+    }
+
+    .checkbox-modern {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-modern input {
+      width: 20px;
+      height: 20px;
+      accent-color: #6d3aff;
+    }
+
+    .result-block {
+      background: #faf8f4;
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 20px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #ece6dc;
+      align-items: baseline;
+    }
+
+    .result-item:last-child {
+      border: none;
+    }
+
+    .big-number {
+      font-size: 30px;
+      font-weight: 600;
+      color: #1e1b2e;
+      line-height: 1;
+    }
+
+    .spacer-80 {
+      grid-column: 1 / -1;
+      height: 80px;
+    }
+
+    .grid-full { grid-column: 1 / -1; }
+    .grid-1-2 { grid-column: 1 / 3; }
+    .grid-3-4 { grid-column: 3 / 5; }
+    .grid-2-4 { grid-column: 2 / 5; }
+    .grid-2-3 { grid-column: 2 / 4; }
+    .grid-2 { grid-column: 2 / 3; }
+    .grid-3 { grid-column: 3 / 4; }
+
+    /* Tablet */
+    @media screen and (max-width: 1024px) {
+      .master-grid {
+        grid-template-columns: repeat(8, 1fr);
+        column-gap: 16px;
+        padding: 0 3vw;
+      }
+
+      h1 { font-size: 52px; letter-spacing: -0.3px; margin-top: 48px; }
+      h2 { font-size: 36px; line-height: 1.1; }
+      h3 { font-size: 24px; line-height: 1.25; }
+      h4 { font-size: 22px; line-height: 1.25; }
+      p { font-size: 13px; line-height: 1.65; }
+      button, .button { font-size: 12px; padding: 13px 24px; border-radius: 18px; }
+      .card { padding: 16px 14px; gap: 16px; border-radius: 20px; }
+      .card h4 { font-size: 20px; }
+      .card p { font-size: 12px; }
+
+      .spacer-80 { grid-column: 1 / -1 !important; }
+
+      h1.grid-full { grid-column: 1 / -1 !important; }
+      h4.grid-2-4 { grid-column: 3 / 9 !important; }
+      .grid-1-2 { grid-column: 1 / 5 !important; }
+      .grid-3-4 { grid-column: 5 / 9 !important; }
+      .grid-2-4 { grid-column: 3 / 9 !important; }
+      .grid-2-3 { grid-column: 3 / 7 !important; }
+      .grid-2 { grid-column: 3 / 5 !important; }
+      .grid-3 { grid-column: 5 / 7 !important; }
+
+      .tabs-grid { gap: 10px; }
+
+      .footer-heading { grid-column: 1 / 3; }
+      .footer-links { grid-column: 3 / 9; }
+    }
+
+    /* Mobile */
+    @media screen and (max-width: 767px) {
+      .master-grid {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        padding: 0 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .grid-full, .grid-1-2, .grid-3-4, .grid-2-4, .grid-2-3, .grid-2, .grid-3,
+      .spacer-80, h1, h2, h3, h4 {
+        grid-column: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      h1 { font-size: 42px; line-height: 1.1; margin-top: 48px; margin-bottom: 24px; }
+      h2 { font-size: 32px; line-height: 1.15; margin: 0; }
+      h2 br { display: none; }
+      h3 { font-size: 22px; line-height: 1.25; margin: 0; }
+      h4 { font-size: 20px; line-height: 1.3; margin: 0 0 32px 0; }
+      p { font-size: 14px; line-height: 1.65; }
+
+      .spacer-80 { height: 48px; width: 100%; }
+
+      .cards-container { flex-direction: column; gap: 16px; }
+      .card { flex: none; width: 100%; padding: 20px 16px; gap: 14px; }
+      .card h4 { font-size: 22px; }
+      .card p { font-size: 14px; }
+
+      .tabs-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+      button, .button { width: 100% !important; justify-content: center !important; border-radius: 25px; padding: 16px 24px; font-size: 14px; }
+
+      .nav-bar { gap: 16px; padding: 20px 0; }
+      .nav-link { font-size: 11px; }
+
+      .site-footer { padding-top: 32px; }
+      .footer-grid { display: flex; flex-direction: column; gap: 20px; }
+      .footer-links { gap: 10px; }
+
+      .master-grid > div:last-child { height: 64px; }
+    }
+
+    @media screen and (max-width: 380px) {
+      .master-grid { padding: 0 20px; }
+      h1 { font-size: 36px; }
+      h2 { font-size: 28px; }
+      h3 { font-size: 20px; }
+      h4 { font-size: 18px; }
+      p { font-size: 13px; }
+      .spacer-80 { height: 40px; }
+      .card { padding: 16px 14px; }
+      .card h4 { font-size: 20px; }
+      button, .button { padding: 14px 20px; font-size: 13px; }
+      .tabs-grid { grid-template-columns: 1fr; }
+    }
+
+    @media screen and (min-width: 1600px) {
+      .master-grid { max-width: 1800px; padding: 0 5vw; }
+      h1 { font-size: 96px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="master-grid">
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="qr-menus.html" class="nav-link">QR Menus</a>
+      <a href="websites.html" class="nav-link active">Websites</a>
+      <a href="https://www.behance.net/8373a5c4" target="_blank" rel="noopener" class="nav-link">Behance ↗</a>
+    </nav>
+
+    <h1 class="grid-full">//WEBSITES</h1>
+
+    <h4 class="grid-2-4" style="margin-top: 40px">
+      This curated selection showcases my web design and development: a strategic fusion of aesthetics and functionality. Each project is built with a clear purpose—to translate business objectives into intuitive, dynamic, and results-driven digital experiences.
+    </h4>
+
+    <div class="spacer-80"></div>
+
+    <div class="grid-1-2">
+      <div class="tabs-grid" id="tabsContainer"></div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Nadi Borse. All rights reserved.</span>
-      <span>Crafted with intention</span>
+
+    <div class="grid-3-4">
+      <div class="preview-window" id="previewCard">
+        <div class="preview-img-placeholder">select project</div>
+        <div class="preview-content">
+          <h4>—</h4>
+          <p>Choose a project from the list to see details.</p>
+        </div>
+      </div>
     </div>
+
+    <div class="spacer-80"></div>
+
+    <h2 class="grid-1-2" style="line-height: 1.15;">
+      "WHAT KIND OF WEBSITE <br>MY BUSINESS <br>really NEEDS?"
+    </h2>
+
+    <div class="grid-2">
+      <p style="margin-top: 10px;">
+        A great question. The right website is an investment, and the scale of that investment depends entirely on your goals. You can certainly build a simple site yourself, or invest in a complex platform that grows with your business for years.
+      </p>
+    </div>
+    <div class="grid-3">
+      <p style="margin-top: 10px;">
+        To bring clarity to this process, I've created a quick online calculator. It will provide an initial, approximate estimate tailored to your project's specific needs. No registration required.
+      </p>
+    </div>
+
+    <div class="spacer-80"></div>
+
+    <h2 class="grid-1">Price calculator</h2>
+
+    <div class="grid-2-4" style="margin-top: 20px;">
+      <div class="card" style="background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+        <div class="calc-field">
+          <label>🎯 Desired monthly revenue (EUR)</label>
+          <input type="text" id="revenue" placeholder="e.g. 15000" inputmode="numeric" />
+        </div>
+        <div class="calc-field">
+          <label>🏢 Business niche</label>
+          <select id="niche">
+            <option value="ecommerce">🛍️ E-commerce (physical goods)</option>
+            <option value="services">🔧 B2C Services (repair, cleaning, beauty)</option>
+            <option value="b2b">🏭 B2B / Wholesale</option>
+            <option value="development">💻 Development / IT / Agencies</option>
+            <option value="medicine">🏥 Healthcare / Dentistry</option>
+            <option value="realestate">🏠 Real Estate / Construction</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label>💵 Average order value (EUR)</label>
+          <input type="text" id="averageOrder" placeholder="e.g. 120" inputmode="numeric" />
+        </div>
+        <label class="checkbox-modern">
+          <input type="checkbox" id="needEcommerce" />
+          <span style="font-size: 14px; font-weight: 400; text-transform: none; letter-spacing: 0;">🛒 I need an online store (selling products)</span>
+        </label>
+        <button class="button" id="calcBtn" style="width: 100%;">
+          see result
+          <svg class="arrow-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+        <div id="calcResult" class="result-block" style="display: none;"></div>
+      </div>
+    </div>
+
+    <div style="grid-column: 1 / -1; height: 80px"></div>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <h3 class="footer-heading">get in touch</h3>
+        <div class="footer-links">
+          <a href="mailto:nadyaiam@gmail.com" class="footer-link">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+            nadyaiam@gmail.com
+          </a>
+          <a href="tel:+79099737333" class="footer-link">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +7 909 973-73-33
+          </a>
+          <a href="tel:040773677" class="footer-link">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            040 773 677
+          </a>
+          <a href="https://t.me/nadinski" target="_blank" rel="noopener" class="footer-link">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5L2.5 10.5L9.5 13.5L21.5 2.5Z"/><path d="M9.5 13.5L12.5 20.5L21.5 2.5"/></svg>
+            t.me/nadinski
+          </a>
+          <a href="https://wa.me/79099737333" target="_blank" rel="noopener" class="footer-link">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 14.5C16 13.5 15 13 13.5 13.5C12 14 10.5 15 9 13.5C7.5 12 8.5 10.5 8 9C7.5 7.5 7 6.5 6 5C5 3.5 3.5 4 2.5 5C1.5 6 1.5 8 2.5 9.5C3.5 11 6 14.5 9 17C12 19.5 15.5 21 17 21.5C18.5 22 20 21.5 21 20.5C22 19.5 21 18 19.5 17C18 16 18.5 15.5 17.5 14.5Z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://www.behance.net/8373a5c4" target="_blank" rel="noopener" class="footer-link">
+            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M8 8h4M8 12h5M8 16h3M15 8h1M15 12h1"/></svg>
+            Behance
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <div style="grid-column: 1 / -1; height: 60px;"></div>
   </div>
-</footer>
+
+  <script>
+    (function() {
+      const projects = [
+        { name: "Leadership Coach", title: "Leadership Coach Landing Page", desc: "A one‑page website for a leadership coach targeting top executives and high‑net‑worth entrepreneurs. Elegant, confident, and focused on credibility." },
+        { name: "Psychologist Course", title: "Psychologist's Course Platform", desc: "Promo website and closed learning platform for an author's course on femininity. Includes secure content protection, online payments, CRM integration, and personal user accounts." },
+        { name: "Criminal Defense", title: "Criminal Defense Attorney Website", desc: "A minimalist, restrained design aimed at building trust and highlighting expertise — no distractions, just credibility." },
+        { name: "Stylist Portfolio", title: "Stylist Portfolio", desc: "A personal website for a stylist, created in a retro‑minimalist aesthetic with emphasis on individuality and visual storytelling." },
+        { name: "Private Course", title: "Private Course Landing Page", desc: "Landing page for an exclusive author‑led course with seamless registration flow and conversion‑focused design." },
+        { name: "Emma School", title: "EMMA SCHOOL Nail Courses", desc: "Promo website for selecting and enrolling in professional nail art courses. Features an interactive course catalog with installment payment options, a verified gallery of graduate works, official certification display, and integrated CRM for lead management." },
+        { name: "Jazz-Funk Dance", title: "Jazz‑Funk Online Dance Course", desc: "A dynamic, high‑energy platform for an online jazz‑funk program. Includes secure content delivery, student accounts, structured lesson access, online payment integration, and a built‑in feedback system." },
+        { name: "Law Firm", title: "Law Firm Website", desc: "A creative corporate site themed around \"lawyers as superheroes.\" Custom comic‑style design concept that communicates professionalism through originality and bold visual storytelling." },
+        { name: "Dental Clinic", title: "Dental Clinic Website", desc: "A large, multi‑page website for a modern dental clinic. Includes a dynamic blog, real‑time reviews, detailed doctor profiles, a \"before & after\" gallery, custom forms, and a catalog of 60+ services with transparent pricing." },
+        { name: "Family Restaurant", title: "Family Restaurant Delivery Service", desc: "Website for a family‑owned food delivery business. Includes address validation, online payment, and full delivery integration to streamline the user experience." },
+        { name: "Luxury Fragrance", title: "Luxury Home Fragrance Store", desc: "An elegant e‑commerce website for a premium home scent brand. Minimalist design, intuitive structure, and integrated features like online payment, delivery options, and a referral program." },
+        { name: "Children Decor", title: "Children's Event Decoration", desc: "A soft, pastel‑toned website with gentle animations, intuitive navigation, and an online catalog for selecting and ordering event decorations." },
+        { name: "Gas Installation", title: "Gas Installation Company", desc: "Website for a gas installation service. Designed for an older audience (50+), with large typography, intuitive navigation, and simple multi‑step cost calculators." },
+        { name: "Asphalt Laying", title: "Asphalt Laying Company", desc: "Corporate website with an interactive, user‑friendly cost calculator that estimates project budgets before collecting client data — increasing engagement and lead quality." },
+        { name: "Heavy Equipment", title: "Heavy Equipment Rental", desc: "Bright, bold, and easy to navigate. A memorable corporate website for a company renting heavy construction machinery, with strong calls to action and a clear visual hierarchy." },
+        { name: "Industrial Gas", title: "Industrial Gas Supply Company", desc: "Website design and development for a supplier of industrial, food‑grade, and medical gases. A clean, structured layout with a focus on clarity, trust, and effortless navigation for B2B clients." },
+        { name: "Confidential", title: "Confidential Projects", desc: "In addition to public projects, I've developed several private websites under NDA — including investor presentation platforms for Silicon Valley tech innovators, closed educational systems for private academies, and digital showcases for new product launches in luxury and tech industries." }
+      ];
+
+      const colorPattern = ['#e0f9f3', '#faeaf2', '#e0f9f3', '#fff4d4', '#fff4d4', '#faeaf2'];
+
+      const tabsContainer = document.getElementById('tabsContainer');
+      const previewCard = document.getElementById('previewCard');
+
+      function updatePreview(project) {
+        previewCard.innerHTML = `
+          <div class="preview-img-placeholder">${project.name}</div>
+          <div class="preview-content">
+            <h4>${project.title}</h4>
+            <p>${project.desc}</p>
+          </div>`;
+      }
+
+      projects.forEach((proj, idx) => {
+        const tab = document.createElement('div');
+        tab.className = 'tab-card';
+        tab.textContent = proj.name;
+        tab.style.background = colorPattern[idx % colorPattern.length];
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab-card').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          updatePreview(proj);
+        });
+        if (idx === 0) {
+          tab.classList.add('active');
+          updatePreview(proj);
+        }
+        tabsContainer.appendChild(tab);
+      });
+
+      const NICHE_CONFIG = {
+        ecommerce: { name: 'E-commerce', cpc: 0.35, conversion: 2.5, ctr: 8.0, defaultCheck: 45 },
+        services: { name: 'B2C Services', cpc: 1.20, conversion: 7.0, ctr: 12.0, defaultCheck: 110 },
+        b2b: { name: 'B2B / Wholesale', cpc: 1.70, conversion: 4.5, ctr: 6.0, defaultCheck: 600 },
+        development: { name: 'Development / IT', cpc: 2.50, conversion: 3.0, ctr: 5.0, defaultCheck: 2000 },
+        medicine: { name: 'Healthcare', cpc: 3.40, conversion: 8.5, ctr: 10.0, defaultCheck: 160 },
+        realestate: { name: 'Real Estate', cpc: 2.20, conversion: 2.0, ctr: 7.0, defaultCheck: 2000 }
+      };
+
+      const AD_SETUP_COST = 400;
+
+      const SITE_OPTIONS = {
+        subscription: { name: 'Landing Page (Subscription)', minPrice: 70, maxPrice: 70, avgPrice: 70, time: '3–5 days', desc: 'Rent a website with a buy‑out option. Minimal start‑up cost, ideal for testing a niche.' },
+        simpleEcommerce: { name: 'Simple Online Store', minPrice: 550, maxPrice: 1400, avgPrice: 950, time: '1–2 weeks', desc: 'Template solution for online sales. Cart, catalogue, payments — all the essentials for your first orders.' },
+        landing: { name: 'Landing Page', minPrice: 550, maxPrice: 1500, avgPrice: 1000, time: '2–3 weeks', desc: 'High‑converting one‑pager for services. Fast launch, ideal for lead generation.' },
+        multiPage: { name: 'Multi‑page Website', minPrice: 1600, maxPrice: 3000, avgPrice: 2300, time: '4–6 weeks', desc: 'Portfolio, services, blog. Builds trust and authority, works for SEO.' },
+        ecommerce: { name: 'Online Store', minPrice: 2400, maxPrice: 5600, avgPrice: 4000, time: '2–3 months', desc: 'Full store: cart, accounts, CRM, delivery integrations, discount system.' },
+        portal: { name: 'Portal / Marketplace', minPrice: 4700, maxPrice: 12800, avgPrice: 8700, time: '4–6 months', desc: 'Complex ecosystem with seller/buyer accounts, ratings, deep integrations.' },
+        ecommercePlus: { name: 'Store + Mobile App', minPrice: 8000, maxPrice: 20000, avgPrice: 14000, time: '4–6 months', desc: 'Web + native iOS/Android. For revenue above 15 000 EUR/month.' }
+      };
+
+      function formatMoney(amount) {
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(amount);
+      }
+
+      function formatNumber(num) {
+        return num.toLocaleString('en-US');
+      }
+
+      function recommendSiteType(budget, needEcommerce) {
+        if (budget <= 280) return 'subscription';
+        if (budget <= 1600) return needEcommerce ? 'simpleEcommerce' : 'landing';
+        if (budget <= 6700) return needEcommerce ? 'ecommerce' : 'multiPage';
+        return needEcommerce ? 'ecommercePlus' : 'portal';
+      }
+
+      function calculate() {
+        const revenue = parseInt(document.getElementById('revenue').value.replace(/[^\d]/g, ''));
+        let avgOrder = parseInt(document.getElementById('averageOrder').value.replace(/[^\d]/g, ''));
+        const nicheKey = document.getElementById('niche').value;
+        const needEcommerce = document.getElementById('needEcommerce').checked;
+        const config = NICHE_CONFIG[nicheKey];
+
+        if (!revenue || revenue < 100) return alert('Please enter a valid monthly revenue (min 100 EUR).');
+        if (!avgOrder || isNaN(avgOrder)) avgOrder = config.defaultCheck;
+        if (avgOrder < 10) return alert('Average order must be at least 10 EUR.');
+
+        const conversionRate = config.conversion / 100;
+        const ordersNeeded = Math.ceil(revenue / avgOrder);
+        const visitorsNeeded = Math.ceil(ordersNeeded / conversionRate);
+        const monthlyAdSpend = Math.ceil(visitorsNeeded * config.cpc);
+        const adBudget = monthlyAdSpend + AD_SETUP_COST;
+        const cpo = ordersNeeded > 0 ? Math.ceil(adBudget / ordersNeeded) : 0;
+
+        const optimalBudget = Math.floor(revenue * 0.15);
+        const recommendedKey = recommendSiteType(optimalBudget, needEcommerce);
+        const site = SITE_OPTIONS[recommendedKey];
+
+        const grossProfit = revenue * 0.35;
+        const netProfit = grossProfit - adBudget;
+        const payback = netProfit > 0 ? Math.round((site.avgPrice / netProfit) * 10) / 10 : Infinity;
+
+        const resultDiv = document.getElementById('calcResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+          <div class="result-item"><strong>Monthly orders needed:</strong> ${formatNumber(ordersNeeded)}</div>
+          <div class="result-item"><strong>Visitors/month:</strong> ${formatNumber(visitorsNeeded)}</div>
+          <div class="result-item"><strong>Google Ads budget (incl. setup):</strong> ${formatMoney(adBudget)}</div>
+          <div class="result-item"><strong>Cost per order (CPO):</strong> ${formatMoney(cpo)}</div>
+          <div class="result-item"><strong>Optimal website budget:</strong> <span class="big-number">${formatMoney(optimalBudget)}</span></div>
+          <div class="result-item"><strong>Recommended:</strong> ${site.name}</div>
+          <div class="result-item"><strong>Estimated price:</strong> ${formatMoney(site.minPrice)} – ${formatMoney(site.maxPrice)}</div>
+          <div class="result-item"><strong>Net profit after ads:</strong> ${netProfit > 0 ? formatMoney(netProfit) : '⚠️ negative'}</div>
+          <div class="result-item"><strong>Payback period:</strong> ${payback === Infinity ? 'not profitable' : payback + ' months'}</div>
+          <p style="margin-top: 12px; font-size: 12px; color: #888;">* Based on Google Ads averages (EU, 2026). Real values may vary ±20%.</p>
+        `;
+      }
+
+      document.getElementById('calcBtn').addEventListener('click', calculate);
+
+      document.getElementById('niche').addEventListener('change', function() {
+        const config = NICHE_CONFIG[this.value];
+        const avgInput = document.getElementById('averageOrder');
+        if (!avgInput.value) {
+          avgInput.placeholder = `e.g. ${config.defaultCheck}`;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
