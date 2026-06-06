@@ -1,1284 +1,2019 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
-  <title>QR MENUS · portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: #fffbf5;
-      font-family: "Manrope", sans-serif;
-      font-weight: 400;
-      color: #493f55;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-      width: 100%;
-    }
-
-    .master-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      column-gap: 20px;
-      padding: 0 2vw;
-      margin: 0 auto;
-      position: relative;
-      width: 100%;
-    }
-
-    h1 {
-      font-family: "Manrope", sans-serif;
-      font-weight: 400;
-      font-size: 82px;
-      line-height: 1.05;
-      text-transform: uppercase;
-      color: #493f55;
-      letter-spacing: -0.5px;
-      margin-top: 60px;
-    }
-
-    h2 {
-      font-family: "Manrope", sans-serif;
-      font-weight: 400;
-      font-size: 50px;
-      line-height: 1.1;
-      text-transform: uppercase;
-      color: #493f55;
-    }
-
-    h3 {
-      font-family: "Manrope", sans-serif;
-      font-weight: 400;
-      font-size: 30px;
-      line-height: 1.2;
-      text-transform: uppercase;
-      color: #493f55;
-    }
-
-    h4 {
-      font-family: "Manrope", sans-serif;
-      font-weight: 400;
-      font-size: 30px;
-      line-height: 1.25;
-      text-transform: uppercase;
-      color: #6d3aff;
-    }
-
-    p {
-      font-family: "Manrope", sans-serif;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 1.7;
-      color: #493f55;
-    }
-
-    button,
-    .button {
-      background-color: #ff914d;
-      border: none;
-      color: #fffbf5;
-      font-family: "Manrope", sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      text-transform: uppercase;
-      border-radius: 20px;
-      padding: 14px 28px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      letter-spacing: 0.4px;
-      transition: background 0.25s ease, transform 0.2s ease;
-      text-decoration: none;
-      white-space: nowrap;
-      line-height: 1;
-      min-height: 48px;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-
-    button:hover,
-    .button:hover {
-      background-color: #e07b3c;
-      transform: translateY(-2px);
-    }
-
-    button:active,
-    .button:active {
-      transform: translateY(0);
-    }
-
-    .arrow-icon-left {
-      display: inline-block;
-      transform: rotate(180deg);
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    /* Navigation */
-    .nav-bar {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 24px;
-      padding: 24px 0;
-      flex-wrap: wrap;
-    }
-
-    .nav-link {
-      font-family: "Manrope", sans-serif;
-      font-weight: 600;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: #493f55;
-      text-decoration: none;
-      transition: color 0.2s ease;
-      position: relative;
-    }
-
-    .nav-link::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: #6d3aff;
-      transition: width 0.25s ease;
-    }
-
-    .nav-link:hover {
-      color: #6d3aff;
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    .nav-link.active {
-      color: #6d3aff;
-    }
-
-    .nav-link.active::after {
-      width: 100%;
-    }
-
-    /* Cards */
-    .cards-container {
-      display: flex;
-      gap: 20px;
-      width: 100%;
-    }
-
-    .card {
-      flex: 1;
-      border-radius: 24px;
-      padding: 20px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .card h4 {
-      font-size: 30px;
-      color: #6d3aff;
-    }
-
-    .card p {
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    /* Phone mockups */
-    .phones-row {
-      display: flex;
-      gap: 20px;
-      width: 100%;
-    }
-
-    .phone-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .phone-chassis {
-      position: relative;
-      width: 100%;
-      max-width: 340px;
-      aspect-ratio: 9 / 19;
-      border-radius: 36px;
-      background: #fffbf5;
-      box-shadow: 0 25px 45px rgba(73, 63, 85, 0.08), 0 0 0 4px #e7e1d8;
-      overflow: hidden;
-    }
-
-    .phone-screen-area {
-      position: absolute;
-      top: 12px;
-      left: 8px;
-      right: 8px;
-      bottom: 12px;
-      border-radius: 28px;
-      overflow: hidden;
-      background: #ffffff;
-    }
-
-    .phone-screen-area iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-      pointer-events: auto;
-      background: white;
-    }
-
-    .phone-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      color: #493f55;
-      letter-spacing: 1px;
-      font-weight: 400;
-    }
-
-    /* Calculator */
-    .calc-field {
-      margin-bottom: 20px;
-    }
-
-    .calc-field label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #6d3aff;
-      margin-bottom: 6px;
-    }
-
-    .calc-field input,
-    .calc-field select {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid #e7e1d8;
-      border-radius: 16px;
-      font-family: "Manrope", sans-serif;
-      font-size: 15px;
-      background: #fffbf5;
-      color: #493f55;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    .calc-field input:focus,
-    .calc-field select:focus {
-      border-color: #6d3aff;
-      box-shadow: 0 0 0 3px rgba(109, 58, 255, 0.06);
-    }
-
-    .radio-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .radio-option {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px 16px;
-      border: 1px solid #e7e1d8;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: 0.2s;
-      background: #fffbf5;
-    }
-
-    .radio-option:hover {
-      border-color: #6d3aff;
-    }
-
-    .radio-option.selected {
-      border-color: #6d3aff;
-      background: #faf8ff;
-      box-shadow: 0 0 0 3px rgba(109, 58, 255, 0.06);
-    }
-
-    .radio-option input {
-      display: none;
-    }
-
-    .radio-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid #ccc;
-      flex-shrink: 0;
-      margin-top: 1px;
-      transition: 0.2s;
-      position: relative;
-    }
-
-    .radio-option.selected .radio-dot {
-      border-color: #6d3aff;
-      background: #6d3aff;
-    }
-
-    .radio-option.selected .radio-dot::after {
-      content: "";
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: white;
-    }
-
-    .radio-label {
-      font-size: 14px;
-      line-height: 1.4;
-      color: #493f55;
-    }
-
-    .radio-label strong {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    /* Number wheel */
-    .number-wheel-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      border: 1px solid #e7e1d8;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #fffbf5;
-      width: fit-content;
-    }
-
-    .number-wheel-wrapper input {
-      width: 60px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: 600;
-      border: none;
-      padding: 14px 0;
-      outline: none;
-      background: transparent;
-      color: #493f55;
-      font-family: "Manrope", sans-serif;
-    }
-
-    .wheel-btn {
-      width: 44px;
-      height: 48px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-size: 20px;
-      color: #6d3aff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .wheel-btn:hover {
-      background: #f3ede5;
-    }
-
-    .wheel-btn:active {
-      background: #e7e1d8;
-    }
-
-    /* Result */
-    .result-block {
-      background: #faf8f4;
-      border-radius: 20px;
-      padding: 20px;
-      margin-top: 20px;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .result-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #ece6dc;
-      align-items: baseline;
-    }
-
-    .result-item:last-child {
-      border: none;
-    }
-
-    .big-number {
-      font-size: 30px;
-      font-weight: 600;
-      color: #1e1b2e;
-      line-height: 1;
-    }
-
-    /* Share */
-    .share-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-
-    .share-btn {
-      background: #ffffff;
-      border: 1px solid #e7e1d8;
-      border-radius: 14px;
-      padding: 10px 18px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      color: #493f55;
-      transition: 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-    }
-
-    .share-btn:hover {
-      border-color: #6d3aff;
-      color: #6d3aff;
-    }
-
-    /* Form */
-    .lead-form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .lead-form input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid #e7e1d8;
-      border-radius: 16px;
-      font-family: "Manrope", sans-serif;
-      font-size: 15px;
-      background: #fffbf5;
-      color: #493f55;
-      outline: none;
-      transition: 0.2s;
-    }
-
-    .lead-form input:focus {
-      border-color: #6d3aff;
-    }
-
-    .lead-form input.error {
-      border-color: #ff4444;
-      box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
-      animation: shake 0.4s ease;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-4px); }
-    }
-
-    .checkbox-modern {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      font-size: 13px;
-      color: #493f55;
-    }
-
-    .checkbox-modern input {
-      width: 20px;
-      height: 20px;
-      accent-color: #6d3aff;
-    }
-
-    .checkbox-modern.error {
-      color: #ff4444;
-    }
-
-    .checkbox-modern.error input {
-      outline: 2px solid #ff4444;
-      outline-offset: 2px;
-    }
-
-    /* Utility */
-    .spacer-80 {
-      grid-column: 1 / -1;
-      height: 80px;
-    }
-
-    .grid-full { grid-column: 1 / -1; }
-    .grid-1-2 { grid-column: 1 / 3; }
-    .grid-3-4 { grid-column: 3 / 5; }
-    .grid-2-4 { grid-column: 2 / 5; }
-    .grid-2-3 { grid-column: 2 / 4; }
-    .grid-2 { grid-column: 2 / 3; }
-
-    /* Footer */
-    .site-footer {
-      grid-column: 1 / -1;
-      border-top: 1px solid #e7e1d8;
-      padding-top: 40px;
-      margin-top: 0;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: subgrid;
-      grid-column: 1 / -1;
-    }
-
-    .footer-heading {
-      grid-column: 1 / 2;
-      margin-bottom: 20px;
-    }
-
-    .footer-links {
-      grid-column: 2 / 5;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .footer-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: "Manrope", sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      text-transform: uppercase;
-      color: #493f55;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .footer-link:hover {
-      color: #6d3aff;
-    }
-
-    .footer-icon {
-      width: 18px;
-      height: 18px;
-      opacity: 0.7;
-    }
-
-    /* Tablet */
-    @media screen and (max-width: 1024px) {
-      .master-grid {
-        grid-template-columns: repeat(8, 1fr);
-        column-gap: 16px;
-        padding: 0 3vw;
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover"
+    />
+    <title>QR MENUS · portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
-      h1 { font-size: 52px; letter-spacing: -0.3px; margin-top: 48px; }
-      h2 { font-size: 36px; line-height: 1.1; }
-      h3 { font-size: 24px; line-height: 1.25; }
-      h4 { font-size: 22px; line-height: 1.25; }
-      p { font-size: 13px; line-height: 1.65; }
-      button, .button { font-size: 12px; padding: 13px 24px; border-radius: 18px; }
-      .card { padding: 16px 14px; gap: 16px; border-radius: 20px; }
-      .card h4 { font-size: 20px; }
-      .card p { font-size: 12px; }
+      body {
+        background-color: #fffbf5;
+        font-family: "Manrope", sans-serif;
+        font-weight: 400;
+        color: #493f55;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        width: 100%;
+      }
 
-      .spacer-80 { grid-column: 1 / -1 !important; }
-
-      h1.grid-full { grid-column: 1 / -1 !important; }
-      .grid-1-2 { grid-column: 1 / 5 !important; }
-      .grid-3-4 { grid-column: 5 / 9 !important; }
-      .grid-2-4 { grid-column: 3 / 9 !important; }
-      .grid-2-3 { grid-column: 3 / 7 !important; }
-      .grid-2 { grid-column: 3 / 5 !important; }
-
-      .footer-heading { grid-column: 1 / 3; }
-      .footer-links { grid-column: 3 / 9; }
-
-      .phones-row {
+      .master-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px 16px;
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 20px;
+        padding: 0 2vw;
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
       }
-    }
 
-    /* Mobile */
-    @media screen and (max-width: 767px) {
-      .master-grid {
-        grid-template-columns: 1fr;
-        column-gap: 0;
-        padding: 0 24px;
+      h1 {
+        font-family: "Manrope", sans-serif;
+        font-weight: 400;
+        font-size: 82px;
+        line-height: 1.05;
+        text-transform: uppercase;
+        color: #493f55;
+        letter-spacing: -0.5px;
+        margin-top: 60px;
+      }
+
+      h2 {
+        font-family: "Manrope", sans-serif;
+        font-weight: 400;
+        font-size: 50px;
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: #493f55;
+      }
+
+      h3 {
+        font-family: "Manrope", sans-serif;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 1.2;
+        text-transform: uppercase;
+        color: #493f55;
+      }
+
+      h4 {
+        font-family: "Manrope", sans-serif;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 1.25;
+        text-transform: uppercase;
+        color: #6d3aff;
+      }
+
+      p {
+        font-family: "Manrope", sans-serif;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 1.7;
+        color: #493f55;
+      }
+
+      button,
+      .button {
+        background-color: #ff914d;
+        border: none;
+        color: #fffbf5;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        border-radius: 20px;
+        padding: 14px 28px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        letter-spacing: 0.4px;
+        transition: background 0.25s ease, transform 0.2s ease;
+        text-decoration: none;
+        white-space: nowrap;
+        line-height: 1;
+        min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      button:hover,
+      .button:hover {
+        background-color: #e07b3c;
+        transform: translateY(-2px);
+      }
+
+      button:active,
+      .button:active {
+        transform: translateY(0);
+      }
+
+      .arrow-icon-left {
+        display: inline-block;
+        transform: rotate(180deg);
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      /* Navigation */
+      .nav-bar {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 24px;
+        padding: 24px 0;
+        flex-wrap: wrap;
+      }
+
+      .nav-link {
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: #493f55;
+        text-decoration: none;
+        transition: color 0.2s ease;
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #6d3aff;
+        transition: width 0.25s ease;
+      }
+
+      .nav-link:hover {
+        color: #6d3aff;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .nav-link.active {
+        color: #6d3aff;
+      }
+
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      /* Cards */
+      .cards-container {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+      }
+
+      .card {
+        flex: 1;
+        border-radius: 24px;
+        padding: 20px 16px;
         display: flex;
         flex-direction: column;
+        gap: 20px;
+      }
+
+      .card h4 {
+        font-size: 30px;
+        color: #6d3aff;
+      }
+
+      .card p {
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      /* Phone mockups */
+      .phones-row {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+      }
+
+      .phone-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .phone-chassis {
+        position: relative;
+        width: 100%;
+        max-width: 340px;
+        aspect-ratio: 9 / 19;
+        border-radius: 36px;
+        background: #fffbf5;
+        box-shadow: 0 25px 45px rgba(73, 63, 85, 0.08), 0 0 0 4px #e7e1d8;
+        overflow: hidden;
+      }
+
+      .phone-screen-area {
+        position: absolute;
+        top: 12px;
+        left: 8px;
+        right: 8px;
+        bottom: 12px;
+        border-radius: 28px;
+        overflow: hidden;
+        background: #ffffff;
+      }
+
+      .phone-screen-area iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+        pointer-events: auto;
+        background: white;
+      }
+
+      .phone-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: #493f55;
+        letter-spacing: 1px;
+        font-weight: 400;
+      }
+
+      /* Calculator */
+      .calc-step {
+        display: none;
+      }
+
+      .calc-step.active {
+        display: block;
+      }
+
+      .step-indicator {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .step-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #e7e1d8;
+        transition: 0.3s;
+      }
+
+      .step-dot.done {
+        background: #6d3aff;
+      }
+
+      .step-dot.current {
+        background: #ff914d;
+        width: 24px;
+        border-radius: 4px;
+      }
+
+      .calc-nav {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .calc-nav .button-back {
+        background: transparent;
+        color: #6d3aff;
+        border: 1px solid #6d3aff;
+      }
+
+      .calc-nav .button-back:hover {
+        background: #f3ede5;
+      }
+
+      .calc-field {
+        margin-bottom: 20px;
+      }
+
+      .calc-field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #6d3aff;
+        margin-bottom: 6px;
+      }
+
+      .calc-field input,
+      .calc-field select {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid #e7e1d8;
+        border-radius: 16px;
+        font-family: "Manrope", sans-serif;
+        font-size: 15px;
+        background: #fffbf5;
+        color: #493f55;
+        outline: none;
+        transition: 0.2s;
+      }
+
+      .calc-field input:focus,
+      .calc-field select:focus {
+        border-color: #6d3aff;
+        box-shadow: 0 0 0 3px rgba(109, 58, 255, 0.06);
+      }
+
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+        border: 1px solid #e7e1d8;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+        background: #fffbf5;
+      }
+
+      .radio-option:hover {
+        border-color: #6d3aff;
+      }
+
+      .radio-option.selected {
+        border-color: #6d3aff;
+        background: #faf8ff;
+      }
+
+      .radio-option input {
+        display: none;
+      }
+
+      .radio-dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+        flex-shrink: 0;
+        margin-top: 1px;
+        transition: 0.2s;
+        position: relative;
+      }
+
+      .radio-option.selected .radio-dot {
+        border-color: #6d3aff;
+        background: #6d3aff;
+      }
+
+      .radio-option.selected .radio-dot::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+      }
+
+      .radio-label {
+        font-size: 14px;
+        line-height: 1.4;
+        color: #493f55;
+      }
+
+      .radio-label strong {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+
+      /* Number wheel */
+      .number-wheel-wrapper {
+        display: flex;
+        align-items: center;
         gap: 0;
+        border: 1px solid #e7e1d8;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fffbf5;
+        width: fit-content;
       }
 
-      .grid-full, .grid-1-2, .grid-3-4, .grid-2-4, .grid-2-3, .grid-2,
-      .spacer-80, h1, h2, h3, h4 {
-        grid-column: auto !important;
-        width: 100% !important;
-        max-width: 100% !important;
+      .number-wheel-wrapper input {
+        width: 60px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        border: none;
+        padding: 14px 0;
+        outline: none;
+        background: transparent;
+        color: #493f55;
+        font-family: "Manrope", sans-serif;
       }
 
-      h1 { font-size: 42px; line-height: 1.1; margin-top: 48px; margin-bottom: 24px; }
-      h2 { font-size: 32px; line-height: 1.15; margin: 0; }
-      h2 br { display: none; }
-      h3 { font-size: 22px; line-height: 1.25; margin: 0; }
-      h4 { font-size: 20px; line-height: 1.3; margin: 0 0 32px 0; }
-      p { font-size: 14px; line-height: 1.65; }
-
-      .spacer-80 { height: 48px; width: 100%; }
-
-      .cards-container { flex-direction: column; gap: 16px; }
-      .card { flex: none; width: 100%; padding: 20px 16px; gap: 14px; }
-      .card h4 { font-size: 22px; }
-      .card p { font-size: 14px; }
-
-      .phones-row { grid-template-columns: 1fr !important; gap: 32px; }
-
-      button, .button { width: 100% !important; justify-content: center !important; border-radius: 25px; padding: 16px 24px; font-size: 14px; }
-
-      .nav-bar { gap: 16px; padding: 20px 0; }
-      .nav-link { font-size: 11px; }
-
-      .site-footer { padding-top: 32px; }
-      .footer-grid { display: flex; flex-direction: column; gap: 20px; }
-      .footer-links { gap: 10px; }
-
-      .master-grid > div:last-child { height: 64px; }
-    }
-
-    @media screen and (max-width: 380px) {
-      .master-grid { padding: 0 20px; }
-      h1 { font-size: 36px; }
-      h2 { font-size: 28px; }
-      h3 { font-size: 20px; }
-      h4 { font-size: 18px; }
-      p { font-size: 13px; }
-      .spacer-80 { height: 40px; }
-      .card { padding: 16px 14px; }
-      .card h4 { font-size: 20px; }
-      button, .button { padding: 14px 20px; font-size: 13px; }
-    }
-
-    @media screen and (min-width: 1600px) {
-      .master-grid { max-width: 1800px; padding: 0 5vw; }
-      h1 { font-size: 96px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+      .wheel-btn {
+        width: 44px;
+        height: 48px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 20px;
+        color: #6d3aff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        -webkit-tap-highlight-color: transparent;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="master-grid">
-    <nav class="nav-bar">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="qr-menus.html" class="nav-link active">QR Menus</a>
-      <a href="websites.html" class="nav-link">Websites</a>
-      <a href="https://www.behance.net/8373a5c4" target="_blank" rel="noopener" class="nav-link">Behance ↗</a>
-    </nav>
 
-    <h1 class="grid-full">//qr-menus</h1>
+      .wheel-btn:hover {
+        background: #f3ede5;
+      }
 
-    <h4 class="grid-2-4" style="margin-top: 40px">
-      Custom menu design built on your existing brand or crafted from scratch.
-      Editable digital menus tailored to your restaurant and available on your
-      web-site with qr-code link.
-    </h4>
+      .wheel-btn:active {
+        background: #e7e1d8;
+      }
 
-    <div class="spacer-80"></div>
+      /* Result */
+      .result-block {
+        background: #faf8f4;
+        border-radius: 20px;
+        padding: 20px;
+        margin-top: 20px;
+        font-size: 13px;
+        line-height: 1.6;
+      }
 
-    <!-- Image -->
-    <div class="grid-1-2">
-      <img 
-        src="image 88 (1).webp" 
-        alt="Shar-Shara visual" 
-        style="width: 100%; aspect-ratio: 4/3; border-radius: 30px; object-fit: cover; display: block;"
-      />
-    </div>
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #ece6dc;
+        align-items: baseline;
+      }
 
-    <!-- HOW IT WORKS + Calculator -->
-    <div class="grid-3-4">
-      <h3 style="color: #493f55; margin-bottom: 12px;">HOW IT WORKS?</h3>
-      <p style="margin-bottom: 24px;">There are a few scenarios, let's find the most suitable for your case.</p>
+      .result-item:last-child {
+        border: none;
+      }
 
-      <div class="card" style="background: #ffffff; box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding: 24px 20px;">
-        <!-- 1. Количество позиций -->
-        <div class="calc-field">
-          <label>📋 How many menu items?</label>
-          <input type="number" id="menuItems" placeholder="e.g. 30" min="5" value="30" />
-        </div>
+      .big-number {
+        font-size: 30px;
+        font-weight: 600;
+        color: #1e1b2e;
+        line-height: 1;
+      }
 
-        <!-- 2. Версия меню -->
-        <div class="calc-field">
-          <label>⚙️ Menu version</label>
-          <div class="radio-group" id="menuVersion">
-            <label class="radio-option selected" data-version="demo">
-              <input type="radio" name="version" value="demo" checked />
-              <span class="radio-dot"></span>
-              <span class="radio-label">
-                <strong>Demo version</strong>
-                Menu without editing capability
-              </span>
-            </label>
-            <label class="radio-option" data-version="editable">
-              <input type="radio" name="version" value="editable" />
-              <span class="radio-dot"></span>
-              <span class="radio-label">
-                <strong>Full version</strong>
-                Menu with editing capability
-              </span>
-            </label>
-            <label class="radio-option" data-version="extended">
-              <input type="radio" name="version" value="extended" />
-              <span class="radio-dot"></span>
-              <span class="radio-label">
-                <strong>Extended version</strong>
-                Editing + POS integration + online payment
-              </span>
-            </label>
+      /* Share */
+      .share-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .share-btn {
+        background: #ffffff;
+        border: 1px solid #e7e1d8;
+        border-radius: 14px;
+        padding: 10px 18px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        color: #493f55;
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .share-btn:hover {
+        border-color: #6d3aff;
+        color: #6d3aff;
+      }
+
+      /* Form */
+      .lead-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .lead-form input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid #e7e1d8;
+        border-radius: 16px;
+        font-family: "Manrope", sans-serif;
+        font-size: 15px;
+        background: #fffbf5;
+        color: #493f55;
+        outline: none;
+        transition: 0.2s;
+      }
+
+      .lead-form input:focus {
+        border-color: #6d3aff;
+      }
+
+      .lead-form input.error {
+        border-color: #ff4444;
+        box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
+        animation: shake 0.4s ease;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        50% {
+          transform: translateX(6px);
+        }
+        75% {
+          transform: translateX(-4px);
+        }
+      }
+
+      .checkbox-modern {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        font-size: 13px;
+        color: #493f55;
+      }
+
+      .checkbox-modern input {
+        width: 20px;
+        height: 20px;
+        accent-color: #6d3aff;
+        flex-shrink: 0;
+      }
+
+      .checkbox-modern.error {
+        color: #ff4444;
+      }
+
+      .checkbox-modern.error input {
+        outline: 2px solid #ff4444;
+        outline-offset: 2px;
+      }
+
+      /* Utility */
+      .spacer-80 {
+        grid-column: 1 / -1;
+        height: 80px;
+      }
+
+      .grid-full {
+        grid-column: 1 / -1;
+      }
+      .grid-1-2 {
+        grid-column: 1 / 3;
+      }
+      .grid-3-4 {
+        grid-column: 3 / 5;
+      }
+      .grid-2-4 {
+        grid-column: 2 / 5;
+      }
+      .grid-2-3 {
+        grid-column: 2 / 4;
+      }
+      .grid-2 {
+        grid-column: 2 / 3;
+      }
+
+      /* Footer */
+      .site-footer {
+        grid-column: 1 / -1;
+        border-top: 1px solid #e7e1d8;
+        padding-top: 40px;
+        margin-top: 0;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-column: 1 / -1;
+      }
+
+      .footer-heading {
+        grid-column: 1 / 2;
+        margin-bottom: 20px;
+      }
+
+      .footer-links {
+        grid-column: 2 / 5;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .footer-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+        color: #493f55;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .footer-link:hover {
+        color: #6d3aff;
+      }
+
+      .footer-icon {
+        width: 18px;
+        height: 18px;
+        opacity: 0.7;
+      }
+
+      /* Tablet */
+      @media screen and (max-width: 1024px) {
+        .master-grid {
+          grid-template-columns: repeat(8, 1fr);
+          column-gap: 16px;
+          padding: 0 3vw;
+        }
+
+        h1 {
+          font-size: 52px;
+          letter-spacing: -0.3px;
+          margin-top: 48px;
+        }
+        h2 {
+          font-size: 36px;
+          line-height: 1.1;
+        }
+        h3 {
+          font-size: 24px;
+          line-height: 1.25;
+        }
+        h4 {
+          font-size: 22px;
+          line-height: 1.25;
+        }
+        p {
+          font-size: 13px;
+          line-height: 1.65;
+        }
+        button,
+        .button {
+          font-size: 12px;
+          padding: 13px 24px;
+          border-radius: 18px;
+        }
+        .card {
+          padding: 16px 14px;
+          gap: 16px;
+          border-radius: 20px;
+        }
+        .card h4 {
+          font-size: 20px;
+        }
+        .card p {
+          font-size: 12px;
+        }
+
+        .spacer-80 {
+          grid-column: 1 / -1 !important;
+        }
+
+        h1.grid-full {
+          grid-column: 1 / -1 !important;
+        }
+        .grid-1-2 {
+          grid-column: 1 / 5 !important;
+        }
+        .grid-3-4 {
+          grid-column: 5 / 9 !important;
+        }
+        .grid-2-4 {
+          grid-column: 3 / 9 !important;
+        }
+        .grid-2-3 {
+          grid-column: 3 / 7 !important;
+        }
+        .grid-2 {
+          grid-column: 3 / 5 !important;
+        }
+
+        .footer-heading {
+          grid-column: 1 / 3;
+        }
+        .footer-links {
+          grid-column: 3 / 9;
+        }
+
+        .phones-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px 16px;
+        }
+      }
+
+      /* Mobile */
+      @media screen and (max-width: 767px) {
+        .master-grid {
+          grid-template-columns: 1fr;
+          column-gap: 0;
+          padding: 0 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+
+        .grid-full,
+        .grid-1-2,
+        .grid-3-4,
+        .grid-2-4,
+        .grid-2-3,
+        .grid-2,
+        .spacer-80,
+        h1,
+        h2,
+        h3,
+        h4 {
+          grid-column: auto !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        h1 {
+          font-size: 42px;
+          line-height: 1.1;
+          margin-top: 48px;
+          margin-bottom: 24px;
+        }
+        h2 {
+          font-size: 32px;
+          line-height: 1.15;
+          margin: 0;
+        }
+        h2 br {
+          display: none;
+        }
+        h3 {
+          font-size: 22px;
+          line-height: 1.25;
+          margin: 0;
+        }
+        h4 {
+          font-size: 20px;
+          line-height: 1.3;
+          margin: 0 0 32px 0;
+        }
+        p {
+          font-size: 14px;
+          line-height: 1.65;
+        }
+
+        .spacer-80 {
+          height: 48px;
+          width: 100%;
+        }
+
+        .cards-container {
+          flex-direction: column;
+          gap: 16px;
+        }
+        .card {
+          flex: none;
+          width: 100%;
+          padding: 20px 16px;
+          gap: 14px;
+        }
+        .card h4 {
+          font-size: 22px;
+        }
+        .card p {
+          font-size: 14px;
+        }
+
+        .phones-row {
+          grid-template-columns: 1fr !important;
+          gap: 32px;
+        }
+
+        button,
+        .button {
+          width: 100% !important;
+          justify-content: center !important;
+          border-radius: 25px;
+          padding: 16px 24px;
+          font-size: 14px;
+        }
+
+        .nav-bar {
+          gap: 16px;
+          padding: 20px 0;
+        }
+        .nav-link {
+          font-size: 11px;
+        }
+
+        .site-footer {
+          padding-top: 32px;
+        }
+        .footer-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .footer-links {
+          gap: 10px;
+        }
+
+        .calc-nav .button-back {
+          width: auto !important;
+        }
+
+        .master-grid > div:last-child {
+          height: 64px;
+        }
+        /* Send to Nadi — одна колонка на мобилке */
+        .send-to-nadi-grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
+
+      @media screen and (max-width: 380px) {
+        .master-grid {
+          padding: 0 20px;
+        }
+        h1 {
+          font-size: 36px;
+        }
+        h2 {
+          font-size: 28px;
+        }
+        h3 {
+          font-size: 20px;
+        }
+        h4 {
+          font-size: 18px;
+        }
+        p {
+          font-size: 13px;
+        }
+        .spacer-80 {
+          height: 40px;
+        }
+        .card {
+          padding: 16px 14px;
+        }
+        .card h4 {
+          font-size: 20px;
+        }
+        button,
+        .button {
+          padding: 14px 20px;
+          font-size: 13px;
+        }
+      }
+
+      @media screen and (min-width: 1600px) {
+        .master-grid {
+          max-width: 1800px;
+          padding: 0 5vw;
+        }
+        h1 {
+          font-size: 96px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Modal */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(30, 27, 46, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal-dialog {
+        background: #ffffff;
+        border-radius: 28px;
+        padding: 32px 24px;
+        max-width: 440px;
+        width: 90%;
+        box-shadow: 0 30px 60px rgba(30, 27, 46, 0.15);
+        position: relative;
+        animation: modalIn 0.3s ease;
+      }
+
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #493f55;
+        padding: 4px 8px;
+        border-radius: 8px;
+        min-height: auto;
+        width: auto;
+      }
+
+      .modal-close:hover {
+        background: #f3ede5;
+        transform: none;
+      }
+
+      .modal-dialog h3 {
+        margin-bottom: 8px;
+      }
+
+      .modal-dialog p {
+        margin-bottom: 20px;
+      }
+
+      .modal-dialog .lead-form {
+        gap: 14px;
+      }
+
+      .modal-success {
+        display: none;
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      .modal-success.active {
+        display: block;
+      }
+
+      .modal-success .big-emoji {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="master-grid">
+      <nav class="nav-bar">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="qr-menus.html" class="nav-link active">QR Menus</a>
+        <a href="websites.html" class="nav-link">Websites</a>
+        <a
+          href="https://www.behance.net/8373a5c4"
+          target="_blank"
+          rel="noopener"
+          class="nav-link"
+          >Behance ↗</a
+        >
+      </nav>
+
+      <h1 class="grid-full">//qr-menus</h1>
+
+      <h4 class="grid-2-4" style="margin-top: 40px">
+        Custom menu design built on your existing brand or crafted from scratch.
+        Editable digital menus tailored to your restaurant and available with
+        qr-code link
+      </h4>
+      <div class="spacer-80"></div>
+
+      <div class="spacer-80"></div>
+
+      <h3 class="grid-1-2" style="text-align: left">responsive examples</h3>
+      <div class="spacer-80"></div>
+
+      <div class="grid-full">
+        <div class="phones-row">
+          <div class="phone-item">
+            <div class="phone-chassis">
+              <div class="phone-screen-area">
+                <iframe
+                  src="https://nadinski.github.io/bar/"
+                  title="Shar-Shara menu"
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
+            <span class="phone-label">Secret Bar</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-chassis">
+              <div class="phone-screen-area">
+                <iframe
+                  src="https://nadinski.github.io/shar-shara/"
+                  title="Mura menu"
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
+            <span class="phone-label">Shar-Shara</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-chassis">
+              <div class="phone-screen-area">
+                <iframe
+                  src="https://nadinski.github.io/luna-bar-menu/"
+                  title="Noor menu"
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
+            <span class="phone-label">Luna Bar</span>
+          </div>
+          <div class="phone-item">
+            <div class="phone-chassis">
+              <div class="phone-screen-area">
+                <iframe
+                  src="https://nadinski.github.io/banket/"
+                  title="Velo menu"
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
+            <span class="phone-label">Shar-Shara Banquet</span>
           </div>
         </div>
-
-        <!-- 3. Свой сайт или отдельная ссылка -->
-        <div class="calc-field">
-          <label>🌐 Do you have your own website?</label>
-          <div class="radio-group" id="hasWebsite">
-            <label class="radio-option" data-website="yes">
-              <input type="radio" name="website" value="yes" />
-              <span class="radio-dot"></span>
-              <span class="radio-label">
-                <strong>Yes, I have a website</strong>
-                Menu will be embedded
-              </span>
-            </label>
-            <label class="radio-option selected" data-website="no">
-              <input type="radio" name="website" value="no" checked />
-              <span class="radio-dot"></span>
-              <span class="radio-label">
-                <strong>No, I need a standalone link</strong>
-                +400 € for hosting & domain setup
-              </span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 4. Мультиязычность -->
-        <div class="calc-field">
-          <label>🌍 Multilanguage support?</label>
-          <div class="radio-group" id="multilang">
-            <label class="radio-option selected" data-lang="no">
-              <input type="radio" name="multilang" value="no" checked />
-              <span class="radio-dot"></span>
-              <span class="radio-label">
-                <strong>No, one language is enough</strong>
-              </span>
-            </label>
-            <label class="radio-option" data-lang="yes">
-              <input type="radio" name="multilang" value="yes" />
-              <span class="radio-dot"></span>
-              <span class="radio-label">
-                <strong>Yes, I need multiple languages</strong>
-                +70 € per additional language
-              </span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 4.1 Количество языков -->
-        <div class="calc-field" id="langCountWrapper" style="display: none;">
-          <label>🔢 Number of additional languages</label>
-          <div class="number-wheel-wrapper">
-            <button type="button" class="wheel-btn" id="langMinus">−</button>
-            <input type="text" id="langCount" value="1" readonly />
-            <button type="button" class="wheel-btn" id="langPlus">+</button>
-          </div>
-        </div>
-
-        <button class="button" id="calcBtn" style="width: 100%;">
-          see result
-          <svg class="arrow-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <polyline points="12 5 19 12 12 19" />
-          </svg>
-        </button>
-
-        <div id="calcResult" style="display: none;"></div>
       </div>
-    </div>
 
-    <div class="spacer-80"></div>
+      <div class="spacer-80"></div>
+      <div class="spacer-80"></div>
 
-    <!-- Shar-Shara text -->
-    <div class="grid-full">
-      <div style="display: flex; flex-direction: column; gap: 24px">
-        <h3 style="color: #493f55">
-          Shar-Shara — Seamless Digital Menu Experience
-        </h3>
-        <p>
-          Extending the brand's elegant duality into the digital realm, I
-          designed a dynamic QR menu that prioritizes intuitive usability and
-          modern engagement.
+      <!-- Benefit cards -->
+      <div class="grid-2-4">
+        <div class="cards-container">
+          <div class="card" style="background: #e0f9f3">
+            <h4>Refined motion</h4>
+            <p>
+              Micro-interactions and subtle transitions elevate the browsing
+              flow without distracting from the cuisine.
+            </p>
+          </div>
+          <div class="card" style="background: #faeaf2">
+            <h4>Universal clarity</h4>
+            <p>
+              Accessible typography and generous touch targets serve every
+              guest, from digital natives to traditional diners.
+            </p>
+          </div>
+          <div class="card" style="background: #e0f9f3">
+            <h4>Brand coherence</h4>
+            <p>
+              Every pixel reflects the restaurant's identity, translating print
+              elegance into a tactile digital language.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-80"></div>
+      <div class="spacer-80"></div>
+      <h2 class="grid-2-3" style="line-height: 1.2">
+        order a DIGITAL menu<br />for your restaurant NOW
+      </h2>
+      <div class="spacer-80"></div>
+
+      <!-- Image -->
+      <div class="grid-1-2">
+        <img
+          src="image 88 (1).webp"
+          alt="Shar-Shara visual"
+          style="
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 30px;
+            object-fit: cover;
+            display: block;
+          "
+        />
+      </div>
+
+      <!-- HOW IT WORKS + Calculator -->
+      <div class="grid-3-4" id="calculatorRoot">
+        <h3 style="color: #493f55; margin-bottom: 12px">4 steps to prpceed</h3>
+        <p style="margin-bottom: 24px">
+          There are a few scenarios, let's pick the most suitable for your case.
         </p>
-        <p>
-          Building on the established print identity, this digital menu
-          translates the restaurant's fusion of Eastern and European cuisines
-          into a fluid, mobile-first experience. The interface features
-          graceful animations that guide the eye and enrich the interaction
-          without compromising on clarity.
-        </p>
-      </div>
-    </div>
 
-    <div class="spacer-80"></div>
+        <div
+          class="card"
+          style="
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            padding: 24px 20px;
+          "
+          id="calcCard"
+        >
+          <!-- Step indicator -->
+          <div class="step-indicator" id="stepIndicator">
+            <div class="step-dot current"></div>
+            <div class="step-dot"></div>
+            <div class="step-dot"></div>
+            <div class="step-dot"></div>
+          </div>
 
-    <!-- Benefit cards -->
-    <div class="grid-2-4">
-      <div class="cards-container">
-        <div class="card" style="background: #e0f9f3">
-          <h4>Refined motion</h4>
-          <p>
-            Micro-interactions and subtle transitions elevate the browsing
-            flow without distracting from the cuisine.
-          </p>
-        </div>
-        <div class="card" style="background: #faeaf2">
-          <h4>Universal clarity</h4>
-          <p>
-            Accessible typography and generous touch targets serve every
-            guest, from digital natives to traditional diners.
-          </p>
-        </div>
-        <div class="card" style="background: #e0f9f3">
-          <h4>Brand coherence</h4>
-          <p>
-            Every pixel reflects the restaurant's identity, translating print
-            elegance into a tactile digital language.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="spacer-80"></div>
-
-    <!-- Responsive examples -->
-    <h3 class="grid-1-2" style="text-align: left">responsive examples</h3>
-
-    <div class="spacer-80"></div>
-
-    <!-- Phones -->
-    <div class="grid-full">
-      <div class="phones-row">
-        <div class="phone-item">
-          <div class="phone-chassis">
-            <div class="phone-screen-area">
-              <iframe src="https://nadinski.github.io/bar/" title="Shar-Shara menu" loading="lazy"></iframe>
+          <!-- STEP 1: Items count -->
+          <div class="calc-step active" data-step="1">
+            <div class="calc-field">
+              <label>📋 How many menu items?</label>
+              <input
+                type="number"
+                id="menuItems"
+                placeholder="e.g. 30"
+                min="5"
+                value="30"
+              />
+              <p style="font-size: 11px; margin-top: 6px; color: #888">
+                Min 5 items. Up to 30 = 200€. Above 30 = proportional.
+              </p>
+            </div>
+            <div class="calc-nav">
+              <button class="button" onclick="nextStep()">Next →</button>
             </div>
           </div>
-          <span class="phone-label">Shar-Shara</span>
-        </div>
-        <div class="phone-item">
-          <div class="phone-chassis">
-            <div class="phone-screen-area">
-              <iframe src="https://nadinski.github.io/shar-shara/" title="Mura menu" loading="lazy"></iframe>
+
+          <!-- STEP 2: Version -->
+          <div class="calc-step" data-step="2">
+            <div class="calc-field">
+              <label>⚙️ Menu version</label>
+              <div class="radio-group" id="menuVersion">
+                <label class="radio-option selected" data-version="demo">
+                  <input type="radio" name="version" value="demo" checked />
+                  <span class="radio-dot"></span>
+                  <span class="radio-label">
+                    <strong>Demo version</strong>
+                    Menu without editing capability
+                  </span>
+                </label>
+                <label class="radio-option" data-version="editable">
+                  <input type="radio" name="version" value="editable" />
+                  <span class="radio-dot"></span>
+                  <span class="radio-label">
+                    <strong>Full version (+200€)</strong>
+                    Menu with editing capability
+                  </span>
+                </label>
+                <label class="radio-option" data-version="extended">
+                  <input type="radio" name="version" value="extended" />
+                  <span class="radio-dot"></span>
+                  <span class="radio-label">
+                    <strong>Extended version (+600€)</strong>
+                    Editing + POS integration + online payment
+                  </span>
+                </label>
+              </div>
             </div>
-          </div>
-          <span class="phone-label">Mura</span>
-        </div>
-        <div class="phone-item">
-          <div class="phone-chassis">
-            <div class="phone-screen-area">
-              <iframe src="https://nadinski.github.io/luna-bar-menu/" title="Noor menu" loading="lazy"></iframe>
-            </div>
-          </div>
-          <span class="phone-label">Noor</span>
-        </div>
-        <div class="phone-item">
-          <div class="phone-chassis">
-            <div class="phone-screen-area">
-              <iframe src="https://nadinski.github.io/banket/" title="Velo menu" loading="lazy"></iframe>
-            </div>
-          </div>
-          <span class="phone-label">Velo</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="spacer-80"></div>
-
-    <!-- Order heading -->
-    <h2 class="grid-2-3" style="line-height: 1.2">
-      order a DIGITAL menu<br />for your restaurant
-    </h2>
-
-    <div class="spacer-80"></div>
-
-    <!-- Pricing cards -->
-    <div class="grid-2-4">
-      <div class="cards-container">
-        <div class="card" style="background: #fff4d4">
-          <h4>SIMPLE ONLINE PDF</h4>
-          <p>
-            Polished, on-brand digital menu delivered as a ready-to-share
-            link. Ideal for instant elegance without complex integrations.
-          </p>
-        </div>
-        <div class="card" style="background: #fff4d4">
-          <h4>EDITABLE WEB MENU</h4>
-          <p>
-            Self-manage your dishes, prices, and visuals through a streamlined
-            dashboard. Perfect for seasonal updates and full creative control.
-          </p>
-        </div>
-        <div class="card" style="background: #faeaf2; display: flex; flex-direction: column; gap: 20px;">
-          <h4>POS SYNCHRONISED</h4>
-          <p>
-            Real-time menu alignment with your point-of-sale system.
-            Inventory-aware and effortlessly accurate across all platforms.
-          </p>
-          <button class="button" style="margin-top: auto; align-self: flex-start">
-            <svg class="arrow-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-            book a consultation
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="spacer-80"></div>
-
-    <!-- Order now button -->
-    <div class="grid-2">
-      <button class="button" style="width: 100%; justify-content: center">
-        <svg class="arrow-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-        order now
-      </button>
-    </div>
-
-    <div style="grid-column: 1 / -1; height: 80px"></div>
-
-    <!-- ========== FOOTER ========== -->
-    <footer class="site-footer">
-      <div class="footer-grid">
-        <h3 class="footer-heading">get in touch</h3>
-        <div class="footer-links">
-          <a href="mailto:nadyaiam@gmail.com" class="footer-link">
-            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/>
-            </svg>
-            nadyaiam@gmail.com
-          </a>
-          <a href="tel:+79099737333" class="footer-link">
-            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-            </svg>
-            +7 909 973-73-33
-          </a>
-          <a href="tel:040773677" class="footer-link">
-            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-            </svg>
-            040 773 677
-          </a>
-          <a href="https://t.me/nadinski" target="_blank" rel="noopener" class="footer-link">
-            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21.5 2.5L2.5 10.5L9.5 13.5L21.5 2.5Z"/><path d="M9.5 13.5L12.5 20.5L21.5 2.5"/>
-            </svg>
-            t.me/nadinski
-          </a>
-          <a href="https://wa.me/79099737333" target="_blank" rel="noopener" class="footer-link">
-            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17.5 14.5C16 13.5 15 13 13.5 13.5C12 14 10.5 15 9 13.5C7.5 12 8.5 10.5 8 9C7.5 7.5 7 6.5 6 5C5 3.5 3.5 4 2.5 5C1.5 6 1.5 8 2.5 9.5C3.5 11 6 14.5 9 17C12 19.5 15.5 21 17 21.5C18.5 22 20 21.5 21 20.5C22 19.5 21 18 19.5 17C18 16 18.5 15.5 17.5 14.5Z"/>
-            </svg>
-            WhatsApp
-          </a>
-          <a href="https://www.behance.net/8373a5c4" target="_blank" rel="noopener" class="footer-link">
-            <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="4"/><path d="M8 8h4M8 12h5M8 16h3M15 8h1M15 12h1"/>
-            </svg>
-            Behance
-          </a>
-        </div>
-      </div>
-    </footer>
-
-    <div style="grid-column: 1 / -1; height: 60px;"></div>
-  </div>
-
-  <script>
-    (function() {
-      // ---------- CALCULATOR ----------
-      const MIN_ITEMS = 5;
-      const BASE_ITEMS = 30;
-      const BASE_PRICE = 200;
-      const BASE_DAYS = 3;
-      const PRICE_PER_ITEM = BASE_PRICE / BASE_ITEMS;
-      const DAYS_PER_ITEM = BASE_DAYS / BASE_ITEMS;
-
-      const EXTRA_EDITABLE = 200;
-      const EXTRA_EXTENDED = 400;
-      const EXTRA_STANDALONE = 400;
-      const EXTRA_PER_LANG = 70;
-
-      // Custom radio selects
-      document.querySelectorAll('.radio-group').forEach(group => {
-        group.addEventListener('click', (e) => {
-          const option = e.target.closest('.radio-option');
-          if (!option) return;
-          group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
-          option.classList.add('selected');
-          option.querySelector('input').checked = true;
-
-          // Show/hide language count
-          if (group.id === 'multilang') {
-            const langWrapper = document.getElementById('langCountWrapper');
-            langWrapper.style.display = option.dataset.lang === 'yes' ? 'block' : 'none';
-          }
-        });
-      });
-
-      // Number wheel
-      const langInput = document.getElementById('langCount');
-      let langValue = 1;
-
-      document.getElementById('langMinus').addEventListener('click', () => {
-        langValue = langValue > 1 ? langValue - 1 : 9;
-        langInput.value = langValue;
-      });
-
-      document.getElementById('langPlus').addEventListener('click', () => {
-        langValue = langValue < 9 ? langValue + 1 : 1;
-        langInput.value = langValue;
-      });
-
-      function getSelectedRadio(name) {
-        const checked = document.querySelector(`input[name="${name}"]:checked`);
-        return checked ? checked.value : null;
-      }
-
-      function formatMoney(amount) {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(amount);
-      }
-
-      function calculate() {
-        const items = parseInt(document.getElementById('menuItems').value) || 30;
-        const validItems = Math.max(MIN_ITEMS, items);
-
-        // Base calculation
-        let basePrice, baseDays;
-        if (validItems <= BASE_ITEMS) {
-          basePrice = BASE_PRICE;
-          baseDays = BASE_DAYS;
-        } else {
-          basePrice = Math.round(validItems * PRICE_PER_ITEM);
-          baseDays = Math.round(validItems * DAYS_PER_ITEM);
-        }
-
-        // Version
-        const version = getSelectedRadio('version');
-        let versionName = 'Demo';
-        let totalPrice = basePrice;
-        if (version === 'editable') {
-          totalPrice += EXTRA_EDITABLE;
-          versionName = 'Full (editable)';
-        } else if (version === 'extended') {
-          totalPrice += EXTRA_EDITABLE + EXTRA_EXTENDED;
-          versionName = 'Extended (POS + payment)';
-        }
-
-        // Standalone
-        const hasWebsite = getSelectedRadio('website');
-        if (hasWebsite === 'no') {
-          totalPrice += EXTRA_STANDALONE;
-        }
-
-        // Multilang
-        const multilang = getSelectedRadio('multilang');
-        let langCount = 0;
-        let langCost = 0;
-        if (multilang === 'yes') {
-          langCount = parseInt(langInput.value) || 1;
-          langCost = langCount * EXTRA_PER_LANG;
-          totalPrice += langCost;
-        }
-
-        return {
-          items: validItems,
-          basePrice,
-          baseDays,
-          version: versionName,
-          hasWebsite: hasWebsite === 'yes',
-          multilang: multilang === 'yes',
-          langCount,
-          langCost,
-          totalPrice,
-          extras: {
-            editable: version !== 'demo' ? EXTRA_EDITABLE : 0,
-            extended: version === 'extended' ? EXTRA_EXTENDED : 0,
-            standalone: hasWebsite === 'no' ? EXTRA_STANDALONE : 0,
-            multilang: langCost
-          }
-        };
-      }
-
-      function generateResultHTML(result) {
-        const extrasBreakdown = [];
-        if (result.extras.editable) extrasBreakdown.push(`<div class="result-item"><span>Editing capability</span><span>${formatMoney(result.extras.editable)}</span></div>`);
-        if (result.extras.extended) extrasBreakdown.push(`<div class="result-item"><span>POS integration + payment</span><span>${formatMoney(result.extras.extended)}</span></div>`);
-        if (result.extras.standalone) extrasBreakdown.push(`<div class="result-item"><span>Standalone link & hosting</span><span>${formatMoney(result.extras.standalone)}</span></div>`);
-        if (result.extras.multilang) extrasBreakdown.push(`<div class="result-item"><span>${result.langCount} additional language(s)</span><span>${formatMoney(result.extras.multilang)}</span></div>`);
-
-        return `
-          <div class="result-item"><strong>Menu items:</strong> ${result.items}</div>
-          <div class="result-item"><strong>Version:</strong> ${result.version}</div>
-          <div class="result-item"><strong>Base price (${result.items} items):</strong> ${formatMoney(result.basePrice)}</div>
-          ${extrasBreakdown.join('')}
-          <div class="result-item" style="border-top: 2px solid #6d3aff; padding-top: 12px; margin-top: 4px;">
-            <strong>Total:</strong>
-            <span class="big-number">${formatMoney(result.totalPrice)}</span>
-          </div>
-          <div class="result-item"><strong>Estimated timeline:</strong> ${result.baseDays} days</div>
-          <p style="margin-top: 12px; font-size: 12px; color: #888;">* Timeline may vary depending on complexity and revisions.</p>
-        `;
-      }
-
-      function generateShareText(result) {
-        let text = `📱 *QR Menu Estimate*\n\n`;
-        text += `▸ Items: ${result.items}\n`;
-        text += `▸ Version: ${result.version}\n`;
-        text += `▸ Base: ${formatMoney(result.basePrice)}\n`;
-        if (result.extras.editable) text += `▸ Editing: +${formatMoney(result.extras.editable)}\n`;
-        if (result.extras.extended) text += `▸ POS+Payment: +${formatMoney(result.extras.extended)}\n`;
-        if (result.extras.standalone) text += `▸ Hosting: +${formatMoney(result.extras.standalone)}\n`;
-        if (result.extras.multilang) text += `▸ Languages (${result.langCount}): +${formatMoney(result.extras.multilang)}\n`;
-        text += `\n💰 *Total: ${formatMoney(result.totalPrice)}*\n`;
-        text += `⏱ Timeline: ~${result.baseDays} days\n`;
-        text += `\n✨ Created with Nadi Borse QR Menu Calculator`;
-        return text;
-      }
-
-      function showResult() {
-        const result = calculate();
-        const resultDiv = document.getElementById('calcResult');
-        const shareText = generateShareText(result);
-        const encodedText = encodeURIComponent(shareText);
-
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = `
-          <div class="result-block">
-            ${generateResultHTML(result)}
-          </div>
-          <div style="margin-top: 20px;">
-            <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #6d3aff; margin-bottom: 10px;">Share this result</p>
-            <div class="share-buttons">
-              <a href="https://wa.me/?text=${encodedText}" target="_blank" rel="noopener" class="share-btn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 14.5C16 13.5 15 13 13.5 13.5C12 14 10.5 15 9 13.5C7.5 12 8.5 10.5 8 9C7.5 7.5 7 6.5 6 5C5 3.5 3.5 4 2.5 5C1.5 6 1.5 8 2.5 9.5C3.5 11 6 14.5 9 17C12 19.5 15.5 21 17 21.5C18.5 22 20 21.5 21 20.5C22 19.5 21 18 19.5 17C18 16 18.5 15.5 17.5 14.5Z"/></svg>
-                WhatsApp
-              </a>
-              <a href="https://t.me/share/url?url=&text=${encodedText}" target="_blank" rel="noopener" class="share-btn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2.5L2.5 10.5L9.5 13.5L21.5 2.5Z"/><path d="M9.5 13.5L12.5 20.5L21.5 2.5"/></svg>
-                Telegram
-              </a>
-              <button class="share-btn" onclick="navigator.clipboard.writeText('${shareText.replace(/'/g, "\\'").replace(/\n/g, '\\n')}'); this.textContent='✓ Copied!'; setTimeout(() => this.textContent='📋 Copy', 2000);">
-                📋 Copy
+            <div class="calc-nav">
+              <button class="button button-back" onclick="prevStep()">
+                ← Back
               </button>
+              <button class="button" onclick="nextStep()">Next →</button>
             </div>
           </div>
-          <div style="margin-top: 24px;">
-            <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #6d3aff; margin-bottom: 10px;">Send to Nadi</p>
-            <div class="lead-form" id="leadForm">
-              <input type="text" id="leadName" placeholder="Your name" />
-              <input type="tel" id="leadPhone" placeholder="Your phone number" />
-              <label class="checkbox-modern" id="gdprCheck">
-                <input type="checkbox" id="gdprConsent" />
-                <span>I agree to the processing of personal data</span>
-              </label>
-              <button class="button" id="sendToWhatsApp" style="width: 100%;">
-                Send to WhatsApp
-                <svg class="arrow-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+          <!-- STEP 3: Website or standalone -->
+          <div class="calc-step" data-step="3">
+            <div class="calc-field">
+              <label>🌐 Do you have your own website?</label>
+              <div class="radio-group" id="hasWebsite">
+                <label class="radio-option" data-website="yes">
+                  <input type="radio" name="website" value="yes" />
+                  <span class="radio-dot"></span>
+                  <span class="radio-label">
+                    <strong>Yes, I have a website</strong>
+                    Menu will be embedded
+                  </span>
+                </label>
+                <label class="radio-option selected" data-website="no">
+                  <input type="radio" name="website" value="no" checked />
+                  <span class="radio-dot"></span>
+                  <span class="radio-label">
+                    <strong>No, I need a standalone link (+100€)</strong>
+                    Hosting & domain setup included
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="calc-nav">
+              <button class="button button-back" onclick="prevStep()">
+                ← Back
+              </button>
+              <button class="button" onclick="nextStep()">Next →</button>
+            </div>
+          </div>
+
+          <!-- STEP 4: Multilanguage -->
+          <div class="calc-step" data-step="4">
+            <div class="calc-field">
+              <label>🌍 Multilanguage support?</label>
+              <div class="radio-group" id="multilang">
+                <label class="radio-option selected" data-lang="no">
+                  <input type="radio" name="multilang" value="no" checked />
+                  <span class="radio-dot"></span>
+                  <span class="radio-label">
+                    <strong>No, one language is enough</strong>
+                  </span>
+                </label>
+                <label class="radio-option" data-lang="yes">
+                  <input type="radio" name="multilang" value="yes" />
+                  <span class="radio-dot"></span>
+                  <span class="radio-label">
+                    <strong>Yes, I need multiple languages (+70€ each)</strong>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div class="calc-field" id="langCountWrapper" style="display: none">
+              <label>🔢 Number of additional languages</label>
+              <div class="number-wheel-wrapper">
+                <button type="button" class="wheel-btn" id="langMinus">
+                  −
+                </button>
+                <input type="text" id="langCount" value="1" readonly />
+                <button type="button" class="wheel-btn" id="langPlus">+</button>
+              </div>
+            </div>
+
+            <div class="calc-nav">
+              <button class="button button-back" onclick="prevStep()">
+                ← Back
+              </button>
+              <button class="button" id="calcBtn">
+                See result
+                <svg
+                  class="arrow-icon-left"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
               </button>
             </div>
           </div>
-        `;
 
-        // Attach send handler
-        document.getElementById('sendToWhatsApp').addEventListener('click', () => {
-          const name = document.getElementById('leadName');
-          const phone = document.getElementById('leadPhone');
-          const gdpr = document.getElementById('gdprConsent');
-          const gdprLabel = document.getElementById('gdprCheck');
+          <div id="calcResult" style="display: none"></div>
+        </div>
+      </div>
+
+      <div class="grid-2-4">
+        <div class="cards-container">
+          <div class="card" style="background: #fff4d4">
+            <h4>SIMPLE ONLINE MENU</h4>
+            <p>
+              Polished, on-brand digital menu delivered as a ready-to-share
+              link. Ideal for instant elegance without complex integrations.
+            </p>
+          </div>
+          <div class="card" style="background: #fff4d4">
+            <h4>EDITABLE MENU</h4>
+            <p>
+              Self-manage your dishes, prices, and visuals through a streamlined
+              dashboard. Perfect for seasonal updates and full creative control.
+            </p>
+          </div>
+          <div
+            class="card"
+            style="
+              background: #faeaf2;
+              display: flex;
+              flex-direction: column;
+              gap: 20px;
+            "
+          >
+            <h4>POS SYNCHRONISED</h4>
+            <p>
+              Real-time menu alignment with your point-of-sale system.
+              Inventory-aware and effortlessly accurate across all platforms.
+            </p>
+            <button
+              class="button"
+              style="margin-top: auto; align-self: flex-start"
+              id="bookConsultationBtn"
+            >
+              book a consultation
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-80"></div>
+
+      <div style="grid-column: 1 / -1; height: 80px"></div>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <h3 class="footer-heading">get in touch</h3>
+          <div class="footer-links">
+            <a href="mailto:nadyaiam@gmail.com" class="footer-link"
+              ><svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="M22 4L12 13 2 4" /></svg
+              >nadyaiam@gmail.com</a
+            >
+            <a href="tel:+79099737333" class="footer-link"
+              ><svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                /></svg
+              >+7 909 973-73-33</a
+            >
+            <a href="tel:040773677" class="footer-link"
+              ><svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                /></svg
+              >040 773 677</a
+            >
+            <a
+              href="https://t.me/nadinski"
+              target="_blank"
+              rel="noopener"
+              class="footer-link"
+              ><svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21.5 2.5L2.5 10.5L9.5 13.5L21.5 2.5Z" />
+                <path d="M9.5 13.5L12.5 20.5L21.5 2.5" /></svg
+              >t.me/nadinski</a
+            >
+            <a
+              href="https://wa.me/79099737333"
+              target="_blank"
+              rel="noopener"
+              class="footer-link"
+              ><svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.5 14.5C16 13.5 15 13 13.5 13.5C12 14 10.5 15 9 13.5C7.5 12 8.5 10.5 8 9C7.5 7.5 7 6.5 6 5C5 3.5 3.5 4 2.5 5C1.5 6 1.5 8 2.5 9.5C3.5 11 6 14.5 9 17C12 19.5 15.5 21 17 21.5C18.5 22 20 21.5 21 20.5C22 19.5 21 18 19.5 17C18 16 18.5 15.5 17.5 14.5Z"
+                /></svg
+              >WhatsApp</a
+            >
+            <a
+              href="https://www.behance.net/8373a5c4"
+              target="_blank"
+              rel="noopener"
+              class="footer-link"
+              ><svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="2" width="20" height="20" rx="4" />
+                <path d="M8 8h4M8 12h5M8 16h3M15 8h1M15 12h1" /></svg
+              >Behance</a
+            >
+          </div>
+        </div>
+      </footer>
+
+      <div style="grid-column: 1 / -1; height: 60px"></div>
+    </div>
+    <!-- ========== CONSULTATION MODAL ========== -->
+    <div class="modal-overlay" id="consultationModal">
+      <div class="modal-dialog">
+        <button class="modal-close" id="modalClose">✕</button>
+        <div id="modalForm">
+          <h3>Book a Consultation</h3>
+          <p>POS Synchronised Menu — let's discuss your needs.</p>
+          <div class="lead-form">
+            <input type="text" id="consultName" placeholder="Your name" />
+            <input
+              type="tel"
+              id="consultPhone"
+              placeholder="Your phone number"
+            />
+            <input type="date" id="consultDate" placeholder="Preferred date" />
+            <label class="checkbox-modern" id="consultGdprCheck">
+              <input type="checkbox" id="consultGdpr" />
+              <span>I agree to privacy policy</span>
+            </label>
+            <button class="button" id="consultSubmit" style="width: 100%">
+              Send Request
+            </button>
+          </div>
+        </div>
+        <div class="modal-success" id="modalSuccess">
+          <div class="big-emoji">✅</div>
+          <h4 style="margin-bottom: 12px">Thank you!</h4>
+          <p>
+            Your consultation request has been sent. I'll contact you shortly to
+            confirm the date.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ========== QR MENU CALCULATOR ==========
+      (function () {
+        const TELEGRAM_BOT_TOKEN =
+          "8640577185:AAHdnB-xWPLYNrxCnyT8dHQiSkSp_BtoaRI";
+        const TELEGRAM_CHAT_ID = "348493357";
+
+        async function sendToTelegram(name, phone, resultText) {
+          const message = `📱 *Новая заявка с QR Menu Calculator*\n\n👤 *Имя:* ${name}\n📞 *Телефон:* ${phone}\n\n📊 *Результаты расчёта:*\n${resultText
+            .replace(/\*/g, "\\*")
+            .replace(/_/g, "\\_")}\n\n🕐 ${new Date().toLocaleString("ru-RU")}`;
+
+          try {
+            await fetch(
+              `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: TELEGRAM_CHAT_ID,
+                  text: message,
+                  parse_mode: "Markdown",
+                }),
+              }
+            );
+            return true;
+          } catch (e) {
+            console.error("Telegram send error:", e);
+            return false;
+          }
+        }
+
+        const MIN_ITEMS = 5;
+        const BASE_ITEMS = 30;
+        const BASE_PRICE = 200;
+        const BASE_DAYS = 3;
+        const PRICE_PER_ITEM = BASE_PRICE / BASE_ITEMS;
+        const DAYS_PER_ITEM = BASE_DAYS / BASE_ITEMS;
+        const EXTRA_EDITABLE = 200;
+        const EXTRA_EXTENDED = 400;
+        const EXTRA_STANDALONE = 100;
+        const EXTRA_PER_LANG = 70;
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        let lastResult = null;
+        let lastShareText = "";
+
+        window.nextStep = function () {
+          if (currentStep < totalSteps) {
+            document
+              .querySelector(`[data-step="${currentStep}"]`)
+              .classList.remove("active");
+            currentStep++;
+            document
+              .querySelector(`[data-step="${currentStep}"]`)
+              .classList.add("active");
+            updateStepIndicator();
+            document
+              .getElementById("calcCard")
+              .scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        };
+
+        window.prevStep = function () {
+          if (currentStep > 1) {
+            document
+              .querySelector(`[data-step="${currentStep}"]`)
+              .classList.remove("active");
+            currentStep--;
+            document
+              .querySelector(`[data-step="${currentStep}"]`)
+              .classList.add("active");
+            updateStepIndicator();
+            document
+              .getElementById("calcCard")
+              .scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        };
+
+        function updateStepIndicator() {
+          const dots = document.querySelectorAll(".step-dot");
+          dots.forEach((dot, i) => {
+            dot.classList.remove("done", "current");
+            if (i + 1 < currentStep) dot.classList.add("done");
+            if (i + 1 === currentStep) dot.classList.add("current");
+          });
+        }
+
+        document.querySelectorAll(".radio-group").forEach((group) => {
+          group.addEventListener("click", (e) => {
+            const option = e.target.closest(".radio-option");
+            if (!option) return;
+            group
+              .querySelectorAll(".radio-option")
+              .forEach((o) => o.classList.remove("selected"));
+            option.classList.add("selected");
+            option.querySelector("input").checked = true;
+            if (group.id === "multilang") {
+              document.getElementById("langCountWrapper").style.display =
+                option.dataset.lang === "yes" ? "block" : "none";
+            }
+          });
+        });
+
+        const langInput = document.getElementById("langCount");
+        let langValue = 1;
+        document.getElementById("langMinus").addEventListener("click", () => {
+          langValue = langValue > 1 ? langValue - 1 : 9;
+          langInput.value = langValue;
+        });
+        document.getElementById("langPlus").addEventListener("click", () => {
+          langValue = langValue < 9 ? langValue + 1 : 1;
+          langInput.value = langValue;
+        });
+
+        function getSelectedRadio(name) {
+          const checked = document.querySelector(
+            `input[name="${name}"]:checked`
+          );
+          return checked ? checked.value : null;
+        }
+
+        function formatMoney(amount) {
+          return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "EUR",
+            minimumFractionDigits: 0,
+          }).format(amount);
+        }
+
+        function calculate() {
+          const items =
+            parseInt(document.getElementById("menuItems").value) || 30;
+          const validItems = Math.max(MIN_ITEMS, items);
+          let basePrice, baseDays;
+          if (validItems <= BASE_ITEMS) {
+            basePrice = BASE_PRICE;
+            baseDays = BASE_DAYS;
+          } else {
+            basePrice = Math.round(validItems * PRICE_PER_ITEM);
+            baseDays = Math.round(validItems * DAYS_PER_ITEM);
+          }
+          const version = getSelectedRadio("version");
+          let versionName = "Demo";
+          let versionExtra = 0;
+          let versionDays = 0;
+          if (version === "editable") {
+            versionName = "Full (editable)";
+            versionExtra = EXTRA_EDITABLE;
+            versionDays = 3;
+          } else if (version === "extended") {
+            versionName = "Extended (POS + payment)";
+            versionExtra = EXTRA_EDITABLE + EXTRA_EXTENDED;
+            versionDays = 14;
+          }
+          const hasWebsite = getSelectedRadio("website") === "yes";
+          const standaloneExtra = hasWebsite ? 0 : EXTRA_STANDALONE;
+          const standaloneDays = hasWebsite ? 0 : 1;
+          const multilang = getSelectedRadio("multilang") === "yes";
+          const langCount = multilang ? parseInt(langInput.value) || 1 : 0;
+          const multilangExtra = langCount * EXTRA_PER_LANG;
+          const multilangDays = langCount * 2;
+          const totalPrice =
+            basePrice + versionExtra + standaloneExtra + multilangExtra;
+          const totalDays =
+            baseDays + versionDays + standaloneDays + multilangDays;
+          return {
+            items: validItems,
+            basePrice,
+            baseDays,
+            versionName,
+            versionExtra,
+            versionDays,
+            hasWebsite,
+            standaloneExtra,
+            standaloneDays,
+            multilang,
+            langCount,
+            multilangExtra,
+            multilangDays,
+            totalPrice,
+            totalDays,
+          };
+        }
+
+        function generateShareText(result) {
+          let text = `📱 *QR Menu Estimate*\n\n`;
+          text += `▸ Items: ${result.items}\n▸ Version: ${
+            result.versionName
+          }\n▸ Base: ${formatMoney(result.basePrice)}\n`;
+          if (result.versionExtra)
+            text += `▸ Editing${
+              result.versionExtra > EXTRA_EDITABLE ? " + POS/payment" : ""
+            }: +${formatMoney(result.versionExtra)}\n`;
+          if (result.standaloneExtra)
+            text += `▸ Hosting: +${formatMoney(result.standaloneExtra)}\n`;
+          if (result.multilangExtra)
+            text += `▸ Languages (${result.langCount}): +${formatMoney(
+              result.multilangExtra
+            )}\n`;
+          text += `\n💰 *Total: ${formatMoney(
+            result.totalPrice
+          )}*\n⏱ Timeline: ~${
+            result.totalDays
+          } days\n\n✨ Nadi Borse QR Menu Calculator`;
+          return text;
+        }
+
+        function openWhatsApp(nameVal, phoneVal) {
+          let msg = `Здравствуйте, Надя! Вот результаты расчёта стоимости QR меню:\n\n${lastShareText}`;
+          if (nameVal && phoneVal) {
+            msg += `\n\nИмя: ${nameVal}\nТелефон: ${phoneVal}\n\nУ меня есть к вам пара вопросов.`;
+          } else {
+            msg += `\n\nУ меня есть к вам пара вопросов.`;
+          }
+          window.open(
+            `https://wa.me/79099737333?text=${encodeURIComponent(msg)}`,
+            "_blank"
+          );
+        }
+
+        async function sendToTelegramWithData(nameVal, phoneVal) {
+          const success = await sendToTelegram(
+            nameVal,
+            phoneVal,
+            lastShareText
+          );
+          if (success) {
+            alert(
+              "✅ Thank you! Your request has been sent. I will contact you shortly."
+            );
+          } else {
+            alert(
+              "⚠️ Network error. Please try again or contact me via WhatsApp."
+            );
+          }
+        }
+
+        function showResult() {
+          lastResult = calculate();
+          lastShareText = generateShareText(lastResult);
+          const resultDiv = document.getElementById("calcResult");
+          const encodedText = encodeURIComponent(lastShareText);
+          const pageUrl = encodeURIComponent(window.location.href);
+
+          document
+            .querySelectorAll(".calc-step")
+            .forEach((s) => s.classList.remove("active"));
+          document.getElementById("stepIndicator").style.display = "none";
+
+          resultDiv.style.display = "block";
+          resultDiv.innerHTML = `
+              <div class="result-block">
+                <div class="result-item"><span>Menu items</span><span>${
+                  lastResult.items
+                }</span></div>
+                <div class="result-item"><span>Version</span><span>${
+                  lastResult.versionName
+                }</span></div>
+                <div class="result-item"><span>Base (≤30 = 200€)</span><span>${formatMoney(
+                  lastResult.basePrice
+                )}</span></div>
+                ${
+                  lastResult.versionExtra
+                    ? `<div class="result-item"><span>Editing${
+                        lastResult.versionExtra > EXTRA_EDITABLE
+                          ? " + POS/payment"
+                          : ""
+                      }</span><span>${formatMoney(
+                        lastResult.versionExtra
+                      )}</span></div>`
+                    : ""
+                }
+                ${
+                  lastResult.standaloneExtra
+                    ? `<div class="result-item"><span>Standalone link + hosting</span><span>${formatMoney(
+                        lastResult.standaloneExtra
+                      )}</span></div>`
+                    : ""
+                }
+                ${
+                  lastResult.multilangExtra
+                    ? `<div class="result-item"><span>Languages (${
+                        lastResult.langCount
+                      })</span><span>${formatMoney(
+                        lastResult.multilangExtra
+                      )}</span></div>`
+                    : ""
+                }
+                <div class="result-item" style="border-top: 2px solid #6d3aff; padding-top: 12px; margin-top: 4px;"><strong>Total</strong><span class="big-number">${formatMoney(
+                  lastResult.totalPrice
+                )}</span></div>
+                <div class="result-item"><span>Timeline</span><span>~${
+                  lastResult.totalDays
+                } days</span></div>
+              </div>
+              <div style="margin-top: 20px;">
+                <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #6d3aff; margin-bottom: 8px;">Share this result</p>
+                <div class="share-buttons">
+                  <a href="https://wa.me/?text=${encodedText}" target="_blank" rel="noopener" class="share-btn">💬 WhatsApp</a>
+                  <a href="https://t.me/share/url?url=${pageUrl}&text=${encodedText}" target="_blank" rel="noopener" class="share-btn">✈️ Telegram</a>
+                  <a href="viber://forward?text=${encodedText}" target="_blank" rel="noopener" class="share-btn">📞 Viber</a>
+                  <a href="https://www.facebook.com/dialog/send?link=${pageUrl}&app_id=0&redirect_uri=${pageUrl}" target="_blank" rel="noopener" class="share-btn">💭 Messenger</a>
+                  <button class="share-btn" id="copyBtn">📋 Copy</button>
+                </div>
+              </div>
+              <div class="send-to-nadi-grid" style="margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+                <div>
+                  <p style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #6d3aff; margin-bottom: 10px;">Send to Nadi</p>
+                  <div class="lead-form">
+                    <input type="text" id="leadName" placeholder="Your name" />
+                    <input type="tel" id="leadPhone" placeholder="Your phone number" />
+                    <button class="button" id="sendToTelegramBtn" style="width: 100%;">Send</button>
+                  </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                  <button class="button" id="whatsAppDirect" style="width: 100%; background: #25D366;">💬 Open WhatsApp</button>
+                  <label class="checkbox-modern" id="gdprCheck">
+                    <input type="checkbox" id="gdprConsent" />
+                    <span>I agree to privacy policy</span>
+                  </label>
+                </div>
+              </div>
+              <div style="margin-top: 20px; text-align: center;">
+                <button class="button" id="calcAgain" style="background: transparent; color: #6d3aff; border: 1px solid #6d3aff;">← Calculate again</button>
+              </div>
+            `;
+
+          document.getElementById("copyBtn").addEventListener("click", () => {
+            navigator.clipboard.writeText(lastShareText);
+            document.getElementById("copyBtn").textContent = "✓ Copied!";
+            setTimeout(
+              () =>
+                (document.getElementById("copyBtn").textContent = "📋 Copy"),
+              2000
+            );
+          });
+
+          document
+            .getElementById("whatsAppDirect")
+            .addEventListener("click", () => {
+              const gdpr = document.getElementById("gdprConsent");
+              const gdprLabel = document.getElementById("gdprCheck");
+              if (!gdpr.checked) {
+                gdprLabel.classList.add("error");
+                setTimeout(() => gdprLabel.classList.remove("error"), 600);
+                return;
+              }
+              gdprLabel.classList.remove("error");
+              openWhatsApp(null, null);
+            });
+
+          document
+            .getElementById("sendToTelegramBtn")
+            .addEventListener("click", () => {
+              const name = document.getElementById("leadName");
+              const phone = document.getElementById("leadPhone");
+              const gdpr = document.getElementById("gdprConsent");
+              const gdprLabel = document.getElementById("gdprCheck");
+              let valid = true;
+              [name, phone].forEach((f) => {
+                if (!f.value.trim()) {
+                  f.classList.add("error");
+                  valid = false;
+                  setTimeout(() => f.classList.remove("error"), 600);
+                } else f.classList.remove("error");
+              });
+              if (!gdpr.checked) {
+                gdprLabel.classList.add("error");
+                valid = false;
+                setTimeout(() => gdprLabel.classList.remove("error"), 600);
+              } else gdprLabel.classList.remove("error");
+              if (!valid) return;
+              sendToTelegramWithData(name.value.trim(), phone.value.trim());
+            });
+
+          document.getElementById("calcAgain").addEventListener("click", () => {
+            resultDiv.style.display = "none";
+            resultDiv.innerHTML = "";
+            document.getElementById("stepIndicator").style.display = "flex";
+            currentStep = 1;
+            document
+              .querySelectorAll(".calc-step")
+              .forEach((s) => s.classList.remove("active"));
+            document.querySelector('[data-step="1"]').classList.add("active");
+            updateStepIndicator();
+            document
+              .getElementById("calcCard")
+              .scrollIntoView({ behavior: "smooth", block: "nearest" });
+          });
+
+          resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+
+        document
+          .getElementById("calcBtn")
+          .addEventListener("click", showResult);
+      })();
+
+      // ========== CONSULTATION MODAL ==========
+      (function () {
+        const TELEGRAM_BOT_TOKEN =
+          "8640577185:AAHdnB-xWPLYNrxCnyT8dHQiSkSp_BtoaRI";
+        const TELEGRAM_CHAT_ID = "348493357";
+
+        const modal = document.getElementById("consultationModal");
+        const modalForm = document.getElementById("modalForm");
+        const modalSuccess = document.getElementById("modalSuccess");
+        const btnOpen = document.getElementById("bookConsultationBtn");
+        const btnClose = document.getElementById("modalClose");
+        const btnSubmit = document.getElementById("consultSubmit");
+
+        btnOpen.addEventListener("click", () => {
+          modal.classList.add("active");
+          modalForm.style.display = "block";
+          modalSuccess.classList.remove("active");
+          document.body.style.overflow = "hidden";
+        });
+
+        function closeModal() {
+          modal.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+
+        btnClose.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.classList.contains("active")) {
+            closeModal();
+          }
+        });
+
+        btnSubmit.addEventListener("click", async () => {
+          const name = document.getElementById("consultName");
+          const phone = document.getElementById("consultPhone");
+          const date = document.getElementById("consultDate");
+          const gdpr = document.getElementById("consultGdpr");
+          const gdprLabel = document.getElementById("consultGdprCheck");
           let valid = true;
 
-          [name, phone].forEach(field => {
-            if (!field.value.trim()) {
-              field.classList.add('error');
+          [name, phone, date].forEach((f) => {
+            if (!f.value.trim()) {
+              f.classList.add("error");
               valid = false;
+              setTimeout(() => f.classList.remove("error"), 600);
             } else {
-              field.classList.remove('error');
+              f.classList.remove("error");
             }
           });
 
           if (!gdpr.checked) {
-            gdprLabel.classList.add('error');
+            gdprLabel.classList.add("error");
             valid = false;
+            setTimeout(() => gdprLabel.classList.remove("error"), 600);
           } else {
-            gdprLabel.classList.remove('error');
+            gdprLabel.classList.remove("error");
           }
 
           if (!valid) return;
 
-          const msg = encodeURIComponent(
-            `Здравствуйте, Надя! Вот результаты расчёта стоимости QR меню:\n\n` +
-            shareText +
-            `\n\nИмя: ${name.value.trim()}\nТелефон: ${phone.value.trim()}\n\nУ меня есть к вам пара вопросов.`
-          );
-          window.open(`https://wa.me/79099737333?text=${msg}`, '_blank');
-        });
-      }
+          const message = `📅 *Новая заявка на консультацию*\n\n📄 *Тема:* POS Synchronised Menu\n📍 *Источник:* QR Menus page\n\n👤 *Имя:* ${name.value.trim()}\n📞 *Телефон:* ${phone.value.trim()}\n📆 *Дата:* ${date.value.trim()}\n\n🕐 ${new Date().toLocaleString(
+            "ru-RU"
+          )}`;
 
-      document.getElementById('calcBtn').addEventListener('click', showResult);
-    })();
-  </script>
-</body>
+          try {
+            await fetch(
+              `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: TELEGRAM_CHAT_ID,
+                  text: message,
+                  parse_mode: "Markdown",
+                }),
+              }
+            );
+
+            modalForm.style.display = "none";
+            modalSuccess.classList.add("active");
+
+            setTimeout(() => {
+              closeModal();
+              name.value = "";
+              phone.value = "";
+              date.value = "";
+              gdpr.checked = false;
+              modalForm.style.display = "block";
+              modalSuccess.classList.remove("active");
+            }, 3000);
+          } catch (e) {
+            alert("⚠️ Network error. Please try again.");
+            console.error(e);
+          }
+        });
+      })();
+    </script>
+  </body>
 </html>
