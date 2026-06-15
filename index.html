@@ -41,16 +41,93 @@
         width: 100%;
       }
 
+      /* ======================================== */
+      /*   FIRST SCREEN HERO                       */
+      /* ======================================== */
+      .hero-screen {
+        grid-column: 1 / -1;
+        min-height: 100vh; /* Fallback */
+        min-height: 100dvh; /* Modern dynamic viewport height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 24px; /* Space for nav */
+        padding-bottom: 24px;
+        box-sizing: border-box;
+      }
+
+      .hero-screen .nav-bar {
+        grid-column: auto; /* Override global grid placement */
+        width: 100%;
+        flex-shrink: 0;
+        padding: 0 0 16px 0;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: clamp(16px, 4vh, 40px); /* Fluid gap */
+        width: 100%;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(36px, 6vw, 82px); /* Fluid typography */
+        line-height: 1.05;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        margin: 0;
+        flex-shrink: 0;
+      }
+
+      .cover-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+        width: 100%;
+        flex-shrink: 1; /* Allow shrinking if needed */
+      }
+
+      .cover-photo {
+        grid-column: 1 / 2;
+        display: flex;
+        align-items: center;
+      }
+
+      .cover-text {
+        grid-column: 2 / 4;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: end; /* Align text to bottom of photo */
+      }
+
+      .hero-selected-projects {
+        flex-shrink: 0;
+        margin-top: auto;
+        width: 100%;
+      }
+
+      .hero-selected-projects .section-divider {
+        margin: 0 0 clamp(12px, 2vh, 20px) 0;
+      }
+
+      .hero-selected-projects h3 {
+        margin: 0 0 clamp(8px, 1.5vh, 16px) 0;
+      }
+
+      .portfolio-tiles {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+      }
+
       /* Typography */
       h1 {
         font-family: "Manrope", sans-serif;
         font-weight: 400;
-        font-size: 82px;
-        line-height: 1.05;
-        text-transform: uppercase;
         color: #493f55;
-        letter-spacing: -0.5px;
-        margin-top: 60px;
       }
 
       h2 {
@@ -136,6 +213,7 @@
       /* Photo circle */
       .photo-circle {
         width: 100%;
+        max-width: 240px;
         aspect-ratio: 1 / 1;
         border-radius: 50%;
         background: #f3ede5;
@@ -189,16 +267,10 @@
       }
 
       /* Portfolio tile cards */
-      .portfolio-tiles {
-        display: flex;
-        gap: 20px;
-        width: 100%;
-      }
-
       .tile-card {
         flex: 1;
         border-radius: 30px;
-        padding: 28px 22px;
+        padding: clamp(14px, 2vh, 28px) clamp(16px, 2vw, 22px);
         display: flex;
         flex-direction: column;
         gap: 14px;
@@ -213,7 +285,7 @@
       }
 
       .tile-card h3 {
-        font-size: 26px;
+        font-size: clamp(18px, 2.5vw, 26px);
         line-height: 1.15;
       }
 
@@ -443,9 +515,8 @@
           padding: 0 3vw;
         }
 
-        h1 {
-          font-size: 52px;
-          letter-spacing: -0.3px;
+        .hero-content h1 {
+          font-size: clamp(32px, 8vw, 52px);
         }
         h2 {
           font-size: 36px;
@@ -549,6 +620,13 @@
         .footer-links {
           grid-column: 3 / 9;
         }
+        
+        .hero-screen .cover-section {
+          gap: 16px;
+        }
+        .hero-screen .cover-text {
+          gap: 16px;
+        }
       }
 
       /* ======================================== */
@@ -564,6 +642,115 @@
           gap: 0;
         }
 
+        /* Hero screen mobile adjustments */
+        .hero-screen {
+          padding-left: 24px;
+          padding-right: 24px;
+          margin-left: -24px;
+          margin-right: -24px;
+          padding-top: 16px;
+          padding-bottom: 16px;
+          min-height: 100vh;
+          min-height: 100dvh;
+          justify-content: space-between; /* Distribute space nicely */
+        }
+
+        .hero-content {
+          gap: 16px;
+          justify-content: center;
+        }
+
+        .hero-content h1 {
+          font-size: 36px;
+          line-height: 1.1;
+          margin: 0;
+        }
+
+        .cover-section {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .cover-photo {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+        }
+
+        .photo-circle {
+          max-width: 140px;
+        }
+
+        .cover-text {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .cover-text h4 {
+          font-size: 18px;
+          line-height: 1.3;
+          margin: 0;
+        }
+
+        .cover-text p {
+          font-size: 13px;
+          margin: 0;
+        }
+
+        .hero-selected-projects {
+          margin-top: auto;
+        }
+
+        .hero-selected-projects .section-divider {
+          margin-bottom: 12px;
+        }
+
+        .hero-selected-projects h3 {
+          font-size: 18px;
+          margin-bottom: 8px;
+        }
+
+        .portfolio-tiles {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .tile-card {
+          padding: 12px 16px;
+          border-radius: 20px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+
+        .tile-card h3 {
+          font-size: 16px;
+          line-height: 1.2;
+          flex: 1;
+        }
+        
+        .tile-card h3 br {
+          display: none;
+        }
+
+        .tile-card p {
+          display: none; /* Hide description on mobile tiles to save space */
+        }
+
+        .tile-card .tile-tag {
+          font-size: 10px;
+          margin-right: 8px;
+        }
+
+        .tile-card .tile-arrow {
+          font-size: 10px;
+          margin-left: auto;
+        }
+
+        /* Rest of mobile styles */
         .grid-full,
         .grid-1,
         .grid-2,
@@ -585,13 +772,6 @@
           max-width: 100% !important;
         }
 
-        h1 {
-          font-size: 42px;
-          line-height: 1.1;
-          letter-spacing: -0.5px;
-          margin-top: 48px;
-          margin-bottom: 24px;
-        }
         h2 {
           font-size: 32px;
           line-height: 1.15;
@@ -650,22 +830,13 @@
           font-size: 14px;
         }
 
-        .portfolio-tiles {
-          flex-direction: column;
-          gap: 16px;
-          width: 100%;
+        /* Reset tile cards for non-hero sections on mobile if needed */
+        .master-grid > .grid-full > .portfolio-tiles .tile-card {
+           flex-direction: column;
+           align-items: flex-start;
         }
-        .tile-card {
-          padding: 24px 20px;
-          border-radius: 24px;
-        }
-        .tile-card h3 {
-          font-size: 22px;
-        }
-
-        .photo-circle {
-          max-width: 180px;
-          margin-bottom: 24px;
+        .master-grid > .grid-full > .portfolio-tiles .tile-card p {
+           display: block; /* Show description in main portfolio section */
         }
 
         .subgrid-row {
@@ -698,7 +869,7 @@
 
         .nav-bar {
           gap: 16px;
-          padding: 20px 0;
+          padding: 0 0 12px 0;
         }
         .nav-link {
           font-size: 11px;
@@ -715,44 +886,20 @@
         .footer-links {
           gap: 10px;
         }
-
-        .master-grid > div:last-child {
-          height: 64px;
-        }
-        .cover-section {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 24px !important;
-        }
-
-        .cover-photo {
-          width: 100%;
-        }
-
-        .cover-text {
-          display: flex !important;
-          flex-direction: column !important;
-          gap: 20px !important;
-          width: 100% !important;
-        }
-
-        .cover-text h4 {
-          margin: 0 !important;
-        }
-
-        .cover-text p {
-          margin: 0 !important;
-          width: 100% !important;
-        }
       }
 
       @media screen and (max-width: 380px) {
         .master-grid {
           padding: 0 20px;
         }
-        h1 {
-          font-size: 36px;
-          margin-top: 40px;
+        .hero-screen {
+          padding-left: 20px;
+          padding-right: 20px;
+          margin-left: -20px;
+          margin-right: -20px;
+        }
+        .hero-content h1 {
+          font-size: 32px;
         }
         h2 {
           font-size: 28px;
@@ -785,7 +932,10 @@
           font-size: 13px;
         }
         .photo-circle {
-          max-width: 150px;
+          max-width: 120px;
+        }
+        .tile-card h3 {
+          font-size: 14px;
         }
       }
 
@@ -794,7 +944,7 @@
           max-width: 1800px;
           padding: 0 5vw;
         }
-        h1 {
+        .hero-content h1 {
           font-size: 96px;
         }
       }
@@ -810,133 +960,124 @@
   </head>
   <body>
     <div class="master-grid">
-      <!-- ========== NAVIGATION ========== -->
-      <nav class="nav-bar">
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="qr-menus.html" class="nav-link">QR Menus</a>
-        <a href="websites.html" class="nav-link">Websites</a>
-        <a
-          href="https://www.behance.net/8373a5c4"
-          target="_blank"
-          rel="noopener"
-          class="nav-link"
-          >Behance ↗</a
-        >
-      </nav>
-
-      <!-- ========== H1 ========== -->
-      <h1 class="grid-full">Hello, I'm Nadia</h1>
-
-      <div style="grid-column: 1 / -1; height: 60px"></div>
-      <!-- ========== 3-COLUMN COVER ========== -->
-      <div
-        class="grid-full cover-section"
-        style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px"
-      >
-        <!-- Колонка 1: фото -->
-        <div class="cover-photo" style="grid-column: 1 / 2">
-          <div class="photo-circle">photo</div>
-        </div>
-
-        <!-- Колонки 2-3: подзаголовок на 2-3, текст строго в колонке 2 -->
-        <div
-          class="cover-text"
-          style="
-            grid-column: 2 / 4;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-          "
-        >
-          <h4 style="grid-column: 1 / -1; margin: 0; line-height: 1.15">
-            I am an Art Director for Digital Campaigns
-            and creator of thoughtful,
-            human-centered visual systems.
-          </h4>
-          <p style="grid-column: 1 / 2; margin: 0">
-            Fluent in both languages — creative and commercial. Art direction,
-            digital products, advertising, with a decade of international brand
-            work and an aerospace engineering background. Open to brand
-            campaigns, film, and digital products.
-          </p>
-        </div>
-      </div>
-      <div class="spacer-80"></div>
-      <div class="section-divider"></div>
-      <div class="spacer-80"></div>
-      <!-- ========== PORTFOLIO TILES ========== -->
-      <h3 class="grid-1-2">selected projects</h3>
-
-      <div class="spacer-40"></div>
-
-      <div class="grid-full">
-        <div class="portfolio-tiles">
-          <a href="qr-menus.html" class="tile-card" style="background: #e0f9f3">
-            <span class="tile-tag">01</span>
-            <h3>QR<br />Menus</h3>
-            <p>Digital menus tailored to your restaurant brand.</p>
-            <span class="tile-arrow">
-              explore
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-          </a>
-          <a href="websites.html" class="tile-card" style="background: #faeaf2">
-            <span class="tile-tag">02</span>
-            <h3>Websites</h3>
-            <p>Strategic fusion of aesthetics and functionality.</p>
-            <span class="tile-arrow">
-              explore
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-          </a>
+      <!-- ========== HERO SCREEN (Above the fold) ========== -->
+      <section class="hero-screen">
+        <!-- Navigation inside hero -->
+        <nav class="nav-bar">
+          <a href="index.html" class="nav-link active">Home</a>
+          <a href="qr-menus.html" class="nav-link">QR Menus</a>
+          <a href="websites.html" class="nav-link">Websites</a>
           <a
             href="https://www.behance.net/8373a5c4"
             target="_blank"
             rel="noopener"
-            class="tile-card"
-            style="background: #fff4d4"
+            class="nav-link"
+            >Behance ↗</a
           >
-            <span class="tile-tag">03</span>
-            <h3>Branding</h3>
-            <p>Visual identity systems on Behance.</p>
-            <span class="tile-arrow">
-              behance ↗
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </span>
-          </a>
-        </div>
-      </div>
+        </nav>
 
+        <div class="hero-content">
+          <h1>Hello, I'm Nadia</h1>
+
+          <!-- 3-COLUMN COVER -->
+          <div class="cover-section">
+            <!-- Колонка 1: фото -->
+            <div class="cover-photo">
+              <div class="photo-circle">photo</div>
+            </div>
+
+            <!-- Колонки 2-3: текст -->
+            <div class="cover-text">
+              <h4 style="grid-column: 1 / -1; margin: 0; line-height: 1.15">
+                I am an Art Director of Digital Campaigns <br>and creator of thoughtful,
+                human-centered visual systems.
+              </h4>
+              <p style="grid-column: 1 / 2; margin: 0">
+                Fluent in both languages — creative and commercial. Art direction,
+                digital products, advertising, with a decade of international brand
+                work and an aerospace engineering background. Open to brand
+                campaigns, film, and digital products.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Projects section (bottom of hero) -->
+        <div class="hero-selected-projects">
+          <div class="section-divider"></div>
+          <h3>selected projects</h3>
+          <div class="portfolio-tiles">
+            <a href="qr-menus.html" class="tile-card" style="background: #e0f9f3">
+              <span class="tile-tag">01</span>
+              <h3>QR<br />Menus</h3>
+              <p>Digital menus tailored to your restaurant brand.</p>
+              <span class="tile-arrow">
+                explore
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </a>
+            <a href="websites.html" class="tile-card" style="background: #faeaf2">
+              <span class="tile-tag">02</span>
+              <h3>Websites</h3>
+              <p>Strategic fusion of aesthetics and functionality.</p>
+              <span class="tile-arrow">
+                explore
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </a>
+            <a
+              href="https://www.behance.net/8373a5c4"
+              target="_blank"
+              rel="noopener"
+              class="tile-card"
+              style="background: #fff4d4"
+            >
+              <span class="tile-tag">03</span>
+              <h3>Branding</h3>
+              <p>Visual identity systems on Behance.</p>
+              <span class="tile-arrow">
+                behance ↗
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!--   SECOND SCREEN STARTS HERE                 -->
+      <!-- ========================================== -->
+      
       <div class="spacer-80"></div>
       <div class="section-divider"></div>
       <div class="spacer-80"></div>
