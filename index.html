@@ -119,14 +119,19 @@
         display: block;
       }
 
-      .cover-text {
-        grid-column: 2 / 4;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        align-items: end;
-      }
+   .cover-text {
+  grid-column: 2 / 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center; /* Вертикальное центрирование относительно фото */
+}
 
+.cover-text h4 {
+  grid-column: 1 / -1;
+  margin: 0 0 12px 0; /* Такой же отступ как у других подзаголовков */
+  line-height: 1.15;
+}
       .hero-selected-projects {
         flex-shrink: 0;
         margin-top: auto;
@@ -593,7 +598,9 @@
         display: flex;
         flex-direction: column;
       }
-
+.mission-col .button-wrapper {
+  margin-top: auto;  
+}
       .values-col {
         grid-column: 3 / 5;
         display: flex;
@@ -973,8 +980,12 @@
           gap: 20px;
         }
         .value-block {
-          gap: 6px;
-        }
+  gap: 4px; /* Было 6px, делаем ещё меньше */
+}
+
+.value-block h4 {
+  margin: 0 0 4px 0; /* Добавляем контроль над отступом h4 */
+}
 
         button,
         .button {
@@ -1071,7 +1082,7 @@
           font-size: 14px;
         }
         .value-block {
-          gap: 5px;
+          gap: 3px;
         }
       }
 
@@ -1123,8 +1134,8 @@
 
             <div class="cover-text">
               <h4 style="grid-column: 1 / -1; margin: 0; line-height: 1.15">
-                I am an Art Director for Digital Campaigns <br> 
-              and creator of thoughtful,
+                I am an Art Director of Digital Campaigns <br> 
+              and a creator of thoughtful,  <br>
                 human-centered visual systems.
               </h4>
               <p style="grid-column: 1 / 2; margin: 0">
@@ -1143,7 +1154,7 @@
           <div class="portfolio-tiles">
             <a href="qr-menus.html" class="tile-card" style="background: #e0f9f3">
               <span class="tile-tag">01</span>
-              <h3>QR<br />Menus</h3>
+              <h3>QR Menus</h3>
               <p>Digital menus tailored to your restaurant brand.</p>
               <span class="tile-arrow">
                 explore
@@ -1343,7 +1354,7 @@
       <!-- ========== CTA SECTION (mobile only) ========== -->
       <div class="cta-section">
         <button class="button" onclick="openContactModal()">
-          let's collaborate
+          let's collaborate!
         </button>
       </div>
 
