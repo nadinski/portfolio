@@ -768,7 +768,7 @@
     <div style="grid-column: 1 / -1; height: 60px;"></div>
   </div>
 
- <script>
+<script>
     (function() {
       // ============ ПРОЕКТЫ ============
       const projects = [
@@ -864,10 +864,9 @@
 
       updatePreview(projects[0]);
 
-      // ============ КАЛЬКУЛЯТОР: ИСПРАВЛЕННАЯ МОДЕЛЬ ============
+      // ============ КАЛЬКУЛЯТОР ============
       
-      // Стоимость работы специалиста по рекламе (настройка + первый месяц)
-      const AD_SPECIALIST_FEE = 500; // EUR, настройка и ведение одной системы первый месяц
+      const AD_SPECIALIST_FEE = 500; // Работа специалиста: настройка + первый месяц
 
       const NICHE_CONFIG = {
         ecommerce: { 
@@ -908,7 +907,6 @@
         }
       };
 
-      // Коэффициенты стадии влияют на КОНВЕРСИЮ, а не на выручку
       const STAGE_CONV_COEFF = {
         startup: { name: 'Startup (months 1-3)', coeff: 0.5, desc: 'New audience, cold traffic, no brand recognition yet' },
         growth: { name: 'Growth (months 4-8)', coeff: 0.8, desc: 'Retargeting active, first reviews, growing trust' },
@@ -948,7 +946,6 @@
         const nicheKey = document.getElementById('niche').value;
         const needEcommerce = document.getElementById('needEcommerce').checked;
         const stageKey = document.getElementById('businessStage').value;
-        const googleSplit = parseInt(document.getElementById('googleSplit').value); // 0-100
         
         const config = NICHE_CONFIG[nicheKey];
         const stage = STAGE_CONV_COEFF[stageKey];
@@ -958,7 +955,7 @@
         if (!avgOrder || isNaN(avgOrder)) avgOrder = config.defaultCheck;
         if (avgOrder < 10) return alert('Average order must be at least 10 EUR.');
 
-        // Выручка НЕ режется. Режется конверсия.
+        // Выручка НЕ режется. Стадия влияет на конверсию.
         const ordersNeeded = Math.ceil(revenue / avgOrder);
         
         // GOOGLE ADS
@@ -972,15 +969,11 @@
         const metaClicks = Math.ceil((metaLeads / config.metaCTR) * 100);
         const metaAdSpend = Math.ceil((metaClicks / 1000) * config.metaCPM);
         
-        // РЕАЛИСТИЧНЫЙ МЕДИЙНЫЙ МИКС
-        const googleShare = googleSplit / 100;
-        const metaShare = 1 - googleShare;
-        
-        // Бюджет рекламы + работа специалиста
-        const blendedAdSpend = Math.ceil(googleAdSpend * googleShare + metaAdSpend * metaShare);
+        // Бюджет: 50% Google + 50% Meta + работа специалиста
+        const blendedAdSpend = Math.ceil(googleAdSpend * 0.5 + metaAdSpend * 0.5);
         const totalAdBudget = blendedAdSpend + AD_SPECIALIST_FEE;
         
-        // CPO от реального микса с учётом гонорара специалиста
+        // CPO
         const blendedCPO = ordersNeeded > 0 ? Math.ceil(totalAdBudget / ordersNeeded) : 0;
         
         // Бюджет на сайт
@@ -997,7 +990,7 @@
         // Окупаемость сайта
         const payback = netProfit > 0 ? Math.round((site.avgPrice / netProfit) * 10) / 10 : Infinity;
         
-        // Допустимый CAC с учётом LTV (LTV ≈ средний чек × 3)
+        // Безопасный CAC
         const safeCAC = Math.floor(avgOrder * avgMargin * 3);
 
         // --- РЕНДЕРИНГ ---
@@ -1012,14 +1005,14 @@
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div class="result-block" style="margin-top: 0;">
-              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">🎯 Google Ads (${googleSplit}%)</div>
+              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">🎯 Google Ads</div>
               <div class="result-item"><span>Visitors/mo:</span> <strong>${formatNumber(googleVisitors)}</strong></div>
-              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(googleAdSpend * googleShare))}</strong></div>
+              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(googleAdSpend * 0.5))}</strong></div>
             </div>
             <div class="result-block" style="margin-top: 0;">
-              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">📱 Meta Ads (${100 - googleSplit}%)</div>
+              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">📱 Meta Ads</div>
               <div class="result-item"><span>Reach (~):</span> <strong>${formatNumber(metaLeads * 20)}</strong></div>
-              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(metaAdSpend * metaShare))}</strong></div>
+              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(metaAdSpend * 0.5))}</strong></div>
             </div>
           </div>
 
@@ -1064,11 +1057,11 @@
             <strong>${netProfit > 0 ? '✅' : '⚠️'} Business insight:</strong> 
             ${netProfit > 0 
               ? `Your unit economics are healthy. With ${formatMoney(blendedCPO)} CPO against a safe CAC of ${formatMoney(safeCAC)}, each customer generates positive contribution margin. Focus on scaling volume while maintaining conversion rates.`
-              : `Your current metrics show thin margins. Consider: (1) increasing average order value through upselling, (2) choosing a niche with better CPC/conversion ratio, or (3) allocating more budget to the cheaper channel (try adjusting the split slider).`}
+              : `Your current metrics show thin margins. Consider: (1) increasing average order value through upselling, (2) choosing a niche with better CPC/conversion ratio, or (3) starting with one dominant channel first to reduce specialist costs.`}
           </div>
 
           <p style="margin-top: 12px; font-size: 10px; color: #888; text-align: center;">
-            * Averaged Google & Meta rates for EU, 2026. Includes specialist setup & management fee (${formatMoney(AD_SPECIALIST_FEE)}/mo per system). Real results depend on creatives, targeting, and landing page quality (±20%). Safe CAC = LTV × margin, where LTV ≈ avg order × 3.
+            * Averaged Google & Meta rates for EU, 2026. Budget split 50/50. Includes specialist setup & management fee (${formatMoney(AD_SPECIALIST_FEE)}/mo). Real results depend on creatives, targeting, and landing page quality (±20%).
           </p>
         `;
         
@@ -1083,16 +1076,6 @@
         const avgInput = document.getElementById('averageOrder');
         if (!avgInput.value) avgInput.placeholder = `e.g. ${config.defaultCheck}`;
       });
-
-      // Слайдер распределения бюджета
-      const slider = document.getElementById('googleSplit');
-      slider.addEventListener('input', function() {
-        const val = parseInt(this.value);
-        document.getElementById('splitLabel').textContent = `${val}% Google / ${100 - val}% Meta`;
-        this.style.background = `linear-gradient(to right, #6d3aff 0%, #6d3aff ${val}%, #e7e1d8 ${val}%, #e7e1d8 100%)`;
-      });
-      // Инициализация фона слайдера
-      slider.style.background = `linear-gradient(to right, #6d3aff 0%, #6d3aff 50%, #e7e1d8 50%, #e7e1d8 100%)`;
 
     })();
   </script>
