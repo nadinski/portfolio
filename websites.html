@@ -621,6 +621,47 @@
         transition-duration: 0.01ms !important;
       }
     }
+    /* Range slider */
+.range-slider {
+  width: 100%;
+  margin: 8px 0 16px;
+}
+
+.range-slider input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #6d3aff 0%, #6d3aff 50%, #e7e1d8 50%, #e7e1d8 100%);
+  outline: none;
+}
+
+.range-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #6d3aff;
+  cursor: pointer;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(109, 58, 255, 0.3);
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.range-labels span {
+  text-align: center;
+  flex: 1;
+}
+
+.range-labels span:first-child { text-align: left; }
+.range-labels span:last-child { text-align: right; }
   </style>
 </head>
 <body>
@@ -716,6 +757,17 @@
             <option value="leader">🏆 Leader (stable flow)</option>
           </select>
         </div>
+        <div class="calc-field">
+  <label>📊 Ad budget split: <span id="splitLabel">50% Google / 50% Meta</span></label>
+  <div class="range-slider">
+    <input type="range" id="googleSplit" min="0" max="100" value="50" step="10" />
+    <div class="range-labels">
+      <span>100% Meta</span>
+      <span>50/50</span>
+      <span>100% Google</span>
+    </div>
+  </div>
+</div>
         <label class="checkbox-modern">
           <input type="checkbox" id="needEcommerce" />
           <span style="font-size: 14px; font-weight: 400; text-transform: none; letter-spacing: 0;">🛒 I need an online store (selling products)</span>
@@ -866,7 +918,7 @@
 
       // ============ КАЛЬКУЛЯТОР ============
       
-      const AD_SPECIALIST_FEE = 500; // Работа специалиста: настройка + первый месяц
+      const AD_SPECIALIST_FEE = 1000; // Специалист по двум платформам
 
       const NICHE_CONFIG = {
         ecommerce: { 
@@ -908,9 +960,24 @@
       };
 
       const STAGE_CONV_COEFF = {
-        startup: { name: 'Startup (months 1-3)', coeff: 0.5, desc: 'New audience, cold traffic, no brand recognition yet' },
-        growth: { name: 'Growth (months 4-8)', coeff: 0.8, desc: 'Retargeting active, first reviews, growing trust' },
-        leader: { name: 'Leader (months 9+)', coeff: 1.0, desc: 'Brand known, word-of-mouth, warm audience' }
+        startup: { 
+          name: 'Startup (months 1-3)', 
+          coeff: 0.5, 
+          desc: 'New audience, cold traffic, no brand recognition yet',
+          priceMultiplier: 0.5   // сайт в 2 раза дешевле
+        },
+        growth: { 
+          name: 'Growth (months 4-8)', 
+          coeff: 0.8, 
+          desc: 'Retargeting active, first reviews, growing trust',
+          priceMultiplier: 1.0   // базовые цены
+        },
+        leader: { 
+          name: 'Leader (months 9+)', 
+          coeff: 1.0, 
+          desc: 'Brand known, word-of-mouth, warm audience',
+          priceMultiplier: 1.5   // сайт в 1.5 раза дороже (сложный функционал)
+        }
       };
 
       const SITE_OPTIONS = {
@@ -933,6 +1000,10 @@
         return num.toLocaleString('en-US');
       }
 
+      function applyStagePrice(price, multiplier) {
+        return Math.ceil(price * multiplier);
+      }
+
       function recommendSiteType(budget, needEcommerce) {
         if (budget <= 280) return 'subscription';
         if (budget <= 1600) return needEcommerce ? 'simpleEcommerce' : 'landing';
@@ -946,6 +1017,7 @@
         const nicheKey = document.getElementById('niche').value;
         const needEcommerce = document.getElementById('needEcommerce').checked;
         const stageKey = document.getElementById('businessStage').value;
+        const googleSplit = parseInt(document.getElementById('googleSplit').value);
         
         const config = NICHE_CONFIG[nicheKey];
         const stage = STAGE_CONV_COEFF[stageKey];
@@ -955,7 +1027,6 @@
         if (!avgOrder || isNaN(avgOrder)) avgOrder = config.defaultCheck;
         if (avgOrder < 10) return alert('Average order must be at least 10 EUR.');
 
-        // Выручка НЕ режется. Стадия влияет на конверсию.
         const ordersNeeded = Math.ceil(revenue / avgOrder);
         
         // GOOGLE ADS
@@ -969,28 +1040,38 @@
         const metaClicks = Math.ceil((metaLeads / config.metaCTR) * 100);
         const metaAdSpend = Math.ceil((metaClicks / 1000) * config.metaCPM);
         
-        // Бюджет: 50% Google + 50% Meta + работа специалиста
-        const blendedAdSpend = Math.ceil(googleAdSpend * 0.5 + metaAdSpend * 0.5);
+        // Распределение бюджета через ползунок
+        const googleShare = googleSplit / 100;
+        const metaShare = 1 - googleShare;
+        
+        const blendedAdSpend = Math.ceil(googleAdSpend * googleShare + metaAdSpend * metaShare);
         const totalAdBudget = blendedAdSpend + AD_SPECIALIST_FEE;
         
-        // CPO
         const blendedCPO = ordersNeeded > 0 ? Math.ceil(totalAdBudget / ordersNeeded) : 0;
         
         // Бюджет на сайт
         const monthlySiteBudget = Math.floor(revenue * 0.15);
         const optimalBudget = monthlySiteBudget * 4;
         const recommendedKey = recommendSiteType(optimalBudget, needEcommerce);
-        const site = SITE_OPTIONS[recommendedKey];
+        const siteBase = SITE_OPTIONS[recommendedKey];
+        
+        // Применяем множитель стадии к ценам сайта
+        const site = {
+          name: siteBase.name,
+          minPrice: applyStagePrice(siteBase.minPrice, stage.priceMultiplier),
+          maxPrice: applyStagePrice(siteBase.maxPrice, stage.priceMultiplier),
+          avgPrice: applyStagePrice(siteBase.avgPrice, stage.priceMultiplier),
+          time: siteBase.time,
+          desc: siteBase.desc
+        };
         
         // Маржинальность
         const avgMargin = (config.marginLow + config.marginHigh) / 2;
         const grossProfit = Math.floor(revenue * avgMargin);
         const netProfit = grossProfit - totalAdBudget;
         
-        // Окупаемость сайта
         const payback = netProfit > 0 ? Math.round((site.avgPrice / netProfit) * 10) / 10 : Infinity;
         
-        // Безопасный CAC
         const safeCAC = Math.floor(avgOrder * avgMargin * 3);
 
         // --- РЕНДЕРИНГ ---
@@ -1005,14 +1086,14 @@
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div class="result-block" style="margin-top: 0;">
-              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">🎯 Google Ads</div>
+              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">🎯 Google Ads (${googleSplit}%)</div>
               <div class="result-item"><span>Visitors/mo:</span> <strong>${formatNumber(googleVisitors)}</strong></div>
-              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(googleAdSpend * 0.5))}</strong></div>
+              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(googleAdSpend * googleShare))}</strong></div>
             </div>
             <div class="result-block" style="margin-top: 0;">
-              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">📱 Meta Ads</div>
+              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">📱 Meta Ads (${100 - googleSplit}%)</div>
               <div class="result-item"><span>Reach (~):</span> <strong>${formatNumber(metaLeads * 20)}</strong></div>
-              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(metaAdSpend * 0.5))}</strong></div>
+              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(metaAdSpend * metaShare))}</strong></div>
             </div>
           </div>
 
@@ -1030,7 +1111,7 @@
             <div class="result-item"><span>Type:</span> <strong>${site.name}</strong></div>
             <div class="result-item"><span>Budget:</span> <strong>${formatMoney(site.minPrice)} – ${formatMoney(site.maxPrice)}</strong></div>
             <div class="result-item"><span>Timeline:</span> <strong>${site.time}</strong></div>
-            <div style="font-size: 12px; color: #666; margin-top: 8px;">${site.desc}</div>
+            <div style="font-size: 12px; color: #666; margin-top: 8px;">${site.desc} <em style="color: #6d3aff;">(×${stage.priceMultiplier} for your stage)</em></div>
           </div>
 
           <div class="result-block" style="margin-top: 20px; background: #1e1b2e; color: #fff;">
@@ -1057,11 +1138,11 @@
             <strong>${netProfit > 0 ? '✅' : '⚠️'} Business insight:</strong> 
             ${netProfit > 0 
               ? `Your unit economics are healthy. With ${formatMoney(blendedCPO)} CPO against a safe CAC of ${formatMoney(safeCAC)}, each customer generates positive contribution margin. Focus on scaling volume while maintaining conversion rates.`
-              : `Your current metrics show thin margins. Consider: (1) increasing average order value through upselling, (2) choosing a niche with better CPC/conversion ratio, or (3) starting with one dominant channel first to reduce specialist costs.`}
+              : `Your current metrics show thin margins. Consider: (1) increasing average order value through upselling, (2) choosing a niche with better CPC/conversion ratio, or (3) adjusting the Google/Meta split to favour the cheaper channel.`}
           </div>
 
           <p style="margin-top: 12px; font-size: 10px; color: #888; text-align: center;">
-            * Averaged Google & Meta rates for EU, 2026. Budget split 50/50. Includes specialist setup & management fee (${formatMoney(AD_SPECIALIST_FEE)}/mo). Real results depend on creatives, targeting, and landing page quality (±20%).
+            * Averaged Google & Meta rates for EU, 2026. Specialist fee: ${formatMoney(AD_SPECIALIST_FEE)}/mo. Website prices adjusted for your business stage (×${stage.priceMultiplier}). Safe CAC = LTV × margin, LTV ≈ avg order × 3. Real results ±20%.
           </p>
         `;
         
@@ -1076,6 +1157,15 @@
         const avgInput = document.getElementById('averageOrder');
         if (!avgInput.value) avgInput.placeholder = `e.g. ${config.defaultCheck}`;
       });
+
+      // Слайдер
+      const slider = document.getElementById('googleSplit');
+      slider.addEventListener('input', function() {
+        const val = parseInt(this.value);
+        document.getElementById('splitLabel').textContent = `${val}% Google / ${100 - val}% Meta`;
+        this.style.background = `linear-gradient(to right, #6d3aff 0%, #6d3aff ${val}%, #e7e1d8 ${val}%, #e7e1d8 100%)`;
+      });
+      slider.style.background = `linear-gradient(to right, #6d3aff 0%, #6d3aff 50%, #e7e1d8 50%, #e7e1d8 100%)`;
 
     })();
   </script>
