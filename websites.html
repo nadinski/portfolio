@@ -768,132 +768,38 @@
     <div style="grid-column: 1 / -1; height: 60px;"></div>
   </div>
 
-  <script>
+ <script>
     (function() {
-      // ============ ПРОЕКТЫ С ИЗОБРАЖЕНИЯМИ ============
+      // ============ ПРОЕКТЫ ============
       const projects = [
-        { 
-          name: "Leadership Coach", 
-          title: "Leadership Coach Landing Page", 
-          desc: "A one‑page website for a leadership coach targeting top executives and high‑net‑worth entrepreneurs. Elegant, confident, and focused on credibility.",
-          img: "trainer.webp"
-        },
-        { 
-          name: "Psychologist Course", 
-          title: "Psychologist's Course Platform", 
-          desc: "Promo website and closed learning platform for an author's course on femininity. Includes secure content protection, online payments, CRM integration, and personal user accounts.",
-          img: "feminity course.webp"
-        },
-        { 
-          name: "Criminal Defense", 
-          title: "Criminal Defense Attorney Website", 
-          desc: "A minimalist, restrained design aimed at building trust and highlighting expertise — no distractions, just credibility.",
-          img: null
-        },
-        { 
-          name: "Stylist Portfolio", 
-          title: "Stylist Portfolio", 
-          desc: "A personal website for a stylist, created in a retro‑minimalist aesthetic with emphasis on individuality and visual storytelling.",
-          img: "stylist.webp"
-        },
-        { 
-          name: "Private Course", 
-          title: "Private Course Landing Page", 
-          desc: "Landing page for an exclusive author‑led course with seamless registration flow and conversion‑focused design.",
-          img: null
-        },
-        { 
-          name: "Emma School", 
-          title: "EMMA SCHOOL Nail Courses", 
-          desc: "Promo website for selecting and enrolling in professional nail art courses. Features an interactive course catalog with installment payment options, a verified gallery of graduate works, official certification display, and integrated CRM for lead management.",
-          img: null
-        },
-        { 
-          name: "Jazz-Funk Dance", 
-          title: "Jazz‑Funk Online Dance Course", 
-          desc: "A dynamic, high‑energy platform for an online jazz‑funk program. Includes secure content delivery, student accounts, structured lesson access, online payment integration, and a built‑in feedback system.",
-          img: null
-        },
-        { 
-          name: "Law Firm", 
-          title: "Law Firm Website", 
-          desc: "A creative corporate site themed around \"lawyers as superheroes.\" Custom comic‑style design concept that communicates professionalism through originality and bold visual storytelling.",
-          img: null
-        },
-        { 
-          name: "Dental Clinic", 
-          title: "Dental Clinic Website", 
-          desc: "A large, multi‑page website for a modern dental clinic. Includes a dynamic blog, real‑time reviews, detailed doctor profiles, a \"before & after\" gallery, custom forms, and a catalog of 60+ services with transparent pricing.",
-          img: "medivel.webp"
-        },
-        { 
-          name: "Family Restaurant", 
-          title: "Family Restaurant Delivery Service", 
-          desc: "Website for a family‑owned food delivery business. Includes address validation, online payment, and full delivery integration to streamline the user experience.",
-          img: "gustau.webp"
-        },
-        { 
-          name: "Luxury Fragrance", 
-          title: "Luxury Home Fragrance Store", 
-          desc: "An elegant e‑commerce website for a premium home scent brand. Minimalist design, intuitive structure, and integrated features like online payment, delivery options, and a referral program.",
-          img: null
-        },
-        { 
-          name: "Children Decor", 
-          title: "Children's Event Decoration", 
-          desc: "A soft, pastel‑toned website with gentle animations, intuitive navigation, and an online catalog for selecting and ordering event decorations.",
-          img: null
-        },
-        { 
-          name: "Gas Installation", 
-          title: "Gas Installation Company", 
-          desc: "Website for a gas installation service. Designed for an older audience (50+), with large typography, intuitive navigation, and simple multi‑step cost calculators.",
-          img: "gas.webp"
-        },
-        { 
-          name: "Asphalt Laying", 
-          title: "Asphalt Laying Company", 
-          desc: "Corporate website with an interactive, user‑friendly cost calculator that estimates project budgets before collecting client data — increasing engagement and lead quality.",
-          img: "asphalt.webp"
-        },
-        { 
-          name: "Heavy Equipment", 
-          title: "Heavy Equipment Rental", 
-          desc: "Bright, bold, and easy to navigate. A memorable corporate website for a company renting heavy construction machinery, with strong calls to action and a clear visual hierarchy.",
-          img: null
-        },
-        { 
-          name: "Industrial Gas", 
-          title: "Industrial Gas Supply Company", 
-          desc: "Website design and development for a supplier of industrial, food‑grade, and medical gases. A clean, structured layout with a focus on clarity, trust, and effortless navigation for B2B clients.",
-          img: "gases.webp"
-        },
-        { 
-          name: "Asia Market", 
-          title: "Asian Food Marketplace", 
-          desc: "A vibrant e‑commerce platform for Asian groceries and specialty foods. Features multi-language support, recipe integration, and a seamless shopping experience for authentic ingredients.",
-          img: "asia.webp"
-        },
-        { 
-          name: "Confidential", 
-          title: "Confidential Projects", 
-          desc: "In addition to public projects, I've developed several private websites under NDA — including investor presentation platforms for Silicon Valley tech innovators, closed educational systems for private academies, and digital showcases for new product launches in luxury and tech industries.",
-          img: null
-        }
+        { name: "Leadership Coach", title: "Leadership Coach Landing Page", desc: "A one‑page website for a leadership coach targeting top executives and high‑net‑worth entrepreneurs. Elegant, confident, and focused on credibility.", img: "trainer.webp" },
+        { name: "Psychologist Course", title: "Psychologist's Course Platform", desc: "Promo website and closed learning platform for an author's course on femininity. Includes secure content protection, online payments, CRM integration, and personal user accounts.", img: "feminity course.webp" },
+        { name: "Criminal Defense", title: "Criminal Defense Attorney Website", desc: "A minimalist, restrained design aimed at building trust and highlighting expertise — no distractions, just credibility.", img: null },
+        { name: "Stylist Portfolio", title: "Stylist Portfolio", desc: "A personal website for a stylist, created in a retro‑minimalist aesthetic with emphasis on individuality and visual storytelling.", img: "stylist.webp" },
+        { name: "Private Course", title: "Private Course Landing Page", desc: "Landing page for an exclusive author‑led course with seamless registration flow and conversion‑focused design.", img: null },
+        { name: "Emma School", title: "EMMA SCHOOL Nail Courses", desc: "Promo website for selecting and enrolling in professional nail art courses. Features an interactive course catalog with installment payment options, a verified gallery of graduate works, official certification display, and integrated CRM for lead management.", img: null },
+        { name: "Jazz-Funk Dance", title: "Jazz‑Funk Online Dance Course", desc: "A dynamic, high‑energy platform for an online jazz‑funk program. Includes secure content delivery, student accounts, structured lesson access, online payment integration, and a built‑in feedback system.", img: null },
+        { name: "Law Firm", title: "Law Firm Website", desc: "A creative corporate site themed around \"lawyers as superheroes.\" Custom comic‑style design concept that communicates professionalism through originality and bold visual storytelling.", img: null },
+        { name: "Dental Clinic", title: "Dental Clinic Website", desc: "A large, multi‑page website for a modern dental clinic. Includes a dynamic blog, real‑time reviews, detailed doctor profiles, a \"before & after\" gallery, custom forms, and a catalog of 60+ services with transparent pricing.", img: "medivel.webp" },
+        { name: "Family Restaurant", title: "Family Restaurant Delivery Service", desc: "Website for a family‑owned food delivery business. Includes address validation, online payment, and full delivery integration to streamline the user experience.", img: "gustau.webp" },
+        { name: "Luxury Fragrance", title: "Luxury Home Fragrance Store", desc: "An elegant e‑commerce website for a premium home scent brand. Minimalist design, intuitive structure, and integrated features like online payment, delivery options, and a referral program.", img: null },
+        { name: "Children Decor", title: "Children's Event Decoration", desc: "A soft, pastel‑toned website with gentle animations, intuitive navigation, and an online catalog for selecting and ordering event decorations.", img: null },
+        { name: "Gas Installation", title: "Gas Installation Company", desc: "Website for a gas installation service. Designed for an older audience (50+), with large typography, intuitive navigation, and simple multi‑step cost calculators.", img: "gas.webp" },
+        { name: "Asphalt Laying", title: "Asphalt Laying Company", desc: "Corporate website with an interactive, user‑friendly cost calculator that estimates project budgets before collecting client data — increasing engagement and lead quality.", img: "asphalt.webp" },
+        { name: "Heavy Equipment", title: "Heavy Equipment Rental", desc: "Bright, bold, and easy to navigate. A memorable corporate website for a company renting heavy construction machinery, with strong calls to action and a clear visual hierarchy.", img: null },
+        { name: "Industrial Gas", title: "Industrial Gas Supply Company", desc: "Website design and development for a supplier of industrial, food‑grade, and medical gases. A clean, structured layout with a focus on clarity, trust, and effortless navigation for B2B clients.", img: "gases.webp" },
+        { name: "Asia Market", title: "Asian Food Marketplace", desc: "A vibrant e‑commerce platform for Asian groceries and specialty foods. Features multi-language support, recipe integration, and a seamless shopping experience for authentic ingredients.", img: "asia.webp" },
+        { name: "Confidential", title: "Confidential Projects", desc: "In addition to public projects, I've developed several private websites under NDA — including investor presentation platforms for Silicon Valley tech innovators, closed educational systems for private academies, and digital showcases for new product launches in luxury and tech industries.", img: null }
       ];
 
       const colorPattern = ['#e0f9f3', '#faeaf2', '#e0f9f3', '#fff4d4', '#fff4d4', '#faeaf2'];
-
       const tabsContainer = document.getElementById('tabsContainer');
       const previewCard = document.getElementById('previewCard');
       const accordionHeader = document.getElementById('accordionHeader');
       const accordionTitle = document.getElementById('accordionTitle');
       const accordionBody = document.getElementById('accordionBody');
-      let currentProject = projects[0];
 
-      // ============ ОБНОВЛЕНИЕ ПРЕВЬЮ ============
       function updatePreview(project) {
-        currentProject = project;
         const imgHTML = project.img 
           ? `<img src="${project.img}" alt="${project.name}" />`
           : project.name;
@@ -905,19 +811,14 @@
             <p>${project.desc}</p>
           </div>`;
         
-        // Обновляем заголовок аккордеона
         accordionTitle.textContent = project.name;
-        
-        // Подсвечиваем активный пункт в аккордеоне
         document.querySelectorAll('.accordion-option').forEach(opt => {
           opt.classList.remove('active');
-          if (opt.textContent === project.name) {
-            opt.classList.add('active');
-          }
+          if (opt.textContent === project.name) opt.classList.add('active');
         });
       }
 
-      // ============ ДЕСКТОП: ТАБЫ ============
+      // Табы
       projects.forEach((proj, idx) => {
         const tab = document.createElement('div');
         tab.className = 'tab-card';
@@ -928,14 +829,11 @@
           tab.classList.add('active');
           updatePreview(proj);
         });
-        if (idx === 0) {
-          tab.classList.add('active');
-        }
+        if (idx === 0) tab.classList.add('active');
         tabsContainer.appendChild(tab);
       });
 
-      // ============ МОБИЛЬНЫЙ: АККОРДЕОН ============
-      // Заполняем тело аккордеона
+      // Аккордеон
       projects.forEach((proj, idx) => {
         const option = document.createElement('button');
         option.className = 'accordion-option';
@@ -944,78 +842,77 @@
         option.addEventListener('click', (e) => {
           e.stopPropagation();
           updatePreview(proj);
-          // Закрываем аккордеон после выбора
           accordionBody.classList.remove('open');
           accordionHeader.classList.remove('active');
         });
-        if (idx === 0) {
-          option.classList.add('active');
-        }
+        if (idx === 0) option.classList.add('active');
         accordionBody.appendChild(option);
       });
 
-      // Клик по заголовку аккордеона
       accordionHeader.addEventListener('click', () => {
         const isOpen = accordionBody.classList.contains('open');
-        if (isOpen) {
-          accordionBody.classList.remove('open');
-          accordionHeader.classList.remove('active');
-        } else {
-          accordionBody.classList.add('open');
-          accordionHeader.classList.add('active');
-        }
+        accordionBody.classList.toggle('open', !isOpen);
+        accordionHeader.classList.toggle('active', !isOpen);
       });
 
-      // Закрытие аккордеона при клике вне его
       document.addEventListener('click', (e) => {
-        const accordion = document.getElementById('mobileAccordion');
-        if (!accordion.contains(e.target)) {
+        if (!document.getElementById('mobileAccordion').contains(e.target)) {
           accordionBody.classList.remove('open');
           accordionHeader.classList.remove('active');
         }
       });
 
-      // Инициализация первого проекта
       updatePreview(projects[0]);
 
-      // ============ КАЛЬКУЛЯТОР ============
+      // ============ КАЛЬКУЛЯТОР: ИСПРАВЛЕННАЯ МОДЕЛЬ ============
+      
+      // Стоимость работы специалиста по рекламе (настройка + первый месяц)
+      const AD_SPECIALIST_FEE = 500; // EUR, настройка и ведение одной системы первый месяц
+
       const NICHE_CONFIG = {
         ecommerce: { 
           name: 'E-commerce', 
-          googleCPC: 0.35, googleConv: 2.5, googleCTR: 8.0, 
+          googleCPC: 0.35, googleConv: 2.5,
           metaCPM: 18.00, metaCTR: 1.80, metaConv: 2.0, 
-          defaultCheck: 45 
+          defaultCheck: 45, marginLow: 0.25, marginHigh: 0.45
         },
         services: { 
           name: 'B2C Services', 
-          googleCPC: 1.20, googleConv: 7.0, googleCTR: 12.0, 
+          googleCPC: 1.20, googleConv: 7.0,
           metaCPM: 22.00, metaCTR: 2.20, metaConv: 5.5, 
-          defaultCheck: 110 
+          defaultCheck: 110, marginLow: 0.40, marginHigh: 0.65
         },
         b2b: { 
           name: 'B2B / Wholesale', 
-          googleCPC: 1.70, googleConv: 4.5, googleCTR: 6.0, 
+          googleCPC: 1.70, googleConv: 4.5,
           metaCPM: 38.00, metaCTR: 1.50, metaConv: 3.0, 
-          defaultCheck: 600 
+          defaultCheck: 600, marginLow: 0.30, marginHigh: 0.50
         },
         development: { 
           name: 'Development / IT', 
-          googleCPC: 2.50, googleConv: 3.0, googleCTR: 5.0, 
+          googleCPC: 2.50, googleConv: 3.0,
           metaCPM: 40.00, metaCTR: 1.20, metaConv: 2.5, 
-          defaultCheck: 2000 
+          defaultCheck: 2000, marginLow: 0.35, marginHigh: 0.60
         },
         medicine: { 
           name: 'Healthcare', 
-          googleCPC: 3.40, googleConv: 8.5, googleCTR: 10.0, 
+          googleCPC: 3.40, googleConv: 8.5,
           metaCPM: 25.00, metaCTR: 2.50, metaConv: 7.0, 
-          defaultCheck: 160 
+          defaultCheck: 160, marginLow: 0.40, marginHigh: 0.70
         },
         realestate: { 
           name: 'Real Estate', 
-          googleCPC: 2.20, googleConv: 2.0, googleCTR: 7.0, 
+          googleCPC: 2.20, googleConv: 2.0,
           metaCPM: 35.00, metaCTR: 1.60, metaConv: 1.5, 
-          defaultCheck: 2000 
+          defaultCheck: 2000, marginLow: 0.20, marginHigh: 0.40
         }
+      };
+
+      // Коэффициенты стадии влияют на КОНВЕРСИЮ, а не на выручку
+      const STAGE_CONV_COEFF = {
+        startup: { name: 'Startup (months 1-3)', coeff: 0.5, desc: 'New audience, cold traffic, no brand recognition yet' },
+        growth: { name: 'Growth (months 4-8)', coeff: 0.8, desc: 'Retargeting active, first reviews, growing trust' },
+        leader: { name: 'Leader (months 9+)', coeff: 1.0, desc: 'Brand known, word-of-mouth, warm audience' }
       };
 
       const SITE_OPTIONS = {
@@ -1027,15 +924,6 @@
         portal: { name: 'Portal / Marketplace', minPrice: 4700, maxPrice: 12800, avgPrice: 8700, time: '4–6 months', desc: 'Complex ecosystem with seller/buyer accounts, ratings, deep integrations.' },
         ecommercePlus: { name: 'Store + Mobile App', minPrice: 8000, maxPrice: 20000, avgPrice: 14000, time: '4–6 months', desc: 'Web + native iOS/Android. For revenue above 15 000 EUR/month.' }
       };
-
-      const STAGE_COEFF = {
-        startup: { name: 'Startup (months 1-3)', coeff: 0.4, desc: 'New business without client base' },
-        growth: { name: 'Growth (months 4-8)', coeff: 0.8, desc: 'First sales, setting up retargeting' },
-        leader: { name: 'Leader (months 9+)', coeff: 1.2, desc: 'Stable client flow and word-of-mouth' }
-      };
-
-      const AD_SETUP_COST = 400;
-      const PROFIT_MARGIN = 0.35;
 
       function formatMoney(amount) {
         if (amount === Infinity || isNaN(amount)) return '—';
@@ -1060,59 +948,88 @@
         const nicheKey = document.getElementById('niche').value;
         const needEcommerce = document.getElementById('needEcommerce').checked;
         const stageKey = document.getElementById('businessStage').value;
+        const googleSplit = parseInt(document.getElementById('googleSplit').value); // 0-100
         
         const config = NICHE_CONFIG[nicheKey];
-        const stage = STAGE_COEFF[stageKey];
+        const stage = STAGE_CONV_COEFF[stageKey];
 
+        // Валидация
         if (!revenue || revenue < 100) return alert('Please enter a valid monthly revenue (min 100 EUR).');
         if (!avgOrder || isNaN(avgOrder)) avgOrder = config.defaultCheck;
         if (avgOrder < 10) return alert('Average order must be at least 10 EUR.');
 
-        const adjustedRevenue = Math.floor(revenue * stage.coeff);
-        const ordersNeeded = Math.ceil(adjustedRevenue / avgOrder);
+        // Выручка НЕ режется. Режется конверсия.
+        const ordersNeeded = Math.ceil(revenue / avgOrder);
         
         // GOOGLE ADS
-        const googleConvRate = config.googleConv / 100;
+        const googleConvRate = (config.googleConv / 100) * stage.coeff;
         const googleVisitors = Math.ceil(ordersNeeded / googleConvRate);
         const googleAdSpend = Math.ceil(googleVisitors * config.googleCPC);
         
         // META ADS
-        const metaConvRate = config.metaConv / 100;
+        const metaConvRate = (config.metaConv / 100) * stage.coeff;
         const metaLeads = Math.ceil(ordersNeeded / metaConvRate);
         const metaClicks = Math.ceil((metaLeads / config.metaCTR) * 100);
         const metaAdSpend = Math.ceil((metaClicks / 1000) * config.metaCPM);
         
-        const totalAdSpend = googleAdSpend + metaAdSpend + (AD_SETUP_COST * 2);
-        const cpo = ordersNeeded > 0 ? Math.ceil(totalAdSpend / ordersNeeded) : 0;
+        // РЕАЛИСТИЧНЫЙ МЕДИЙНЫЙ МИКС
+        const googleShare = googleSplit / 100;
+        const metaShare = 1 - googleShare;
         
-        const optimalBudget = Math.floor(adjustedRevenue * 0.15);
+        // Бюджет рекламы + работа специалиста
+        const blendedAdSpend = Math.ceil(googleAdSpend * googleShare + metaAdSpend * metaShare);
+        const totalAdBudget = blendedAdSpend + AD_SPECIALIST_FEE;
+        
+        // CPO от реального микса с учётом гонорара специалиста
+        const blendedCPO = ordersNeeded > 0 ? Math.ceil(totalAdBudget / ordersNeeded) : 0;
+        
+        // Бюджет на сайт
+        const monthlySiteBudget = Math.floor(revenue * 0.15);
+        const optimalBudget = monthlySiteBudget * 4;
         const recommendedKey = recommendSiteType(optimalBudget, needEcommerce);
         const site = SITE_OPTIONS[recommendedKey];
         
-        const grossProfit = adjustedRevenue * PROFIT_MARGIN;
-        const netProfit = grossProfit - totalAdSpend;
+        // Маржинальность
+        const avgMargin = (config.marginLow + config.marginHigh) / 2;
+        const grossProfit = Math.floor(revenue * avgMargin);
+        const netProfit = grossProfit - totalAdBudget;
+        
+        // Окупаемость сайта
         const payback = netProfit > 0 ? Math.round((site.avgPrice / netProfit) * 10) / 10 : Infinity;
+        
+        // Допустимый CAC с учётом LTV (LTV ≈ средний чек × 3)
+        const safeCAC = Math.floor(avgOrder * avgMargin * 3);
 
+        // --- РЕНДЕРИНГ ---
         const resultDiv = document.getElementById('calcResult');
         resultDiv.style.display = 'block';
         
         resultDiv.innerHTML = `
           <div style="text-align: center; margin-bottom: 24px; background: #6d3aff10; padding: 12px; border-radius: 16px;">
-            <span style="font-size: 14px; font-weight: 600; color: #6d3aff;">REALISTIC FORECAST: ${stage.name}</span>
-            <p style="font-size: 11px; margin-top: 4px; color: #493f55;">${stage.desc}. Projected revenue: ${formatMoney(adjustedRevenue)}</p>
+            <span style="font-size: 14px; font-weight: 600; color: #6d3aff;">FORECAST: ${stage.name}</span>
+            <p style="font-size: 11px; margin-top: 4px; color: #493f55;">${stage.desc}. Target revenue: <strong>${formatMoney(revenue)}</strong></p>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div class="result-block" style="margin-top: 0;">
-              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">🎯 Google Ads</div>
-              <div class="result-item"><span>Visitors:</span> <strong>${formatNumber(googleVisitors)}</strong></div>
-              <div class="result-item"><span>Budget:</span> <strong>${formatMoney(googleAdSpend + AD_SETUP_COST)}</strong></div>
+              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">🎯 Google Ads (${googleSplit}%)</div>
+              <div class="result-item"><span>Visitors/mo:</span> <strong>${formatNumber(googleVisitors)}</strong></div>
+              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(googleAdSpend * googleShare))}</strong></div>
             </div>
             <div class="result-block" style="margin-top: 0;">
-              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">📱 Meta Ads</div>
+              <div style="font-weight: 600; margin-bottom: 8px; color: #1e1b2e;">📱 Meta Ads (${100 - googleSplit}%)</div>
               <div class="result-item"><span>Reach (~):</span> <strong>${formatNumber(metaLeads * 20)}</strong></div>
-              <div class="result-item"><span>Budget:</span> <strong>${formatMoney(metaAdSpend + AD_SETUP_COST)}</strong></div>
+              <div class="result-item"><span>Ad spend:</span> <strong>${formatMoney(Math.ceil(metaAdSpend * metaShare))}</strong></div>
             </div>
+          </div>
+
+          <div style="text-align: center; font-size: 13px; font-weight: 600; margin-top: 16px; color: #493f55;">
+            💰 Total monthly ad budget: <span style="color: #6d3aff; font-size: 18px;">${formatMoney(totalAdBudget)}</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; font-size: 11px; color: #888; text-align: center;">
+            <span>Ad platforms: ${formatMoney(blendedAdSpend)}</span>
+            <span>Specialist fee: ${formatMoney(AD_SPECIALIST_FEE)}</span>
           </div>
 
           <div class="result-block" style="margin-top: 20px;">
@@ -1124,30 +1041,58 @@
           </div>
 
           <div class="result-block" style="margin-top: 20px; background: #1e1b2e; color: #fff;">
-            <div style="font-weight: 600; margin-bottom: 8px;">⚡ Key Metrics</div>
-            <div class="result-item" style="border-color: #333;"><span>Max CAC (cost per acquisition):</span> <strong style="color: #ff914d;">${formatMoney(cpo)}</strong></div>
-            <div class="result-item" style="border-color: #333;"><span>Net profit (after ads):</span> <strong style="color: ${netProfit > 0 ? '#a5d6a5' : '#ff8a8a'};">${netProfit > 0 ? formatMoney(netProfit) : '⚠️ LOSS'}</strong></div>
-            <div class="result-item" style="border: none;"><span>Website payback:</span> <strong>${payback === Infinity ? 'Not profitable' : payback + ' months'}</strong></div>
+            <div style="font-weight: 600; margin-bottom: 12px;">⚡ Key Business Metrics</div>
+            <div class="result-item" style="border-color: #333;">
+              <span>Cost per order (CPO):</span> 
+              <strong style="color: #ff914d;">${formatMoney(blendedCPO)}</strong>
+            </div>
+            <div class="result-item" style="border-color: #333;">
+              <span>Safe max CAC:</span> 
+              <strong style="color: #a5d6a5;">${formatMoney(safeCAC)}</strong>
+            </div>
+            <div class="result-item" style="border-color: #333;">
+              <span>Net profit (after all costs):</span> 
+              <strong style="color: ${netProfit > 0 ? '#a5d6a5' : '#ff8a8a'};">${netProfit > 0 ? formatMoney(netProfit) : '⚠️ Review your numbers'}</strong>
+            </div>
+            <div class="result-item" style="border: none;">
+              <span>Site payback period:</span> 
+              <strong>${payback === Infinity ? 'Not profitable at current margins' : payback + ' months'}</strong>
+            </div>
           </div>
 
-          <p style="margin-top: 16px; font-size: 11px; color: #888; text-align: center;">
-            * Averaged Google & Meta rates for EU, 2026. Actual results depend on creatives and targeting (±20%).
+          <div style="margin-top: 16px; padding: 12px; background: ${netProfit > 0 ? '#e0f9f3' : '#fff4d4'}; border-radius: 12px; font-size: 12px; line-height: 1.5;">
+            <strong>${netProfit > 0 ? '✅' : '⚠️'} Business insight:</strong> 
+            ${netProfit > 0 
+              ? `Your unit economics are healthy. With ${formatMoney(blendedCPO)} CPO against a safe CAC of ${formatMoney(safeCAC)}, each customer generates positive contribution margin. Focus on scaling volume while maintaining conversion rates.`
+              : `Your current metrics show thin margins. Consider: (1) increasing average order value through upselling, (2) choosing a niche with better CPC/conversion ratio, or (3) allocating more budget to the cheaper channel (try adjusting the split slider).`}
+          </div>
+
+          <p style="margin-top: 12px; font-size: 10px; color: #888; text-align: center;">
+            * Averaged Google & Meta rates for EU, 2026. Includes specialist setup & management fee (${formatMoney(AD_SPECIALIST_FEE)}/mo per system). Real results depend on creatives, targeting, and landing page quality (±20%). Safe CAC = LTV × margin, where LTV ≈ avg order × 3.
           </p>
         `;
         
-        // Плавный скролл к результату
         resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
 
+      // Обработчики
       document.getElementById('calcBtn').addEventListener('click', calculate);
       
       document.getElementById('niche').addEventListener('change', function() {
         const config = NICHE_CONFIG[this.value];
         const avgInput = document.getElementById('averageOrder');
-        if (!avgInput.value) {
-          avgInput.placeholder = `e.g. ${config.defaultCheck}`;
-        }
+        if (!avgInput.value) avgInput.placeholder = `e.g. ${config.defaultCheck}`;
       });
+
+      // Слайдер распределения бюджета
+      const slider = document.getElementById('googleSplit');
+      slider.addEventListener('input', function() {
+        const val = parseInt(this.value);
+        document.getElementById('splitLabel').textContent = `${val}% Google / ${100 - val}% Meta`;
+        this.style.background = `linear-gradient(to right, #6d3aff 0%, #6d3aff ${val}%, #e7e1d8 ${val}%, #e7e1d8 100%)`;
+      });
+      // Инициализация фона слайдера
+      slider.style.background = `linear-gradient(to right, #6d3aff 0%, #6d3aff 50%, #e7e1d8 50%, #e7e1d8 100%)`;
 
     })();
   </script>
