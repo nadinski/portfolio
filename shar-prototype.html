@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Shar-Shara Delivery — clickable prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Navy & gold palette — the Silk Road meets fine dining */
+    --bg-dark: #0f0f1a;
+    --bg-pattern: #191730;
+    --container-bg: #1a1829;
+    --surface-2: #1c1a2e;
+    --gold: #c9a84c;
+    --gold-light: #ddc06a;
+    --gold-dark: #9e8430;
+    --gold-pale: #e8d49b;
+    --white: #f7f5ee;
+    --white-soft: #e3e6de;
+    --muted: #8b86a6;
+    --danger: #d97a63;
+    --success: #4fd1a5;
+    --title-font: "Forum", serif;
+    --text-font: "Manrope", sans-serif;
+    --glow-primary: 0 0 15px rgba(201, 168, 76, 0.35);
+    --glow-secondary: 0 0 25px rgba(201, 168, 76, 0.22);
+    --radius: 14px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+  html,body { height:100%; background:#fffbf5; font-family:var(--text-font); }
+  body {
+    display:grid; grid-template-columns:170px auto; grid-template-rows:auto 1fr;
+    align-content:center; justify-content:center; gap:10px 24px;
+    padding:12px; color:#493f55;
+  }
+  @media (max-width:760px) { body { grid-template-columns:1fr; grid-template-rows:auto auto auto; justify-items:center; } }
+  .demo-label {
+    grid-column:1; grid-row:1; align-self:end;
+    font-family:var(--text-font); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
+    color:#8d8496; text-align:left; line-height:1.5;
+  }
+  .demo-label b { color:#6d3aff; font-weight:600; }
+  .demo-nav {
+    grid-column:1; grid-row:2; display:grid; grid-template-columns:1fr 1fr; gap:6px;
+    align-self:start;
+  }
+  @media (max-width:760px) { .demo-nav { grid-template-columns:repeat(3,1fr); } }
+  .demo-nav button {
+    font-family:var(--text-font); font-size:.56rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    background:#efe9db; color:#9e8430; border:none;
+    border-radius:12px; padding:7px 6px; cursor:pointer; transition:.2s; text-align:center;
+  }
+  .demo-nav button:hover { background:#e8dcc0; color:#7d6826; }
+  .demo-nav button.current { background:#1a1829; color:#e8d49b; }
+
+  /* ===== PHONE FRAME ===== */
+  .phone-frame {
+    grid-column:2; grid-row:1 / span 2;
+    width:auto; height:min(844px, calc(100vh - 28px)); aspect-ratio:390 / 844;
+    background:#000; border-radius:52px; padding:14px;
+    box-shadow:0 18px 40px rgba(73,63,85,0.22), 0 0 0 2px rgba(201,168,76,0.18);
+    position:relative; flex-shrink:0;
+  }
+  .phone-notch {
+    position:absolute; top:14px; left:50%; transform:translateX(-50%);
+    width:120px; height:26px; background:#000; border-radius:0 0 16px 16px; z-index:50;
+  }
+  .app {
+    position:relative; width:100%; height:100%; background:var(--bg-dark);
+    border-radius:38px; overflow:hidden; font-family:var(--text-font);
+  }
+  .app::before {
+    content:""; position:absolute; inset:0; z-index:0; opacity:.6; pointer-events:none;
+    background-color: var(--bg-dark);
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(42,36,86,0.65) 0%, transparent 50%),
+      radial-gradient(circle at 80% 15%, rgba(42,36,86,0.65) 0%, transparent 50%),
+      repeating-linear-gradient(45deg, var(--bg-pattern) 0px, var(--bg-pattern) 1px, transparent 1px, transparent 11px),
+      repeating-linear-gradient(-45deg, var(--bg-pattern) 0px, var(--bg-pattern) 1px, transparent 1px, transparent 11px);
+    background-size:100% 100%, 100% 100%, 20px 20px, 20px 20px;
+  }
+
+  ::-webkit-scrollbar { width:3px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:rgba(201,168,76,0.4); border-radius:2px; }
+
+  /* ===== SCREENS ===== */
+  .screen {
+    position:absolute; inset:0; z-index:1; display:flex; flex-direction:column;
+    opacity:0; pointer-events:none; transform:translateX(16px);
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .screen.active { opacity:1; pointer-events:auto; transform:translateX(0); z-index:2; }
+  .screen-scroll { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  .screen-pad { padding:18px 18px 24px; }
+
+  /* ===== TOP BAR (sub-screens) ===== */
+  .topbar {
+    display:flex; align-items:center; gap:12px; padding:18px 16px 10px; position:relative; z-index:2;
+  }
+  .back-btn {
+    width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.06);
+    border:1px solid rgba(201,168,76,0.3); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--gold-light); flex-shrink:0;
+  }
+  .topbar h2 {
+    font-family:var(--title-font); font-weight:normal; font-size:1.25rem; letter-spacing:1px; color:var(--white);
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn-primary {
+    display:block; width:100%; text-align:center; font-family:var(--text-font); font-weight:600;
+    font-size:.85rem; letter-spacing:.06em; text-transform:uppercase; color:#12101f;
+    background:linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%);
+    border:none; border-radius:12px; padding:15px; cursor:pointer;
+    box-shadow:var(--glow-primary), inset 0 1px 0 rgba(255,255,255,0.35);
+    transition:transform .2s ease;
+  }
+  .btn-primary:active { transform:scale(.97); }
+  .btn-primary:disabled { opacity:.35; box-shadow:none; cursor:not-allowed; }
+  .btn-secondary {
+    display:block; width:100%; text-align:center; font-family:var(--text-font); font-weight:500;
+    font-size:.8rem; letter-spacing:.05em; text-transform:uppercase; color:var(--white-soft);
+    background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.25);
+    border-radius:12px; padding:13px; cursor:pointer;
+  }
+  .btn-ghost {
+    background:none; border:none; color:var(--gold-light); font-family:var(--text-font);
+    font-size:.78rem; letter-spacing:.04em; cursor:pointer; text-decoration:underline;
+    text-underline-offset:3px;
+  }
+
+  /* ===== SPLASH ===== */
+  #screen-splash { align-items:center; justify-content:center; text-align:center; }
+  .splash-logo { width:150px; margin-bottom:18px; filter:brightness(1.1); animation:fadeIn 1s ease; }
+  .splash-title { font-family:var(--title-font); font-size:2rem; letter-spacing:5px; color:var(--white); }
+  .splash-sub { font-family:var(--title-font); font-size:.95rem; letter-spacing:3px; color:var(--white-soft); margin-top:6px; }
+  /* shar-shara means "waterfall" — one thread of water, and the ring it leaves behind.
+     Restraint reads as luxury; six racing stripes read as a loading bar. */
+  .waterfall { position:relative; margin-top:30px; width:1px; height:64px; overflow:visible; }
+  .waterfall span:not(.pool) {
+    position:absolute; left:0; top:0; width:1px; height:26px;
+    background:linear-gradient(to bottom, transparent, var(--gold-pale) 55%, transparent);
+    opacity:0; animation:fall 2.2s cubic-bezier(.55,.06,.68,.19) infinite;
+  }
+  .waterfall span:nth-child(2){ animation-delay:.75s; }
+  .waterfall span:nth-child(3){ animation-delay:1.5s; }
+  .waterfall .pool {
+    position:absolute; left:50%; bottom:-1px; width:8px; height:8px; margin-left:-4px;
+    border:1px solid var(--gold); border-radius:50%; opacity:0;
+    animation:ripple 2.2s ease-out infinite;
+  }
+  .waterfall .pool:nth-of-type(5){ animation-delay:.75s; }
+  @keyframes fall {
+    0%   { transform:translateY(-26px) scaleY(.4); opacity:0; }
+    30%  { opacity:.9; }
+    70%  { opacity:.9; }
+    100% { transform:translateY(64px) scaleY(1.6); opacity:0; }
+  }
+  @keyframes ripple {
+    0%, 62%  { transform:scale(.3); opacity:0; }
+    72%      { opacity:.7; }
+    100%     { transform:scale(4.2); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .waterfall span { animation:none; opacity:.5; }
+    .waterfall .pool { animation:none; opacity:.4; transform:scale(2); }
+  }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+  /* ===== ONBOARDING ===== */
+  #screen-onboarding .screen-pad { display:flex; flex-direction:column; justify-content:flex-end; height:100%; gap:12px; }
+  .onboarding-art {
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:10px;
+  }
+  .onboarding-art img { width:130px; }
+  .onboarding-art h1 { font-family:var(--title-font); font-size:1.7rem; letter-spacing:2px; color:var(--white); }
+  .onboarding-art p { font-size:.75rem; color:var(--white-soft); letter-spacing:.1em; text-transform:uppercase; }
+  .field {
+    background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.25); border-radius:12px;
+    padding:13px 14px; font-family:var(--text-font); font-size:.85rem; color:var(--white); width:100%;
+  }
+  .field::placeholder { color:var(--muted); }
+  .divider-row { display:flex; align-items:center; gap:10px; margin:6px 0; }
+  .divider-row .line { flex:1; height:1px; background:rgba(201,168,76,0.2); }
+  .divider-row span { font-size:.68rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+
+  /* ===== ADDRESS ===== */
+  .map-placeholder {
+    height:170px; border-radius:var(--radius); border:1px dashed rgba(201,168,76,0.35);
+    background:
+      repeating-linear-gradient(45deg, rgba(201,168,76,0.05) 0, rgba(201,168,76,0.05) 10px, transparent 10px, transparent 20px),
+      var(--container-bg);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; margin-bottom:16px;
+  }
+  .map-placeholder .pin { font-size:1.6rem; }
+  .map-placeholder span { font-size:.68rem; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; text-align:center; padding:0 20px; }
+  .suggest-chips { display:flex; flex-direction:column; gap:8px; margin:14px 0; }
+  .suggest-chip {
+    display:flex; gap:10px; align-items:center; background:var(--container-bg); border:1px solid rgba(201,168,76,0.15);
+    border-radius:10px; padding:12px 14px; cursor:pointer; font-size:.8rem; color:var(--white-soft); transition:.2s;
+  }
+  .suggest-chip:hover, .suggest-chip.selected { border-color:var(--gold); box-shadow:var(--glow-primary); color:var(--white); }
+  .suggest-chip .dot { color:var(--gold); }
+  .field-label { font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:14px 0 8px; }
+
+  /* ===== CATALOG HEADER ===== */
+  .app-header { text-align:center; padding:20px 18px 12px; position:relative; z-index:2; }
+  .app-header .logo { max-width:150px; width:70%; height:auto; filter:brightness(1.1); margin-bottom:6px;}
+  .app-header h1 { font-family:var(--title-font); font-size:1.7rem; color:var(--white); letter-spacing:3px; font-weight:normal; }
+  .app-header .subtitle { font-family:var(--title-font); font-size:.72rem; letter-spacing:2px; color:var(--white-soft); margin-top:2px; }
+  .delivery-pill {
+    display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:6px 14px; border-radius:20px;
+    background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.3); font-size:.68rem; color:var(--gold-pale);
+    letter-spacing:.04em; cursor:pointer;
+  }
+  .halal-badge {
+    position:absolute; top:16px; right:16px; z-index:3; display:flex; flex-direction:column; align-items:center; gap:3px;
+  }
+  .halal-badge img {
+    width:38px; height:38px; border-radius:50%; padding:4px; background:rgba(255,255,255,0.06);
+    border:1px solid rgba(201,168,76,0.4); box-shadow:var(--glow-primary);
+  }
+  .halal-badge span {
+    font-size:.5rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gold-pale); opacity:.85;
+  }
+
+  /* ===== CATEGORY TABS ===== */
+  .category-tabs {
+    display:flex; gap:8px; overflow-x:auto; padding:4px 18px 14px; z-index:2; position:relative;
+  }
+  .category-tabs::-webkit-scrollbar { display:none; }
+  .cat-btn {
+    flex-shrink:0; background:rgba(15,15,26,0.75); color:var(--white-soft); border:1px solid rgba(201,168,76,0.3);
+    padding:9px 16px; border-radius:20px; font-family:var(--title-font); font-size:.85rem; letter-spacing:.5px;
+    cursor:pointer; white-space:nowrap; transition:.3s;
+  }
+  .cat-btn.active { background:rgba(201,168,76,0.12); border-color:var(--gold); color:var(--white); box-shadow:var(--glow-primary); }
+
+  /* ===== MENU LIST ===== */
+  .menu-list { padding:0 18px 100px; display:flex; flex-direction:column; gap:14px; position:relative; z-index:2; }
+  .menu-card {
+    display:flex; gap:12px; background:var(--container-bg); border:1px solid rgba(201,168,76,0.12);
+    border-radius:var(--radius); padding:10px; cursor:pointer; transition:.25s; position:relative;
+    box-shadow:0 8px 20px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+  .menu-card:active { border-color:rgba(201,168,76,0.4); }
+  .menu-card .thumb {
+    width:78px; height:78px; border-radius:10px; overflow:hidden; flex-shrink:0; background:var(--surface-2);
+  }
+  .menu-card .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .menu-card .thumb.no-photo { display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:var(--gold); }
+  .menu-card .info { flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; gap:3px; }
+  .menu-card .name { font-family:var(--title-font); font-size:1.02rem; color:var(--white); letter-spacing:.3px; }
+  .menu-card .variant { font-size:.66rem; color:var(--muted); letter-spacing:.05em; }
+  .menu-card .desc { font-size:.7rem; color:var(--white-soft); opacity:.75; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; }
+  .menu-card .price-row { display:flex; align-items:center; justify-content:space-between; margin-top:2px; }
+  .menu-card .price { font-family:var(--text-font); font-weight:600; color:var(--gold-light); font-size:.85rem; }
+  .add-btn {
+    width:28px; height:28px; border-radius:50%; background:var(--gold); color:#12101f; border:none;
+    font-size:1rem; font-weight:700; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0;
+  }
+  .qty-pill {
+    display:flex; align-items:center; gap:8px; background:rgba(201,168,76,0.12); border:1px solid var(--gold);
+    border-radius:20px; padding:3px 4px;
+  }
+  .qty-pill button {
+    width:22px; height:22px; border-radius:50%; border:none; background:var(--gold); color:#12101f;
+    font-weight:700; cursor:pointer; font-size:.85rem; display:flex; align-items:center; justify-content:center;
+  }
+  .qty-pill span { font-size:.78rem; color:var(--white); min-width:14px; text-align:center; }
+
+  /* ===== CART BAR + TAB BAR ===== */
+  .cart-bar {
+    position:absolute; left:12px; right:12px; bottom:76px; z-index:5;
+    background:linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%); color:#12101f; border-radius:14px;
+    padding:13px 16px; display:flex; align-items:center; justify-content:space-between; cursor:pointer;
+    box-shadow:0 8px 22px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.3); transform:translateY(120%); transition:transform .3s ease; font-weight:600;
+  }
+  .cart-bar.visible { transform:translateY(0); }
+  .cart-bar .cnt {
+    background:#12101f; color:var(--gold-light); width:22px; height:22px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:.72rem; margin-right:8px;
+  }
+  .cart-bar .label { display:flex; align-items:center; font-size:.78rem; letter-spacing:.03em; text-transform:uppercase; }
+  .cart-bar .total { font-size:.9rem; }
+
+  .tab-bar {
+    position:absolute; left:0; right:0; bottom:0; height:64px; z-index:6;
+    background:rgba(16,15,32,0.92); backdrop-filter:blur(10px); border-top:1px solid rgba(201,168,76,0.18);
+    display:flex; align-items:center; justify-content:space-around;
+  }
+  .tab-item {
+    display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; color:var(--muted);
+    font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; flex:1; padding:6px 0;
+  }
+  .tab-item.active { color:var(--gold-light); }
+  .tab-item svg { width:20px; height:20px; }
+
+  /* ===== ITEM DETAIL ===== */
+  #screen-item .hero { height:280px; position:relative; flex-shrink:0; }
+  #screen-item .hero img { width:100%; height:100%; object-fit:cover; }
+  #screen-item .hero.no-photo { background:var(--container-bg); display:flex; align-items:center; justify-content:center; font-size:3rem; color:var(--gold); }
+  #screen-item .hero .back-btn { position:absolute; top:16px; left:16px; background:rgba(16,15,32,0.6); }
+  .item-detail-body { padding:20px 20px 110px; position:relative; z-index:2; }
+  .item-detail-body h2 { font-family:var(--title-font); font-size:1.5rem; color:var(--white); letter-spacing:.5px; }
+  .item-detail-body .price-big { font-size:1.15rem; color:var(--gold-light); font-weight:600; margin-top:4px; }
+  .variant-row { display:flex; gap:8px; margin:14px 0; flex-wrap:wrap; }
+  .variant-chip {
+    padding:7px 13px; border-radius:16px; border:1px solid rgba(201,168,76,0.3); background:rgba(255,255,255,0.03);
+    font-size:.72rem; color:var(--white-soft); cursor:pointer;
+  }
+  .variant-chip.active { background:rgba(201,168,76,0.15); border-color:var(--gold); color:var(--white); }
+  .item-detail-body .desc-text { font-size:.82rem; line-height:1.7; color:var(--white-soft); margin-top:8px; }
+  .item-detail-body .ingredients { font-size:.7rem; color:var(--muted); margin-top:14px; line-height:1.6; }
+  .item-detail-body .ingredients b { color:var(--gold-pale); text-transform:uppercase; letter-spacing:.06em; font-size:.65rem; display:block; margin-bottom:4px; }
+  .sticky-footer {
+    position:absolute; left:0; right:0; bottom:0; padding:14px 18px 20px; z-index:5;
+    background:linear-gradient(to top, var(--bg-dark) 60%, transparent);
+    display:flex; gap:12px; align-items:center;
+  }
+  .qty-stepper {
+    display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.3);
+    border-radius:12px; padding:10px 14px; flex-shrink:0;
+  }
+  .qty-stepper button { width:24px; height:24px; border-radius:50%; border:none; background:var(--gold); color:#12101f; font-weight:700; cursor:pointer; }
+  .qty-stepper span { min-width:16px; text-align:center; color:var(--white); }
+
+  /* ===== CART SCREEN ===== */
+  .cart-row {
+    display:flex; gap:12px; background:var(--container-bg); border-radius:12px; padding:12px;
+    border:1px solid rgba(201,168,76,0.12); align-items:center; margin-bottom:12px;
+  }
+  .cart-row .thumb { width:56px; height:56px; border-radius:8px; overflow:hidden; flex-shrink:0; background:var(--surface-2); }
+  .cart-row .thumb img { width:100%; height:100%; object-fit:cover; }
+  .cart-row .info { flex:1; min-width:0; }
+  .cart-row .name { font-family:var(--title-font); font-size:.92rem; color:var(--white); }
+  .cart-row .unit { font-size:.68rem; color:var(--muted); }
+  .cart-row .remove { color:var(--danger); font-size:.68rem; cursor:pointer; margin-top:4px; letter-spacing:.04em; }
+  .summary-box { background:var(--container-bg); border-radius:12px; padding:16px; margin:18px 0; border:1px solid rgba(201,168,76,0.12); }
+  .summary-line { display:flex; justify-content:space-between; font-size:.8rem; color:var(--white-soft); padding:5px 0; }
+  .summary-line.total { border-top:1px solid rgba(201,168,76,0.2); margin-top:6px; padding-top:12px; font-size:1rem; color:var(--white); font-weight:600; }
+  .empty-state { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:30px; text-align:center; }
+  .empty-state .icon { font-size:2.6rem; opacity:.4; }
+  .empty-state p { color:var(--muted); font-size:.85rem; }
+
+  /* ===== CHECKOUT ===== */
+  .radio-row {
+    display:flex; align-items:center; gap:12px; background:var(--container-bg); border:1px solid rgba(201,168,76,0.15);
+    border-radius:12px; padding:14px; margin-bottom:10px; cursor:pointer;
+  }
+  .radio-row .circle { width:18px; height:18px; border-radius:50%; border:2px solid var(--gold); flex-shrink:0; position:relative; }
+  .radio-row.selected .circle::after { content:""; position:absolute; inset:3px; background:var(--gold); border-radius:50%; }
+  .radio-row .txt { font-size:.82rem; color:var(--white-soft); }
+  .radio-row.selected .txt { color:var(--white); }
+  textarea.field { resize:none; height:70px; font-family:var(--text-font); }
+
+  /* ===== CONFIRM ===== */
+  #screen-confirm .screen-pad { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:16px; }
+  .check-circle {
+    width:84px; height:84px; border-radius:50%; background:rgba(79,209,165,0.12); border:2px solid var(--success);
+    display:flex; align-items:center; justify-content:center; font-size:2.4rem; color:var(--success);
+    animation:popIn .4s ease;
+  }
+  @keyframes popIn { from{transform:scale(.5); opacity:0;} to{transform:scale(1); opacity:1;} }
+  #screen-confirm h2 { font-family:var(--title-font); font-size:1.5rem; color:var(--white); }
+  #screen-confirm .order-num { color:var(--gold-light); font-size:1.1rem; font-weight:600; }
+  #screen-confirm p.hint { color:var(--muted); font-size:.78rem; max-width:260px; }
+
+  /* ===== TRACKING ===== */
+  .status-timeline { margin:20px 0 10px; }
+  .status-step { display:flex; gap:14px; position:relative; padding-bottom:28px; }
+  .status-step:last-child { padding-bottom:0; }
+  .status-step .marker {
+    width:26px; height:26px; border-radius:50%; border:2px solid rgba(201,168,76,0.3); background:var(--bg-dark);
+    display:flex; align-items:center; justify-content:center; font-size:.7rem; flex-shrink:0; z-index:2; color:var(--muted);
+  }
+  .status-step .line {
+    position:absolute; left:12.5px; top:26px; bottom:0; width:2px; background:rgba(201,168,76,0.2);
+  }
+  .status-step.done .marker { background:var(--gold); border-color:var(--gold); color:#12101f; }
+  .status-step.done .line { background:var(--gold); }
+  .status-step.current .marker { background:rgba(201,168,76,0.15); border-color:var(--gold); color:var(--gold); box-shadow:var(--glow-primary); animation:pulse 1.6s infinite; }
+  .status-step .content h4 { font-family:var(--title-font); font-size:.95rem; color:var(--white); font-weight:normal; letter-spacing:.3px; }
+  .status-step .content span { font-size:.68rem; color:var(--muted); }
+  .status-step.done .content h4, .status-step.current .content h4 { color:var(--white); }
+  .eta-box {
+    background:var(--container-bg); border:1px solid rgba(201,168,76,0.2); border-radius:12px; padding:16px;
+    text-align:center; margin:16px 0;
+  }
+  .eta-box .big { font-family:var(--title-font); font-size:1.6rem; color:var(--gold-light); }
+  .eta-box .lbl { font-size:.66rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; margin-top:2px; }
+  .contact-row { display:flex; gap:10px; margin-top:14px; }
+  .contact-row a {
+    flex:1; text-align:center; padding:11px; border:1px solid var(--gold); border-radius:10px; color:var(--gold-light);
+    font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; text-decoration:none;
+  }
+
+  /* ===== ORDERS / PROFILE ===== */
+  .order-card {
+    background:var(--container-bg); border:1px solid rgba(201,168,76,0.15); border-radius:12px; padding:14px; cursor:pointer;
+  }
+  .order-card .row1 { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .order-card .num { font-family:var(--title-font); font-size:1rem; color:var(--white); }
+  .badge {
+    font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; padding:4px 10px; border-radius:12px;
+    background:rgba(201,168,76,0.15); color:var(--gold-light); border:1px solid rgba(201,168,76,0.3);
+  }
+  .order-card .meta { font-size:.72rem; color:var(--muted); }
+  .profile-card { display:flex; align-items:center; gap:14px; background:var(--container-bg); border-radius:12px; padding:16px; border:1px solid rgba(201,168,76,0.15); margin-bottom:18px; }
+  .profile-avatar { width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,var(--gold-light),var(--gold-dark)); display:flex; align-items:center; justify-content:center; font-family:var(--title-font); font-size:1.3rem; color:#12101f; flex-shrink:0; }
+  .profile-card h3 { font-family:var(--title-font); font-weight:normal; font-size:1.05rem; color:var(--white); }
+  .profile-card span { font-size:.72rem; color:var(--muted); }
+  .profile-menu-item {
+    display:flex; justify-content:space-between; align-items:center; padding:14px 4px; border-bottom:1px solid rgba(201,168,76,0.1);
+    font-size:.82rem; color:var(--white-soft); cursor:pointer;
+  }
+  .profile-menu-item:last-child { border-bottom:none; }
+</style>
+<style>
+  /* bare-mode: embed as just the phone (no demo chrome) — used inside the case */
+  body.bare-mode { grid-template-columns:1fr; grid-template-rows:1fr; padding:0; height:100%; }
+  body.bare-mode .demo-label, body.bare-mode .demo-nav { display:none; }
+  /* the embedding page draws the phone outline — so drop ours entirely */
+  body.bare-mode .phone-frame {
+    grid-column:1; grid-row:1; width:100%; height:100%; aspect-ratio:auto;
+    background:none; border-radius:0; padding:0; box-shadow:none;
+  }
+  body.bare-mode .phone-notch { display:none; }
+  body.bare-mode .app { border-radius:0; }
+</style>
+</head>
+<body>
+
+  <div class="demo-label">Shar-Shara Delivery — <b>clickable prototype</b> (demo data, no real backend)</div>
+  <div class="demo-nav" id="demoNav"></div>
+
+  <div class="phone-frame">
+    <div class="phone-notch"></div>
+    <div class="app" id="app">
+
+      <!-- SPLASH -->
+      <section class="screen active" id="screen-splash">
+        <img class="splash-logo" src="https://shar-shara.ru/wp-content/uploads/2025/07/Logo-shar-shara.svg" alt="Shar-Shara" />
+        <div class="splash-title">SHAR-SHARA</div>
+        <div class="splash-sub">DELIVERY</div>
+        <div class="waterfall" aria-hidden="true"><span></span><span></span><span></span><span class="pool"></span><span class="pool"></span></div>
+      </section>
+
+      <!-- ONBOARDING -->
+      <section class="screen" id="screen-onboarding">
+        <div class="screen-pad" style="height:100%; display:flex; flex-direction:column;">
+          <div class="onboarding-art">
+            <img src="https://shar-shara.ru/wp-content/uploads/2025/07/Logo-shar-shara.svg" alt="" />
+            <h1>Welcome</h1>
+            <p>Uzbek and European cuisine<br/>delivered</p>
+          </div>
+          <input class="field" placeholder="Email or phone" style="margin-bottom:10px;" />
+          <input class="field" type="password" placeholder="Password" style="margin-bottom:14px;" />
+          <button class="btn-primary" onclick="goToAddress()">Sign in</button>
+          <div class="divider-row"><div class="line"></div><span>or</span><div class="line"></div></div>
+          <button class="btn-secondary" onclick="goToAddress()" style="margin-bottom:10px;">Continue as guest</button>
+          <p style="text-align:center; font-size:.72rem; color:var(--muted); margin-top:4px;">
+            No account? <span class="btn-ghost" onclick="goToAddress()">Sign up</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- ADDRESS -->
+      <section class="screen" id="screen-address">
+        <div class="topbar"><h2>Where to?</h2></div>
+        <div class="screen-scroll">
+          <div class="screen-pad" style="padding-top:0;">
+            <input class="field" id="addressInput" placeholder="Enter delivery address" oninput="onAddressType()" />
+            <div class="map-placeholder">
+              <div class="pin">📍</div>
+              <span>Map — Yandex.Maps JS API<br/>(delivery-zone detection by address)</span>
+            </div>
+            <div class="field-label">Matching addresses</div>
+            <div class="suggest-chips" id="suggestChips"></div>
+          </div>
+        </div>
+        <div class="screen-pad" style="padding-top:0;">
+          <button class="btn-primary" id="confirmAddressBtn" disabled onclick="confirmAddress()">Confirm address</button>
+        </div>
+      </section>
+
+      <!-- CATALOG -->
+      <section class="screen" id="screen-catalog">
+        <div class="screen-scroll">
+          <div class="app-header">
+            <div class="halal-badge">
+              <img src="https://shar-shara.ru/wp-content/uploads/2025/07/Group-248.png" alt="Halal" />
+              <span>Halal</span>
+            </div>
+            <img class="logo" src="https://shar-shara.ru/wp-content/uploads/2025/07/Logo-shar-shara.svg" alt="Shar-Shara" />
+            <h1>MENU</h1>
+            <div class="subtitle">UZBEK AND EUROPEAN CUISINE</div>
+            <div class="delivery-pill" onclick="showScreen('screen-address')" id="deliveryPill">📍 15 Lenina St · Central branch · change</div>
+          </div>
+          <div class="category-tabs" id="categoryTabs"></div>
+          <div class="menu-list" id="menuList"></div>
+        </div>
+        <div class="cart-bar" id="cartBar" onclick="showScreen('screen-cart')">
+          <div class="label"><span class="cnt" id="cartCount">0</span>Cart</div>
+          <div class="total" id="cartTotal">€0.00</div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item active" data-tab="screen-catalog" onclick="switchTab('screen-catalog')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 01-1 1h-5v-6H10v6H5a1 1 0 01-1-1V10.5z"/></svg>
+            Menu
+          </div>
+          <div class="tab-item" data-tab="screen-cart" onclick="switchTab('screen-cart')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h2l2.4 12.2a2 2 0 002 1.8h8.2a2 2 0 002-1.6L20 8H6"/></svg>
+            Cart
+          </div>
+          <div class="tab-item" data-tab="screen-orders" onclick="switchTab('screen-orders')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-3M9 5a2 2 0 012-2h2a2 2 0 012 2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 12h6M9 16h6"/></svg>
+            Orders
+          </div>
+          <div class="tab-item" data-tab="screen-profile" onclick="switchTab('screen-profile')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+            Profile
+          </div>
+        </div>
+      </section>
+
+      <!-- ITEM DETAIL -->
+      <section class="screen" id="screen-item">
+        <div class="screen-scroll">
+          <div class="hero" id="itemHero"><div class="back-btn" onclick="showScreen('screen-catalog')">←</div></div>
+          <div class="item-detail-body">
+            <h2 id="itemName">—</h2>
+            <div class="price-big" id="itemPrice">—</div>
+            <div class="variant-row" id="itemVariants"></div>
+            <div class="desc-text" id="itemDesc"></div>
+            <div class="ingredients" id="itemIngredients"></div>
+          </div>
+        </div>
+        <div class="sticky-footer">
+          <div class="qty-stepper">
+            <button onclick="changeDetailQty(-1)">−</button>
+            <span id="detailQty">1</span>
+            <button onclick="changeDetailQty(1)">+</button>
+          </div>
+          <button class="btn-primary" style="flex:1;" onclick="addDetailToCart()" id="addToCartBtn">Add to cart</button>
+        </div>
+      </section>
+
+      <!-- CART -->
+      <section class="screen" id="screen-cart">
+        <div class="topbar"><h2>Cart</h2></div>
+        <div class="screen-scroll" id="cartScrollArea">
+          <div class="screen-pad" style="padding-top:0;" id="cartContent"></div>
+        </div>
+        <div class="screen-pad" style="padding-top:0;" id="cartFooter">
+          <button class="btn-primary" onclick="showScreen('screen-checkout'); renderCheckout();">Checkout</button>
+        </div>
+      </section>
+
+      <!-- CHECKOUT -->
+      <section class="screen" id="screen-checkout">
+        <div class="topbar"><h2>Checkout</h2></div>
+        <div class="screen-scroll">
+          <div class="screen-pad" style="padding-top:0;">
+            <div class="field-label">Delivery address</div>
+            <div class="suggest-chip selected" style="margin-bottom:6px;" id="checkoutAddress">
+              <span class="dot">📍</span><span id="checkoutAddressText">15 Lenina St</span>
+            </div>
+            <div class="field-label">Payment method</div>
+            <div class="radio-row selected" id="pay-online" onclick="selectPayment('online')">
+              <div class="circle"></div><div class="txt">Card online (YooKassa)</div>
+            </div>
+            <div class="radio-row" id="pay-cash" onclick="selectPayment('cash')">
+              <div class="circle"></div><div class="txt">Cash to courier</div>
+            </div>
+            <div class="field-label">Order note</div>
+            <textarea class="field" placeholder="e.g. the intercom is broken, please call on arrival"></textarea>
+            <div class="summary-box" id="checkoutSummary"></div>
+          </div>
+        </div>
+        <div class="screen-pad" style="padding-top:0;">
+          <button class="btn-primary" onclick="placeOrder()">Place order</button>
+        </div>
+      </section>
+
+      <!-- CONFIRM -->
+      <section class="screen" id="screen-confirm">
+        <div class="screen-pad">
+          <div class="check-circle">✓</div>
+          <h2>Order placed!</h2>
+          <div class="order-num" id="orderNumber">#0000</div>
+          <p class="hint">The restaurant has started cooking. You will get a push notification at every status change.</p>
+          <div style="width:100%; margin-top:10px;">
+            <button class="btn-primary" onclick="showScreen('screen-tracking'); renderTracking();">Track order</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRACKING -->
+      <section class="screen" id="screen-tracking">
+        <div class="topbar"><h2>Order <span id="trackOrderNum"></span></h2></div>
+        <div class="screen-scroll">
+          <div class="screen-pad" style="padding-top:0;">
+            <div class="eta-box">
+              <div class="big">25–35 min</div>
+              <div class="lbl">Estimated delivery time</div>
+            </div>
+            <div class="status-timeline" id="statusTimeline"></div>
+            <div class="field-label">Restaurant contact</div>
+            <div class="contact-row">
+              <a href="#" onclick="return false;">WhatsApp</a>
+              <a href="#" onclick="return false;">Telegram</a>
+            </div>
+          </div>
+        </div>
+        <div class="screen-pad" style="padding-top:0;">
+          <button class="btn-secondary" onclick="switchTab('screen-catalog')">Back to menu</button>
+        </div>
+      </section>
+
+      <!-- ORDERS TAB -->
+      <section class="screen" id="screen-orders">
+        <div class="topbar"><h2>My orders</h2></div>
+        <div class="screen-scroll"><div class="screen-pad" style="padding-top:0;" id="ordersContent"></div></div>
+        <div class="tab-bar">
+          <div class="tab-item" data-tab="screen-catalog" onclick="switchTab('screen-catalog')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 01-1 1h-5v-6H10v6H5a1 1 0 01-1-1V10.5z"/></svg>Menu
+          </div>
+          <div class="tab-item" data-tab="screen-cart" onclick="switchTab('screen-cart')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h2l2.4 12.2a2 2 0 002 1.8h8.2a2 2 0 002-1.6L20 8H6"/></svg>Cart
+          </div>
+          <div class="tab-item active" data-tab="screen-orders" onclick="switchTab('screen-orders')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-3M9 5a2 2 0 012-2h2a2 2 0 012 2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 12h6M9 16h6"/></svg>Orders
+          </div>
+          <div class="tab-item" data-tab="screen-profile" onclick="switchTab('screen-profile')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>Profile
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFILE TAB -->
+      <section class="screen" id="screen-profile">
+        <div class="topbar"><h2>Profile</h2></div>
+        <div class="screen-scroll">
+          <div class="screen-pad" style="padding-top:0;">
+            <div class="profile-card">
+              <div class="profile-avatar">G</div>
+              <div><h3>Guest</h3><span>Not signed in</span></div>
+            </div>
+            <div class="profile-menu-item"><span>My addresses</span><span>›</span></div>
+            <div class="profile-menu-item"><span>Order history</span><span>›</span></div>
+            <div class="profile-menu-item"><span>Payment methods</span><span>›</span></div>
+            <div class="profile-menu-item"><span>Language — English</span><span>›</span></div>
+            <div class="profile-menu-item"><span>Dark theme</span><span>✓</span></div>
+            <div class="profile-menu-item"><span>Support</span><span>›</span></div>
+          </div>
+        </div>
+        <div class="tab-bar">
+          <div class="tab-item" data-tab="screen-catalog" onclick="switchTab('screen-catalog')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 01-1 1h-5v-6H10v6H5a1 1 0 01-1-1V10.5z"/></svg>Menu
+          </div>
+          <div class="tab-item" data-tab="screen-cart" onclick="switchTab('screen-cart')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2 3h2l2.4 12.2a2 2 0 002 1.8h8.2a2 2 0 002-1.6L20 8H6"/></svg>Cart
+          </div>
+          <div class="tab-item" data-tab="screen-orders" onclick="switchTab('screen-orders')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1h-3M9 5a2 2 0 012-2h2a2 2 0 012 2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 12h6M9 16h6"/></svg>Orders
+          </div>
+          <div class="tab-item active" data-tab="screen-profile" onclick="switchTab('screen-profile')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>Profile
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+<script>
+  if (new URLSearchParams(location.search).has("bare")) document.body.classList.add("bare-mode");
+
+// ============================================================================
+// DATA — real dishes/prices/photos from shar-shara.ru (client reference); RUB converted to EUR at 88.54
+// ============================================================================
+const MENU = [
+  { id:'soups', label:'Soups', items:[
+    { id:'clay-pot-soup', name:'Clay-pot soup', img:'https://shar-shara.ru/wp-content/uploads/2025/11/IMG_0269-Photoroom-8.png',
+      desc:'Fragrant lamb with potato and carrot, slow-braised with spices in an aromatic broth. A traditional taste that warms the soul.',
+      ingredients:'lamb, potato, carrot, spices',
+      variants:[{label:'350 g', price:4.1}] },
+    { id:'halal-solyanka', name:'Solyanka (halal)', img:'https://shar-shara.ru/wp-content/uploads/2025/10/IMG_0254-Photoroom-8.png',
+      desc:'A bright hit of tomato and spices, finished with lemon and sour cream.',
+      ingredients:'beef, smoked meats, pickled cucumbers, olives, onion, carrot, tomatoes, potato, tomato paste, spices, herbs, lemon, sour cream',
+      variants:[{label:'400 g', price:3.8}] },
+    { id:'lamb-shurpa', name:'Lamb shurpa', img:'https://shar-shara.ru/wp-content/uploads/2025/11/IMG_0269-Photoroom-9.png',
+      desc:'A rich broth simmered slowly and finished with fresh herbs. Hearty, wholesome and truly Eastern.',
+      ingredients:'lamb, onion, carrot, potato, bell pepper, tomatoes, spices, herbs',
+      variants:[{label:'400 g', price:4.1}] },
+    { id:'lagman-soup', name:'Lagman', img:'https://shar-shara.ru/wp-content/uploads/2025/10/IMG_0254-Photoroom-18.png',
+      desc:'A rich meat soup with springy hand-pulled noodles, vegetables and a fragrant bouquet of Eastern spices.',
+      ingredients:'beef, hand-pulled noodles, bell pepper, carrot, radish, garlic, spices, herbs',
+      variants:[{label:'400 g', price:4.0}] },
+  ]},
+  { id:'main', label:'Main dishes', items:[
+    { id:'plov', name:'Plov', img:'https://shar-shara.ru/wp-content/uploads/2025/11/IMG_0269-Photoroom-14.png',
+      desc:'The true classic of Eastern cuisine, cooked to a traditional recipe.',
+      ingredients:'beef, rice, carrot, onion, garlic, chickpeas, aromatic spices, vegetable oil',
+      variants:[{label:'400 g', price:3.9},{label:'200 g', price:3.0}] },
+    { id:'shashlik-lamb', name:'Shashlik (lamb)', img:'https://shar-shara.ru/wp-content/uploads/2025/11/IMG_0269-Photoroom-16.png',
+      desc:'Tender, juicy lamb over charcoal, steeped in smoke and spices.',
+      ingredients:'lamb, spices',
+      variants:[{label:'170 g', price:5.1}] },
+    { id:'manty', name:'Manti', img:'https://shar-shara.ru/wp-content/uploads/2025/10/IMG_0254-Photoroom-13.png',
+      desc:'Plump steamed dumplings with a juicy meat filling, served with sour cream and herbs.',
+      ingredients:'beef, beef fat, onion, spices, dough',
+      variants:[{label:'350 g (5 pcs)', price:4.0},{label:'50 g (1 pc)', price:0.9}] },
+    { id:'kazan-kebab-beef', name:'Kazan-kebab (beef)', img:'https://shar-shara.ru/wp-content/uploads/2025/10/IMG_0254-Photoroom-17.png',
+      desc:'Tender beef seared in a kazan with golden onion, aromatic spices and potato.',
+      ingredients:'beef, potato, onion, vegetable oil, garlic, cumin, coriander, black pepper, salt, herbs',
+      variants:[{label:'400 g', price:5.5}] },
+  ]},
+  { id:'bakery', label:'Bakery', items:[
+    { id:'tandoor-bread', name:'Tandoor bread', img:'https://shar-shara.ru/wp-content/uploads/2025/11/IMG_0269-Photoroom-11.png',
+      desc:'A plump flatbread with a crisp crust and soft crumb, baked in a traditional clay oven. Perfect with meat dishes and soups.',
+      ingredients:'flour, water, yeast/sourdough, salt, sesame',
+      variants:[{label:'1 pc', price:0.7},{label:'half', price:0.4}] },
+    { id:'tandoor-samsa', name:'Tandoor samsa', img:'https://shar-shara.ru/wp-content/uploads/2025/10/IMG_0254-Photoroom-11.png',
+      desc:'Juicy beef wrapped in crisp puff pastry and baked to a golden crust.',
+      ingredients:'meat, beef fat, onion, aromatic spices, puff pastry',
+      variants:[{label:'1 pc', price:1.4}] },
+  ]},
+  { id:'salads', label:'Salads', items:[
+    { id:'spring-salad', name:'Spring salad', img:'https://shar-shara.ru/wp-content/uploads/2025/11/IMG_0269-Photoroom-6.png',
+      desc:'Fresh, light, with young herbs.',
+      ingredients:'tomatoes, cucumbers, onion, herbs',
+      variants:[{label:'300 g', price:3.2}] },
+    { id:'greek-salad', name:'Greek salad', img:'https://shar-shara.ru/wp-content/uploads/2025/10/IMG_0254-Photoroom-20.png',
+      desc:'The Mediterranean classic — juicy, light and fragrant, with real cheese and olive oil.',
+      ingredients:'cucumbers, tomatoes, bell pepper, red onion, black olives, feta, olive oil, spices',
+      variants:[{label:'250 g', price:2.9}] },
+    { id:'pamir-peak', name:'Pamir Peak', img:'https://shar-shara.ru/wp-content/uploads/2025/11/IMG_0269-Photoroom-21.png',
+      desc:'A delicate salad with juicy chicken.',
+      ingredients:'Chinese cabbage, poached chicken, mayonnaise',
+      variants:[{label:'200 g', price:3.0}] },
+  ]},
+  { id:'desserts', label:'Desserts', items:[
+    { id:'oriental-sweets', name:'Oriental sweets / Pastries', img:'https://shar-shara.ru/wp-content/uploads/2024/10/IMG_0164.jpg',
+      desc:'Ask your waiter or at the till for today\'s selection.',
+      ingredients:'', variants:[{label:'1 pc', price:2.0}] },
+  ]},
+  { id:'drinks', label:'Drinks', items:[
+    { id:'cola', name:'Coca-Cola / Pepsi', img:null, desc:'', ingredients:'',
+      variants:[{label:'2 L', price:2.5},{label:'1.5 L', price:2.1},{label:'1 L', price:1.6},{label:'0.5 L', price:1.1}] },
+    { id:'ayran', name:'Ayran', img:null, desc:'', ingredients:'',
+      variants:[{label:'1 L', price:2.9},{label:'0.5 L', price:1.6}] },
+    { id:'lemonade', name:'Lemonade (assorted)', img:null, desc:'', ingredients:'',
+      variants:[{label:'0.5 L', price:1.2}] },
+    { id:'water', name:'Water (sparkling / still)', img:null, desc:'', ingredients:'',
+      variants:[{label:'0.5 L', price:1.0}] },
+  ]},
+];
+
+const DELIVERY_FEE = 2.2; // 199 RUB at 88.54
+const ADDRESS_SUGGESTIONS = ['15 Lenina St', '42 Mira Ave', '3 Gagarina St, apt. 12'];
+
+// ============================================================================
+// STATE
+// ============================================================================
+let cart = {};          // itemId -> { item, variant, qty }
+let currentDetailItem = null;
+let currentDetailVariantIdx = 0;
+let selectedPayment = 'online';
+let lastOrderNumber = null;
+let orders = [];         // { number, status }
+let selectedAddress = '15 Lenina St';
+
+const SCREENS = ['screen-splash','screen-onboarding','screen-address','screen-catalog','screen-item','screen-cart','screen-checkout','screen-confirm','screen-tracking','screen-orders','screen-profile'];
+const SCREEN_LABELS = {
+  'screen-splash':'Splash', 'screen-onboarding':'Sign in', 'screen-address':'Address', 'screen-catalog':'Catalog',
+  'screen-item':'Dish', 'screen-cart':'Cart', 'screen-checkout':'Checkout', 'screen-confirm':'Confirm',
+  'screen-tracking':'Tracking', 'screen-orders':'Orders', 'screen-profile':'Profile'
+};
+
+function fmt(n){ return Math.round(n) + ' ₽'; }
+function fmtMoney(n){ return '\u20AC' + n.toFixed(2); }
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('#demoNav button').forEach(b=>b.classList.toggle('current', b.dataset.screen===id));
+  document.querySelectorAll('.tab-item').forEach(t=>t.classList.toggle('active', t.dataset.tab===id));
+}
+function switchTab(id){ showScreen(id); if(id==='screen-orders') renderOrders(); }
+
+function goToAddress(){ showScreen('screen-address'); }
+
+function onAddressType(){
+  const val = document.getElementById('addressInput').value.trim();
+  document.getElementById('confirmAddressBtn').disabled = val.length === 0 && !document.querySelector('.suggest-chip.selected');
+}
+
+function renderSuggestChips(){
+  const wrap = document.getElementById('suggestChips');
+  wrap.innerHTML = '';
+  ADDRESS_SUGGESTIONS.forEach(addr=>{
+    const el = document.createElement('div');
+    el.className = 'suggest-chip';
+    el.innerHTML = '<span class="dot">📍</span><span>'+addr+'</span>';
+    el.onclick = ()=>{
+      document.querySelectorAll('.suggest-chip').forEach(c=>c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('addressInput').value = addr;
+      selectedAddress = addr;
+      document.getElementById('confirmAddressBtn').disabled = false;
+    };
+    wrap.appendChild(el);
+  });
+}
+
+function confirmAddress(){
+  document.getElementById('deliveryPill').innerHTML = '📍 '+selectedAddress+' · Central branch · change';
+  document.getElementById('checkoutAddressText').textContent = selectedAddress;
+  showScreen('screen-catalog');
+}
+
+function renderCategoryTabs(){
+  const wrap = document.getElementById('categoryTabs');
+  wrap.innerHTML = '';
+  MENU.forEach((cat, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn' + (i===0 ? ' active' : '');
+    btn.textContent = cat.label;
+    btn.onclick = ()=>{
+      document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMenuList(cat.id);
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function cartQtyFor(itemId){ return cart[itemId] ? cart[itemId].qty : 0; }
+
+function renderMenuList(catId){
+  const cat = MENU.find(c=>c.id===catId);
+  const wrap = document.getElementById('menuList');
+  wrap.innerHTML = '';
+  cat.items.forEach(item=>{
+    const price = item.variants[0].price;
+    const qty = cartQtyFor(item.id);
+    const card = document.createElement('div');
+    card.className = 'menu-card';
+    card.innerHTML =
+      '<div class="thumb'+(item.img?'':' no-photo')+'">' + (item.img ? '<img src="'+item.img+'" alt="">' : '🥤') + '</div>' +
+      '<div class="info">' +
+        '<div class="name">'+item.name+'</div>' +
+        '<div class="variant">'+item.variants.map(v=>v.label).join(' / ')+'</div>' +
+        (item.desc ? '<div class="desc">'+item.desc+'</div>' : '') +
+        '<div class="price-row"><span class="price">'+fmtMoney(price)+'</span><span class="qty-slot"></span></div>' +
+      '</div>';
+    card.querySelector('.info').addEventListener('click', (e)=>{ if(e.target.closest('.qty-slot')) return; openItemDetail(item.id); });
+    const slot = card.querySelector('.qty-slot');
+    renderCardQtyControl(slot, item);
+    wrap.appendChild(card);
+  });
+}
+
+function renderCardQtyControl(slot, item){
+  const qty = cartQtyFor(item.id);
+  if(qty === 0){
+    slot.innerHTML = '<button class="add-btn">+</button>';
+    slot.querySelector('.add-btn').onclick = (e)=>{ e.stopPropagation(); addToCart(item, item.variants[0], 1); refreshCatalogQty(item.id); };
+  } else {
+    slot.innerHTML = '<div class="qty-pill"><button class="minus">−</button><span>'+qty+'</span><button class="plus">+</button></div>';
+    slot.querySelector('.minus').onclick = (e)=>{ e.stopPropagation(); decCart(item.id); refreshCatalogQty(item.id); };
+    slot.querySelector('.plus').onclick = (e)=>{ e.stopPropagation(); incCart(item.id); refreshCatalogQty(item.id); };
+  }
+}
+
+function refreshCatalogQty(itemId){
+  document.querySelectorAll('#menuList .menu-card').forEach(card=>{
+    const nameEl = card.querySelector('.name');
+    const item = findItem(itemId);
+    if(item && nameEl && nameEl.textContent === item.name){
+      renderCardQtyControl(card.querySelector('.qty-slot'), item);
+    }
+  });
+  updateCartBar();
+}
+
+function findItem(itemId){
+  for(const cat of MENU){ const it = cat.items.find(i=>i.id===itemId); if(it) return it; }
+  return null;
+}
+
+function addToCart(item, variant, qty){
+  if(cart[item.id]){ cart[item.id].qty += qty; cart[item.id].variant = variant; }
+  else { cart[item.id] = { item, variant, qty }; }
+  updateCartBar();
+}
+function incCart(itemId){ if(cart[itemId]){ cart[itemId].qty++; updateCartBar(); } }
+function decCart(itemId){
+  if(!cart[itemId]) return;
+  cart[itemId].qty--;
+  if(cart[itemId].qty <= 0) delete cart[itemId];
+  updateCartBar();
+}
+
+function cartTotals(){
+  let count = 0, subtotal = 0;
+  Object.values(cart).forEach(c=>{ count += c.qty; subtotal += c.qty * c.variant.price; });
+  return { count, subtotal, total: count>0 ? subtotal + DELIVERY_FEE : 0 };
+}
+
+function updateCartBar(){
+  const { count, subtotal } = cartTotals();
+  const bar = document.getElementById('cartBar');
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = fmtMoney(subtotal);
+  bar.classList.toggle('visible', count > 0);
+}
+
+function openItemDetail(itemId){
+  const item = findItem(itemId);
+  currentDetailItem = item;
+  currentDetailVariantIdx = 0;
+  document.getElementById('itemName').textContent = item.name;
+  document.getElementById('itemDesc').textContent = item.desc || '';
+  document.getElementById('itemIngredients').innerHTML = item.ingredients ? '<b>Ingredients</b>'+item.ingredients : '';
+  const hero = document.getElementById('itemHero');
+  hero.innerHTML = '<div class="back-btn" onclick="showScreen(\'screen-catalog\')">←</div>' + (item.img ? '<img src="'+item.img+'">' : '');
+  hero.classList.toggle('no-photo', !item.img);
+  if(!item.img){ hero.innerHTML += '🥤'; }
+  renderVariants();
+  document.getElementById('detailQty').textContent = 1;
+  showScreen('screen-item');
+}
+
+function renderVariants(){
+  const wrap = document.getElementById('itemVariants');
+  wrap.innerHTML = '';
+  currentDetailItem.variants.forEach((v, i)=>{
+    const chip = document.createElement('div');
+    chip.className = 'variant-chip' + (i===currentDetailVariantIdx ? ' active' : '');
+    chip.textContent = v.label + ' — ' + fmtMoney(v.price);
+    chip.onclick = ()=>{ currentDetailVariantIdx = i; renderVariants(); updateDetailPrice(); };
+    wrap.appendChild(chip);
+  });
+  updateDetailPrice();
+}
+function updateDetailPrice(){
+  document.getElementById('itemPrice').textContent = fmtMoney(currentDetailItem.variants[currentDetailVariantIdx].price);
+}
+function changeDetailQty(delta){
+  const el = document.getElementById('detailQty');
+  let q = parseInt(el.textContent) + delta;
+  if(q < 1) q = 1;
+  el.textContent = q;
+}
+function addDetailToCart(){
+  const qty = parseInt(document.getElementById('detailQty').textContent);
+  const variant = currentDetailItem.variants[currentDetailVariantIdx];
+  addToCart(currentDetailItem, variant, qty);
+  showScreen('screen-catalog');
+  const cat = MENU.find(c=>c.items.some(i=>i.id===currentDetailItem.id));
+  renderMenuList(cat.id);
+}
+
+function renderCart(){
+  const content = document.getElementById('cartContent');
+  const footer = document.getElementById('cartFooter');
+  const entries = Object.values(cart);
+  if(entries.length === 0){
+    content.innerHTML = '';
+    document.getElementById('cartScrollArea').innerHTML =
+      '<div class="empty-state"><div class="icon">🛒</div><p>Your cart is empty.<br/>Have a look at the menu and pick something.</p>' +
+      '<button class="btn-secondary" style="width:auto; padding:12px 24px;" onclick="switchTab(\'screen-catalog\')">Go to menu</button></div>';
+    footer.style.display = 'none';
+    return;
+  }
+  footer.style.display = 'block';
+  document.getElementById('cartScrollArea').innerHTML = '<div class="screen-pad" style="padding-top:0;" id="cartContent"></div>';
+  const c2 = document.getElementById('cartContent');
+  c2.innerHTML = '';
+  entries.forEach(e=>{
+    const row = document.createElement('div');
+    row.className = 'cart-row';
+    row.innerHTML =
+      '<div class="thumb">'+(e.item.img?'<img src="'+e.item.img+'">':'🥤')+'</div>' +
+      '<div class="info"><div class="name">'+e.item.name+'</div><div class="unit">'+e.variant.label+' · '+fmtMoney(e.variant.price)+'</div>' +
+      '<div class="remove" data-remove="'+e.item.id+'">Remove</div></div>' +
+      '<div class="qty-pill"><button class="m">−</button><span>'+e.qty+'</span><button class="p">+</button></div>';
+    row.querySelector('.m').onclick = ()=>{ decCart(e.item.id); renderCart(); };
+    row.querySelector('.p').onclick = ()=>{ incCart(e.item.id); renderCart(); };
+    row.querySelector('[data-remove]').onclick = ()=>{ delete cart[e.item.id]; renderCart(); updateCartBar(); };
+    c2.appendChild(row);
+  });
+  const { subtotal, total } = cartTotals();
+  const summary = document.createElement('div');
+  summary.className = 'summary-box';
+  summary.innerHTML =
+    '<div class="summary-line"><span>Subtotal</span><span>'+fmtMoney(subtotal)+'</span></div>' +
+    '<div class="summary-line"><span>Delivery</span><span>'+fmtMoney(DELIVERY_FEE)+'</span></div>' +
+    '<div class="summary-line total"><span>Total</span><span>'+fmtMoney(total)+'</span></div>';
+  c2.appendChild(summary);
+}
+
+function selectPayment(method){
+  selectedPayment = method;
+  document.getElementById('pay-online').classList.toggle('selected', method==='online');
+  document.getElementById('pay-cash').classList.toggle('selected', method==='cash');
+}
+
+function renderCheckout(){
+  const { subtotal, total } = cartTotals();
+  document.getElementById('checkoutSummary').innerHTML =
+    '<div class="summary-line"><span>Subtotal</span><span>'+fmtMoney(subtotal)+'</span></div>' +
+    '<div class="summary-line"><span>Delivery</span><span>'+fmtMoney(DELIVERY_FEE)+'</span></div>' +
+    '<div class="summary-line total"><span>Total to pay</span><span>'+fmtMoney(total)+'</span></div>';
+}
+
+function placeOrder(){
+  const num = '#' + (1000 + Math.floor(Math.random()*9000));
+  lastOrderNumber = num;
+  orders.unshift({ number: num, status: 0 });
+  cart = {};
+  updateCartBar();
+  document.getElementById('orderNumber').textContent = num;
+  showScreen('screen-confirm');
+}
+
+const STATUS_STEPS = [
+  { key:'accepted', label:'Accepted', sub:'The restaurant confirmed your order' },
+  { key:'cooking', label:'Cooking', sub:'The chef has started on your dishes' },
+  { key:'delivering', label:'On the way', sub:'The courier is bringing your order' },
+  { key:'delivered', label:'Delivered', sub:'Enjoy your meal!' },
+];
+
+function renderTracking(){
+  document.getElementById('trackOrderNum').textContent = lastOrderNumber || '#0000';
+  const currentStep = 1; // demo: show "Cooking" as the current step
+  const wrap = document.getElementById('statusTimeline');
+  wrap.innerHTML = '';
+  STATUS_STEPS.forEach((s, i)=>{
+    const div = document.createElement('div');
+    const state = i < currentStep ? 'done' : (i === currentStep ? 'current' : '');
+    div.className = 'status-step ' + state;
+    div.innerHTML =
+      (i < STATUS_STEPS.length-1 ? '<div class="line"></div>' : '') +
+      '<div class="marker">'+(i<currentStep ? '✓' : (i+1))+'</div>' +
+      '<div class="content"><h4>'+s.label+'</h4><span>'+s.sub+'</span></div>';
+    wrap.appendChild(div);
+  });
+}
+
+function renderOrders(){
+  const wrap = document.getElementById('ordersContent');
+  if(orders.length === 0){
+    wrap.innerHTML = '<div class="empty-state"><div class="icon">📦</div><p>You have no orders yet.<br/>Place your first one from the menu!</p></div>';
+    return;
+  }
+  wrap.innerHTML = '';
+  orders.forEach(o=>{
+    const card = document.createElement('div');
+    card.className = 'order-card';
+    card.style.marginBottom = '12px';
+    card.innerHTML =
+      '<div class="row1"><span class="num">'+o.number+'</span><span class="badge">Cooking</span></div>' +
+      '<div class="meta">Shar-Shara · Central branch · 3 items</div>';
+    card.onclick = ()=>{ lastOrderNumber = o.number; showScreen('screen-tracking'); renderTracking(); };
+    wrap.appendChild(card);
+  });
+}
+
+// demo navigation for the presentation (jump between screens without walking the whole flow)
+function renderDemoNav(){
+  const nav = document.getElementById('demoNav');
+  SCREENS.forEach(id=>{
+    const btn = document.createElement('button');
+    btn.textContent = SCREEN_LABELS[id];
+    btn.dataset.screen = id;
+    btn.onclick = ()=>{
+      showScreen(id);
+      if(id==='screen-orders') renderOrders();
+      if(id==='screen-cart') renderCart();
+      if(id==='screen-checkout') renderCheckout();
+      if(id==='screen-tracking') renderTracking();
+    };
+    nav.appendChild(btn);
+  });
+}
+
+// ============================================================================
+// INIT
+// ============================================================================
+renderDemoNav();
+renderSuggestChips();
+renderCategoryTabs();
+renderMenuList(MENU[0].id);
+updateCartBar();
+
+setTimeout(()=>{ showScreen('screen-onboarding'); }, 1800);
+
+// re-render the cart every time the cart screen is opened from the tab bar/button
+const cartObserver = new MutationObserver(()=>{
+  if(document.getElementById('screen-cart').classList.contains('active')) renderCart();
+});
+cartObserver.observe(document.getElementById('screen-cart'), { attributes:true, attributeFilter:['class'] });
+</script>
+</body>
+</html>
