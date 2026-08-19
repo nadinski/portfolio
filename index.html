@@ -1,0 +1,2117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+<title>nadinsky_ &middot; Portfolio</title>
+<link rel="icon" type="image/png" href="fav.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   nadinsky_ — dark portfolio. Night mode of the SESTO system:
+   same hexes, inverted ground. Cream is the ink, #6d3aff and
+   #ff914d stop being accents and behave like neon and ember,
+   the pastels survive only as small lit marks.
+   ============================================================ */
+:root{
+  --void:#0d0b13;
+  --ground:#14111c;
+  --surface:#1c1826;
+  --surface-2:#241f30;
+  --cream:#fffbf5;
+  --ink:#fffbf5;
+  --muted:rgba(255,251,245,.60);
+  --faint:rgba(255,251,245,.40);
+  --line:rgba(255,251,245,.13);
+  --purple:#6d3aff;
+  --purple-lift:#a98cff;
+  --orange:#ff914d;
+  --mint:#aeeeda;
+  --butter:#ffe4a8;
+  --pink:#f8cede;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+/* the nav is fixed, so anything jumped to by anchor must clear it */
+[id]{scroll-margin-top:104px;}
+
+body{
+  background:var(--void);
+  font-family:"Manrope",sans-serif;
+  font-weight:400;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:clip;            /* clip (not hidden) so <body> doesn't become the scroll container */
+  width:100%;
+}
+::selection{background:rgba(109,58,255,.35);color:#fff;}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--void);}
+::-webkit-scrollbar-thumb{background:#2c2740;border-radius:10px;}
+
+.master-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  column-gap:20px;
+  padding:0 2vw;
+  margin:0 auto;
+  position:relative;
+  width:100%;
+}
+
+/* ---------------- typography ---------------- */
+h1,h2,h3,h4{font-family:"Manrope",sans-serif;font-weight:400;color:var(--cream);}
+h2{font-size:50px;line-height:1.1;text-transform:uppercase;letter-spacing:-.8px;}
+h2.section-opener{font-size:clamp(56px,8vw,120px);line-height:.96;letter-spacing:-2.5px;}
+h2.reviews-opener{color:var(--purple-lift);}
+/* the hand-drawn ring is an accent — only the first three cases carry it */
+.marker-label.no-ring::before{display:none;}
+.marker-label.no-ring{padding-left:0;padding-right:0;}
+h3{font-size:30px;line-height:1.2;text-transform:uppercase;letter-spacing:-.4px;}
+h4{font-size:30px;line-height:1.25;text-transform:uppercase;color:var(--purple-lift);letter-spacing:-.3px;}
+p{font-family:"Manrope",sans-serif;font-weight:400;font-size:14px;line-height:1.7;color:var(--muted);}
+p+p{margin-top:12px;}
+strong{font-weight:700;color:var(--cream);}
+em{font-style:italic;}
+.accent{color:var(--purple-lift);}
+
+/* ---------------- buttons ---------------- */
+button,.button{
+  background:var(--orange);
+  border:none;
+  color:#1a1206;
+  font-family:"Manrope",sans-serif;
+  font-weight:500;
+  font-size:13px;
+  text-transform:uppercase;
+  border-radius:999px;
+  padding:15px 30px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  letter-spacing:.6px;
+  transition:transform .2s ease, box-shadow .25s ease, background .2s ease;
+  text-decoration:none;
+  white-space:nowrap;
+  line-height:1;
+  min-height:50px;
+  box-shadow:0 0 0 rgba(255,145,77,0);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+button:hover,.button:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.35);}
+button:active,.button:active{transform:translateY(0);}
+.button.ghost{background:transparent;color:var(--cream);border:1px solid var(--line);box-shadow:none;}
+.button.ghost:hover{border-color:var(--purple-lift);color:var(--purple-lift);box-shadow:none;}
+.button.purple{background:var(--purple);color:#fff;}
+.button.purple:hover{box-shadow:0 12px 34px rgba(109,58,255,.40);}
+.button svg{width:16px;height:16px;flex-shrink:0;}
+
+.eyebrow{display:block;font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:2px;color:var(--purple-lift);}
+
+/* ---------------- nav ---------------- */
+nav.nav-bar{
+  position:fixed;top:0;left:0;width:100%;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:24px;padding:20px 2vw;
+  background:linear-gradient(180deg,rgba(13,11,19,.92) 0%,rgba(13,11,19,0) 100%);
+  backdrop-filter:blur(2px);
+}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--cream);}
+.brand .mark{display:grid;grid-template-columns:repeat(3,9px);grid-template-rows:repeat(2,9px);gap:3px;}
+.brand .mark i{border-radius:2px;display:block;box-shadow:0 0 12px rgba(174,238,218,.22);}
+.brand .mark i:nth-child(1){background:var(--mint);}
+.brand .mark i:nth-child(2){background:var(--pink);}
+.brand .mark i:nth-child(3){background:var(--mint);}
+.brand .mark i:nth-child(4){background:var(--butter);}
+.brand .mark i:nth-child(5){background:var(--butter);}
+.brand .mark i:nth-child(6){background:var(--pink);}
+.brand .word{font-size:19px;font-weight:600;letter-spacing:.12em;}
+.nav-links{display:flex;align-items:center;gap:26px;
+  position:absolute;left:50%;transform:translateX(-50%);}   /* centred regardless of what flanks it */
+.nav-right{display:flex;align-items:center;gap:14px;margin-left:auto;}
+.nav-link{font-family:"Manrope",sans-serif;font-weight:400;font-size:12px;text-transform:uppercase;
+  letter-spacing:.6px;color:var(--muted);text-decoration:none;transition:color .2s ease;position:relative;}
+.nav-link::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--purple-lift);transition:width .25s ease;}
+.nav-link:hover{color:var(--cream);}
+.nav-link:hover::after{width:100%;}
+.nav-cta{font-family:"Manrope",sans-serif;font-weight:500;font-size:12px;text-transform:uppercase;
+  letter-spacing:.6px;color:#1a1206;background:var(--orange);border:none;cursor:pointer;
+  padding:11px 20px;border-radius:999px;transition:transform .2s ease,box-shadow .25s ease;min-height:auto;}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.35);}
+/* language switch — a quiet pill, same voice as the nav */
+.lang-switch{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;}
+.lang-switch button{font-family:"Manrope",sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.4px;color:var(--muted);background:none;border:none;cursor:pointer;padding:6px 11px;
+  border-radius:999px;min-height:auto;transition:background .2s ease,color .2s ease;}
+.lang-switch button.active{background:var(--surface-2);color:var(--cream);}
+.lang-switch button:hover{color:var(--cream);}
+.burger{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;min-width:44px;min-height:44px;}
+.burger span{display:block;width:24px;height:2px;background:var(--cream);border-radius:2px;transition:.3s;}
+/* burger → X, and the page behind blurs (same move as HGK) */
+.burger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.burger.active span:nth-child(2){opacity:0;}
+.burger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.nav-overlay{position:fixed;inset:0;z-index:140;background:rgba(13,11,19,.45);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  opacity:0;pointer-events:none;transition:opacity .5s ease;}
+.nav-overlay.active{opacity:1;pointer-events:auto;}
+
+/* ---------------- cover / hero ---------------- */
+.cover{position:relative;min-height:100vh;min-height:100dvh;width:100%;overflow:hidden;
+  background:var(--ground);display:flex;align-items:center;isolation:isolate;}
+#cover-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
+.cover .lamp{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(70% 55% at 14% 12%,rgba(109,58,255,.18) 0%,transparent 60%),
+    radial-gradient(60% 60% at 74% 50%,rgba(109,58,255,.07) 0%,transparent 62%),
+    radial-gradient(130% 110% at 50% 45%,transparent 42%,rgba(13,11,19,.82) 100%);}
+.cover .grain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.13;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.55'/></svg>");}
+.cover-inner{position:relative;z-index:10;width:100%;padding:0 2vw;max-width:1800px;margin:0 auto;}
+.cover-eyebrow{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:2.4px;
+  color:var(--purple-lift);margin-bottom:26px;}
+.hook{margin:0;}
+.hook .l{display:block;text-transform:uppercase;line-height:.98;letter-spacing:-2px;
+  font-size:clamp(38px,8vw,120px);font-weight:400;}
+.hook .l.a{color:var(--cream);}
+.hook .l.b{color:var(--purple-lift);font-weight:600;}
+.cover-sub{margin-top:30px;max-width:640px;font-size:clamp(15px,1.6vw,19px);line-height:1.55;color:rgba(255,251,245,.82);}
+.cover-sub b{color:var(--cream);font-weight:600;}
+.cover-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;}
+.scroll-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);z-index:10;
+  font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);
+  display:flex;flex-direction:column;align-items:center;gap:8px;animation:cue 2.2s infinite;}
+@keyframes cue{0%,100%{opacity:.35;}50%{opacity:1;}}
+
+/* ---------------- cards ---------------- */
+.cards-row{display:grid;gap:20px;width:100%;}
+.cards-4{grid-template-columns:repeat(4,1fr);}
+.cards-3{grid-template-columns:repeat(3,1fr);}
+.cards-2{grid-template-columns:repeat(2,1fr);}
+.card{position:relative;border-radius:24px;padding:26px 22px;display:flex;flex-direction:column;gap:10px;
+  background:var(--surface);border:1px solid var(--line);overflow:hidden;}
+.card::before{content:"";position:absolute;left:22px;top:22px;width:14px;height:14px;border-radius:4px;
+  background:var(--tick,var(--mint));box-shadow:0 0 14px rgba(255,255,255,.10);}
+.card.pad-tick{padding-top:52px;}
+.card .stat{font-size:40px;line-height:1;color:var(--cream);letter-spacing:-1.5px;}
+.card h4{font-size:22px;color:var(--purple-lift);}
+.card p{font-size:13px;line-height:1.55;color:var(--muted);}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{font-size:12px;font-weight:600;letter-spacing:.3px;color:rgba(255,251,245,.82);
+  background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:9px 16px;text-decoration:none;}
+a.chip:hover{border-color:var(--purple-lift);color:var(--purple-lift);}
+
+/* photo */
+.photo-tile{width:100%;border-radius:28px;background:var(--surface);overflow:hidden;
+  border:1px solid var(--line);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 24px 60px rgba(0,0,0,.45);}
+.photo-tile img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-tile.about-photo{aspect-ratio:auto;height:100%;min-height:340px;}
+
+/* ---------------- layout helpers ---------------- */
+.section-divider{grid-column:1 / -1;height:1px;background:var(--line);width:100%;}
+.spacer-80{grid-column:1 / -1;height:80px;}
+.spacer-40{grid-column:1 / -1;height:40px;}
+.spacer-20{grid-column:1 / -1;height:20px;}
+.grid-full{grid-column:1 / -1;}
+.grid-1{grid-column:1 / 2;}
+.grid-2{grid-column:2 / 3;}
+.grid-3{grid-column:3 / 4;}
+.grid-1-2{grid-column:1 / 3;}
+.grid-2-4{grid-column:2 / 5;}
+.grid-3-4{grid-column:3 / 5;}
+.grid-2-3{grid-column:2 / 4;}
+.col-copy p{line-height:1.6;}
+.col-copy p+p{margin-top:12px;}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.tiles.hero-text{margin-bottom:44px;align-items:start;}
+
+/* pull quote / marker label */
+.marker-label{display:inline-block;position:relative;font-size:13px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--purple-lift);padding:9px 20px 10px;}
+.marker-label::before{content:"";position:absolute;inset:-3px -6px -5px -9px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 70' preserveAspectRatio='none'%3E%3Cpath d='M156 13 C186 14 211 23 210 36 C209 52 170 63 108 62 C52 61 10 52 9 37 C8 20 48 9 103 8 C133 7 162 9 178 12' fill='none' stroke='%23ff914d' stroke-width='3.4' stroke-linecap='round' opacity='0.95'/%3E%3Cpath d='M168 10 C198 13 216 24 213 38 C210 54 168 65 110 64 C82 64 58 61 42 56' fill='none' stroke='%23ff914d' stroke-width='2.2' stroke-linecap='round' opacity='0.5'/%3E%3C/svg%3E");
+  background-size:100% 100%;background-repeat:no-repeat;transform:rotate(-1.7deg);pointer-events:none;}
+.pull{font-size:clamp(20px,2.2vw,30px);line-height:1.25;font-weight:400;letter-spacing:-.3px;margin:0;color:var(--cream);}
+.pull .pull-b{color:var(--purple-lift);}
+.pull-arrow{text-decoration:none;color:var(--purple-lift);display:inline-block;transition:transform .25s ease;margin-left:6px;}
+.pull-arrow:hover{transform:translateY(6px);}
+
+/* ---------------- calculator ---------------- */
+.calc-card{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:28px 24px;
+  display:flex;flex-direction:column;gap:2px;box-shadow:0 24px 60px rgba(0,0,0,.4);}
+.calc-field{margin-bottom:18px;}
+.calc-field label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;
+  color:var(--purple-lift);margin-bottom:8px;}
+.calc-field input,.calc-field select{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:14px;
+  font-family:"Manrope",sans-serif;font-size:16px;background:var(--surface-2);color:var(--cream);outline:none;transition:.2s;}
+.calc-field select{appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a98cff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;padding-right:42px;}
+.calc-field input::placeholder{color:var(--faint);}
+.calc-field input:focus,.calc-field select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(109,58,255,.18);}
+.calc-field option{background:var(--surface-2);color:var(--cream);}
+.checkbox-modern{display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:20px;color:var(--cream);}
+.checkbox-modern input{width:20px;height:20px;accent-color:var(--purple);}
+.range-slider{width:100%;margin:8px 0 4px;}
+.range-slider input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;
+  background:linear-gradient(to right,#6d3aff 0%,#6d3aff 50%,#2c2740 50%,#2c2740 100%);outline:none;}
+.range-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:#6d3aff;cursor:pointer;border:3px solid #14111c;box-shadow:0 2px 10px rgba(109,58,255,.5);}
+.range-slider input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#6d3aff;cursor:pointer;border:3px solid #14111c;}
+.range-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);margin-top:6px;}
+.range-labels span{flex:1;text-align:center;}
+.range-labels span:first-child{text-align:left;}
+.range-labels span:last-child{text-align:right;}
+.result-block{background:var(--surface-2);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:18px;font-size:13px;line-height:1.6;color:var(--muted);}
+.result-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);align-items:baseline;gap:10px;color:var(--cream);}
+.result-item:last-child{border:none;}
+.result-item span{color:var(--muted);}
+
+/* ---------------- cases ---------------- */
+.case-tabs{display:flex;flex-wrap:wrap;gap:10px;}
+.tab-card{border-radius:16px;padding:13px 16px;cursor:pointer;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.4px;color:var(--muted);transition:all .2s ease;
+  border:1px solid var(--line);background:var(--surface);line-height:1.2;min-height:auto;
+  display:inline-block;font-family:inherit;white-space:nowrap;}
+.tab-card .num{color:var(--faint);margin-right:6px;}
+.tab-card:hover{background:var(--surface-2);border-color:#332c48;transform:none;color:var(--cream);}
+.tab-card.active{background:var(--surface-2);border-color:var(--purple);color:var(--cream);
+  box-shadow:0 4px 18px rgba(109,58,255,.20);transform:none;}
+.tab-card.active .num{color:var(--purple-lift);}
+.tab-card:focus-visible{outline:3px solid var(--purple);outline-offset:2px;}
+
+.case-window{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:28px;overflow:hidden;
+  box-shadow:0 30px 70px rgba(0,0,0,.5);margin-top:16px;isolation:isolate;}
+/* a brief flash when a tab is picked — makes the switch legible even before
+   the new image has loaded, especially once tabs wrap into their own rows */
+.case-window.pulse{animation:tabPulse .5s ease;}
+@keyframes tabPulse{
+  0%{box-shadow:0 30px 70px rgba(0,0,0,.5), 0 0 0 3px rgba(109,58,255,.55);}
+  100%{box-shadow:0 30px 70px rgba(0,0,0,.5), 0 0 0 0 rgba(109,58,255,0);}
+}
+.case-window>*{border-radius:28px;overflow:hidden;}
+.case-scroll{aspect-ratio:2800 / 1877;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#6d3aff #241f30;}
+.case-scroll img{width:100%;display:block;}
+.case-scroll::-webkit-scrollbar{width:10px;}
+.case-scroll::-webkit-scrollbar-track{background:#241f30;}
+.case-scroll::-webkit-scrollbar-thumb{background:#6d3aff;border-radius:10px;border:2px solid #241f30;}
+.case-hint{position:absolute;right:22px;bottom:14px;pointer-events:none;font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.8px;color:var(--purple-lift);background:var(--surface-2);
+  border:1px solid var(--line);border-radius:999px;padding:6px 12px;transition:opacity .2s ease;}
+.case-hint.hidden{opacity:0;}
+.case-cap{margin-top:14px;font-size:13px;line-height:1.5;color:var(--muted);}
+.case-cap b{color:var(--purple-lift);font-weight:600;}
+
+.case-live{aspect-ratio:2800 / 1877;background:var(--ground);display:flex;align-items:center;
+  justify-content:flex-start;overflow:hidden;gap:22px;padding:14px;}
+.case-live.mode-duo-menus{justify-content:flex-start;}
+.case-live.mode-full,.case-live.mode-html{justify-content:center;}
+.case-live.mode-slot{justify-content:center;}
+.case-live iframe{border:0;}
+.case-live.mode-full{padding:0;border-radius:28px;overflow:hidden;}
+.case-live.mode-html{padding:0;border-radius:28px;overflow:hidden;}
+.case-live.mode-full iframe{width:100%;height:100%;background:#1c1c1e;}
+.phone-chassis{height:100%;aspect-ratio:390 / 844;width:auto;position:relative;flex-shrink:0;
+  background:transparent;border:1.5px solid rgba(255,251,245,.45);border-radius:40px;padding:9px;box-shadow:none;}
+.phone-chassis::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);
+  width:84px;height:5px;background:rgba(255,251,245,.45);border-radius:0 0 6px 6px;z-index:5;}
+.phone-chassis iframe{width:100%;height:100%;border-radius:32px;display:block;background:#fff;}
+.case-live.mode-duo iframe.bare{height:100%;aspect-ratio:390 / 844;width:auto;border-radius:0;}
+.duo-half{height:100%;display:flex;align-items:center;justify-content:center;}
+.duo-half.grow{flex:1;min-width:0;}
+.slot{width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:24px;}
+.slot img{max-width:100%;max-height:100%;object-fit:contain;display:block;border-radius:6px;box-shadow:0 18px 44px rgba(0,0,0,.5);}
+.slot .ph{border:1px dashed #3a3350;border-radius:18px;padding:30px 38px;text-align:center;color:var(--faint);
+  font-size:11px;text-transform:uppercase;letter-spacing:.12em;line-height:2.1;}
+.slot .ph b{display:block;color:var(--purple-lift);font-weight:600;letter-spacing:.06em;font-size:12px;}
+.slot .ph code{font-family:ui-monospace,monospace;letter-spacing:0;text-transform:none;}
+
+/* HGK panels — rendered in HGK's own language */
+.hgk{height:100%;width:100%;background:#1c1c1e;color:#d4cfc7;font-family:"Space Mono",ui-monospace,monospace;
+  padding:clamp(20px,3vw,40px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#c8a96e #2a2725;}
+.hgk h5{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#c8a96e;font-weight:700;margin:0 0 10px;}
+.hgk p{font-family:"Space Mono",monospace;font-size:12.5px;line-height:1.75;color:#d4cfc7;opacity:.78;margin:0;}
+.hgk-sw{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px;}
+.hgk-sw div{aspect-ratio:1 / 1.15;border-radius:4px;display:flex;flex-direction:column;justify-content:flex-end;padding:10px;font-size:9.5px;letter-spacing:.1em;}
+.hgk-sw span{font-weight:700;}
+.hgk-sw em{font-style:normal;opacity:.7;}
+.hgk-type{font-size:clamp(56px,10vw,132px);font-weight:700;letter-spacing:-3px;color:#c8a96e;line-height:.9;margin-bottom:6px;}
+.hgk-scale{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline;margin:18px 0 24px;color:#d4cfc7;opacity:.85;}
+.hgk-dec{display:grid;grid-template-columns:1fr 1fr;gap:26px 30px;}
+
+/* work tiles: screenshot by default, coloured card slides over on hover */
+.more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.more-tile{--strip:46px;position:relative;border-radius:24px;overflow:hidden;aspect-ratio:16/10;
+  background:var(--surface);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.4);}
+.more-tile:focus-visible{outline:3px solid var(--purple);outline-offset:3px;}
+.more-tile img{position:absolute;top:0;left:0;width:100%;height:calc(100% - var(--strip) + 10px);
+  object-fit:cover;object-position:top center;display:block;}
+.more-tile .nda-ph{position:absolute;top:0;left:0;width:100%;height:calc(100% - var(--strip) + 10px);
+  display:flex;align-items:center;justify-content:center;
+  background:repeating-linear-gradient(45deg,#1c1826,#1c1826 10px,#221d2f 10px,#221d2f 20px);
+  font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+.more-tile .veil{position:absolute;left:0;right:0;bottom:0;background:var(--c);padding:0;display:block;
+  transform:translateY(calc(100% - var(--strip)));transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.more-tile:hover .veil,.more-tile:focus-within .veil{transform:translateY(0);}
+.more-tile .veil h4{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1e1b2e;
+  margin:0;height:var(--strip);box-sizing:border-box;padding:0 18px;display:flex;align-items:center;}
+.more-tile .veil p{font-size:12px;line-height:1.5;margin:0;padding:0 18px 18px;color:#3a3550;}
+.more-tile .veil p b{color:#1e1b2e;}
+
+/* reviews — the real screenshot is the proof; hover gives the translation */
+.rev-wall{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;align-items:flex-start;}
+.rev{position:relative;border-radius:12px;overflow:hidden;background:#fff;border:1px solid var(--line);flex:0 1 auto;max-width:100%;
+  box-shadow:0 14px 40px rgba(0,0,0,.4);}
+.rev:focus-visible{outline:3px solid var(--purple);outline-offset:3px;}
+.rev img{display:block;max-width:100%;height:auto;}
+.rev .tr{position:absolute;inset:0;padding:16px 18px;display:flex;flex-direction:column;justify-content:center;gap:8px;
+  opacity:0;transition:opacity .25s ease;background:var(--c);}
+.rev:hover .tr,.rev:focus-within .tr{opacity:1;}
+.rev .tr p{font-size:12px;line-height:1.5;margin:0;color:#1e1b2e;}
+.rev .tr p b{color:#1e1b2e;font-weight:700;}
+.rev .tr .who{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#1e1b2e;opacity:.55;}
+.rev .flag{position:absolute;top:8px;right:10px;font-size:8.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:#a99fc4;transition:opacity .2s ease;}
+.rev:hover .flag,.rev:focus-within .flag{opacity:0;}
+/* in Russian mode the screenshots are already in the visitor's language — the
+   hover-to-translate affordance would be noise, so it's simply switched off */
+.lang-ru .rev .flag,.lang-ru .rev .tr{display:none;}
+/* the RU intro is one paragraph; the second one is EN-only */
+.lang-ru [data-i18n="hello.p2"]{display:none;}
+
+/* ---------------- CTA + footer ---------------- */
+.cta-band{position:relative;border-radius:32px;overflow:hidden;padding:clamp(40px,6vw,72px);
+  background:linear-gradient(135deg,#1a1530 0%,#14111c 60%);border:1px solid var(--line);}
+.cta-band::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 90% at 85% 15%,rgba(109,58,255,.25),transparent 60%);}
+.cta-band>*{position:relative;z-index:1;}
+.site-footer{grid-column:1 / -1;border-top:1px solid var(--line);padding-top:40px;}
+.footer-grid{display:grid;grid-template-columns:subgrid;grid-column:1 / -1;}
+.footer-heading{grid-column:1 / 2;margin-bottom:20px;color:var(--cream);}
+.footer-links{grid-column:2 / 5;display:flex;flex-direction:column;gap:12px;}
+.footer-link{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:13px;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:color .2s ease;}
+.footer-link:hover{color:var(--purple-lift);}
+
+/* ---------------- modal ---------------- */
+.modal-overlay{position:fixed;inset:0;background:rgba(6,5,10,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;
+  transition:opacity .3s ease,visibility .3s ease;padding:24px;}
+.modal-overlay.active{opacity:1;visibility:visible;}
+.modal-dialog{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:clamp(30px,5vw,44px);
+  max-width:440px;width:100%;position:relative;transform:translateY(20px);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 40px 90px rgba(0,0,0,.6);}
+.modal-overlay.active .modal-dialog{transform:translateY(0);}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;width:36px;height:36px;
+  border-radius:0 !important;   /* beats the global pill radius on <button> */
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--muted);
+  transition:color .2s ease,transform .2s ease;padding:0;min-height:auto;}
+.modal-close:hover{color:var(--purple-lift);transform:rotate(90deg);background:none;box-shadow:none;}
+.modal-close svg{width:22px;height:22px;}
+.modal-title{font-size:clamp(24px,4vw,34px);font-weight:400;text-transform:uppercase;color:var(--cream);margin-bottom:10px;line-height:1.15;}
+.modal-note{font-size:13px;color:var(--muted);margin-bottom:26px;}
+.modal-links{display:flex;flex-direction:column;gap:12px;}
+.modal-link{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:16px;text-decoration:none;
+  font-weight:600;font-size:15px;color:var(--cream);transition:all .25s ease;background:var(--surface-2);border:1px solid var(--line);}
+.modal-link:hover{border-color:var(--purple);transform:translateX(6px);}
+.modal-link img{width:22px;height:22px;flex-shrink:0;}
+.modal-link svg{width:22px;height:22px;flex-shrink:0;color:var(--purple-lift);}
+.modal-link span{flex:1;}
+.modal-link .ext{opacity:0;transform:translateX(-8px);transition:all .25s ease;width:16px;height:16px;color:var(--purple-lift);}
+.modal-link:hover .ext{opacity:.7;transform:translateX(0);}
+
+/* ---------------- responsive ---------------- */
+@media screen and (max-width:1024px){
+  .master-grid{grid-template-columns:repeat(8,1fr);column-gap:16px;padding:0 3vw;}
+  h2{font-size:36px;} h3{font-size:24px;} h4{font-size:22px;}
+  .cards-4{grid-template-columns:repeat(2,1fr);}
+  .grid-1{grid-column:1 / 3;} .grid-2{grid-column:3 / 5;} .grid-3{grid-column:5 / 7;}
+  .grid-1-2{grid-column:1 / 5;} .grid-2-4{grid-column:3 / 9;} .grid-3-4{grid-column:5 / 9;} .grid-2-3{grid-column:3 / 7;}
+  .footer-heading{grid-column:1 / 3;} .footer-links{grid-column:3 / 9;}
+  .hgk-dec,.hgk-sw{grid-template-columns:1fr 1fr;}
+  .more-grid{grid-template-columns:1fr 1fr;}
+}
+/* nav collapses to the burger well before the links can crowd:
+   they need 769px to fit at all, ~859px to breathe — so switch at 900. */
+@media screen and (max-width:900px){
+  .burger{display:flex;z-index:160;}
+  .nav-cta{display:none;}
+  .nav-links{position:fixed;top:0;left:0;width:100%;height:100vh;height:100dvh;
+    flex-direction:column;justify-content:center;align-items:center;gap:30px;
+    background:transparent;transform:translateX(100%);transition:transform .5s cubic-bezier(.4,0,.2,1);z-index:150;}
+  .nav-links.open{transform:translateX(0);}
+  .nav-links .nav-link{font-size:22px;}
+}
+@media screen and (max-width:767px){
+  .master-grid{grid-template-columns:1fr;column-gap:0;padding:0 24px;display:flex;flex-direction:column;gap:0;}
+  nav.nav-bar{padding:16px 24px;}
+  .cover-inner{padding:0 24px;}
+  .cover-eyebrow{font-size:11px;letter-spacing:1.6px;margin-bottom:20px;}
+  .cover-sub{text-shadow:0 1px 10px rgba(13,11,19,.9);}   /* keep copy legible over the station */
+  .cards-row,.cards-4,.cards-3,.cards-2,.tiles{grid-template-columns:1fr !important;display:flex;flex-direction:column;}
+  .grid-full,.grid-1,.grid-2,.grid-3,.grid-1-2,.grid-2-4,.grid-3-4,.grid-2-3,
+  .spacer-80,.spacer-40,.spacer-20,h1,h2,h3,h4{grid-column:auto !important;width:100% !important;max-width:100% !important;}
+  h2{font-size:32px;} h2 br{display:none;} h3{font-size:22px;} h4{font-size:20px;}
+  /* the longest hook line has to fit on one line at 375px */
+  .hook .l{font-size:clamp(24px,8.2vw,38px);letter-spacing:-1.2px;}
+  h3 br,h4 br{display:none;}
+  p{font-size:14px;}
+  .spacer-80{height:48px;} .spacer-40{height:32px;} .spacer-20{height:16px;}
+  .photo-tile.about-photo{aspect-ratio:4/3;height:auto;min-height:0;}
+  /* .tab-card, the burger and the modal close are <button>s too — excluded so they
+     keep their own size instead of stretching across the screen. */
+  button:not(.tab-card):not(.burger):not(.modal-close),.button{width:100%;justify-content:center;}
+  .lang-switch button{width:auto;}
+  .case-tabs{gap:7px;}
+  .tab-card{padding:9px 13px;font-size:11px;}
+  .cover-cta{flex-direction:column;}
+  .cover-cta .button{width:100%;}
+  .footer-grid{display:flex;flex-direction:column;gap:20px;}
+  .more-grid{grid-template-columns:1fr;}
+  .rev .tr{position:static;opacity:1;}
+  .rev .flag{display:none;}
+  .rev{width:100% !important;}
+  .rev img{width:100%;}
+  .hgk-dec,.hgk-sw{grid-template-columns:1fr;}
+  .scroll-cue{display:none;}
+
+  /* cover: copy sits under the nav, the two CTAs ride the bottom so there is always air */
+  .cover{align-items:stretch;}
+  .cover-inner{display:flex;flex-direction:column;justify-content:flex-start;
+    padding-top:104px;padding-bottom:40px;}
+  .cover-cta{margin-top:auto;}
+
+  /* stacked blocks need room to breathe after a photo.
+     The margin goes on the grid item — on .photo-tile it collapses out of its wrapper. */
+  .master-grid > *:has(> .photo-tile){margin-bottom:30px;}
+
+  /* mockup phones stay as large as the screen allows; a pair stacks one after another */
+  .case-live{aspect-ratio:auto;height:auto;flex-direction:column;gap:22px;padding:16px 14px;}
+  .case-live .duo-half{width:100%;height:auto;}
+  .case-live .duo-half.grow{flex:none;}
+  .case-live .phone-chassis{height:auto;width:min(320px,90%);aspect-ratio:390 / 844;}
+  .case-live .slot{height:auto;padding:0;}
+  .case-live .slot img{max-height:none;}
+  .case-live.mode-full{aspect-ratio:3 / 4;padding:0;}
+}
+@media screen and (min-width:1600px){
+  .master-grid{max-width:1800px;padding:0 5vw;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a class="brand" href="#top" aria-label="nadinsky_">
+    <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+    <span class="word">nadinsky_</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#intro" class="nav-link" data-i18n="nav.about">About me</a>
+    <a href="#calc" class="nav-link" data-i18n="nav.calc">Calculator</a>
+    <a href="#work" class="nav-link" data-i18n="nav.projects">Projects</a>
+    <a href="#reviews" class="nav-link" data-i18n="nav.reviews">Reviews</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ru">RU</button>
+    </div>
+    <button class="nav-cta" onclick="openContactModal()" data-i18n="nav.write">Write to me</button>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" data-i18n-attr="aria-label:nav.menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- ============================ COVER ============================ -->
+<section class="cover" id="top">
+  <canvas id="cover-canvas"></canvas>
+  <div class="lamp"></div>
+  <div class="grain"></div>
+  <div class="cover-inner">
+    <span class="cover-eyebrow" data-i18n="cover.eyebrow">Nadezhda Machulskaia &middot; design &amp; build</span>
+    <h1 class="hook">
+      <span class="l a" data-i18n="cover.hookA1">Aerospace engineer</span>
+      <span class="l a" data-i18n="cover.hookA2">by training&nbsp;—</span>
+      <span class="l b" data-i18n="cover.hookB1">designer &amp; builder</span>
+      <span class="l b" data-i18n="cover.hookB2">by trade</span>
+    </h1>
+    <p class="cover-sub" data-i18n="cover.sub">I build <b>websites, brands and digital products</b> for owner-run businesses —
+      with restaurants as my main focus right now. Proof first, then the ask.</p>
+    <div class="cover-cta">
+      <button class="button" onclick="openContactModal()" data-i18n="cover.ctaWrite">Write to me</button>
+      <a class="button ghost" href="#calc" data-i18n="cover.ctaCalc">Price calculator</a>
+    </div>
+  </div>
+  <div class="scroll-cue" data-i18n="cover.scroll">Scroll</div>
+</section>
+
+<div class="master-grid">
+
+  <!-- ==================== HELLO, I'M NADIA ==================== -->
+  <div class="spacer-80" id="intro"></div>
+  <div class="grid-full"><span class="eyebrow" data-i18n="hello.eyebrow">Hello, I'm Nadia</span></div>
+  <div class="spacer-20"></div>
+  <div class="grid-1"><div class="photo-tile about-photo"><img src="main.webp" alt="Nadia"></div></div>
+  <div class="grid-2-4">
+    <h2 style="margin-bottom:14px;" data-i18n="hello.eyebrow">Hello, I'm Nadia</h2>
+    <h4 style="margin-bottom:22px;" data-i18n="hello.h4">Aerospace engineer by training —<br>designer &amp; builder by trade.</h4>
+    <div class="col-copy">
+      <p data-i18n="hello.p1">For over a decade I've helped businesses grow online — <strong>websites, digital products and
+         brand systems</strong> that are as considered as they are effective. I ran my own media agency;
+         since 2024 I work independently.</p>
+      <p data-i18n="hello.p2">More than <strong>30 projects</strong> on, the ones I'm proudest of are restaurants I've stayed with
+         for years — long after the first website went live. Now I'm building my business, my team and my
+         life here in Slovenia. I'm here for the long run.</p>
+    </div>
+    <div class="spacer-20"></div>
+    <!-- three across, the fourth wraps beneath — the SESTO tile pattern -->
+    <div class="cards-row cards-3">
+      <div class="card pad-tick" style="--tick:var(--mint)"><span class="stat">MEng</span><p data-i18n="hello.stat1">Aerospace engineering — Moscow Aviation Institute</p></div>
+      <div class="card pad-tick" style="--tick:var(--pink)"><span class="stat">10+</span><p data-i18n="hello.stat2">Years in design &amp; digital</p></div>
+      <div class="card pad-tick" style="--tick:var(--mint)"><span class="stat">2024</span><p data-i18n="hello.stat3">Independent — ex media-agency founder</p></div>
+      <div class="card pad-tick" style="--tick:var(--butter)"><span class="stat">30+</span><p data-i18n="hello.stat4">Projects · multi-year restaurant partners</p></div>
+    </div>
+  </div>
+
+  <div class="spacer-80"></div>
+
+  <!-- ==================== TASKS PEOPLE COME WITH ==================== -->
+  <div class="grid-full"><span class="eyebrow" data-i18n="tasks.eyebrow">Current focus</span></div>
+  <div class="spacer-20"></div>
+  <h2 class="grid-full" id="tasks" data-i18n="tasks.h2">What people come to me with</h2>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="cards-row cards-3">
+      <div class="card pad-tick" style="--tick:var(--mint)">
+        <h4 data-i18n="tasks.c1t">Launch something new</h4>
+        <p data-i18n="tasks.c1d">Turn an idea, a product or a brand-new company into a digital presence that holds up.</p>
+      </div>
+      <div class="card pad-tick" style="--tick:var(--pink)">
+        <h4 data-i18n="tasks.c2t">Show an existing business as it really is</h4>
+        <p data-i18n="tasks.c2d">Put the worth and the standing of the company into a clear, modern digital form.</p>
+      </div>
+      <div class="card pad-tick" style="--tick:var(--mint)">
+        <h4 data-i18n="tasks.c3t">Get more enquiries</h4>
+        <p data-i18n="tasks.c3d">Rebuild the site and the path through it so that digital actually helps you sell.</p>
+      </div>
+      <div class="card pad-tick" style="--tick:var(--butter)">
+        <h4 data-i18n="tasks.c4t">Relaunch for a new audience</h4>
+        <p data-i18n="tasks.c4d">Refresh the site, the positioning and the way you speak when you scale or enter a new market.</p>
+      </div>
+      <div class="card pad-tick" style="--tick:var(--butter)">
+        <h4 data-i18n="tasks.c5t">Build a complex digital product</h4>
+        <p data-i18n="tasks.c5d">Not just a website but a service, a client area, a catalogue, a system with integrations and automation.</p>
+      </div>
+      <div class="card pad-tick" style="--tick:var(--pink)">
+        <h4 data-i18n="tasks.c6t">Turn an idea into a working tool</h4>
+        <p data-i18n="tasks.c6d">Think through the structure, the experience and the technology where no ready-made template exists.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer-80"></div><div class="section-divider"></div><div class="spacer-80"></div>
+
+  <!-- ==================== CALCULATOR ==================== -->
+  <div class="grid-1-2" id="calc"><span class="marker-label" data-i18n="calc.eyebrow">Try it first</span></div>
+  <div class="spacer-20"></div>
+  <h2 class="grid-1-2" style="line-height:1.12;" data-i18n="calc.h2">What kind of<br>website does my<br>business need?</h2>
+  <div class="spacer-40"></div>
+  <div class="grid-3-4 col-copy">
+    <p data-i18n="calc.p">A fair question — the right site is an investment, and its scale depends entirely on your goals.
+       This quick calculator gives an approximate estimate tailored to your project. The number comes
+       before any form: no registration, no phone number.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="calc-card">
+      <div class="calc-field">
+        <label data-i18n="calc.revenueLabel">🎯 Desired monthly revenue (EUR)</label>
+        <input type="text" id="revenue" placeholder="e.g. 15000" inputmode="numeric" data-i18n-attr="placeholder:calc.revenuePh">
+      </div>
+      <div class="calc-field">
+        <label data-i18n="calc.nicheLabel">🏢 Business niche</label>
+        <select id="niche">
+          <option value="ecommerce" data-i18n="calc.niche.ecommerce">🛍️ E-commerce (physical goods)</option>
+          <option value="services" data-i18n="calc.niche.services">🔧 B2C Services (repair, cleaning, beauty)</option>
+          <option value="b2b" data-i18n="calc.niche.b2b">🏭 B2B / Wholesale</option>
+          <option value="development" data-i18n="calc.niche.development">💻 Development / IT / Agencies</option>
+          <option value="medicine" data-i18n="calc.niche.medicine">🏥 Healthcare / Dentistry</option>
+          <option value="realestate" data-i18n="calc.niche.realestate">🏠 Real Estate / Construction</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label data-i18n="calc.avgOrderLabel">💵 Average order value (EUR)</label>
+        <input type="text" id="averageOrder" placeholder="e.g. 120" inputmode="numeric" data-i18n-attr="placeholder:calc.avgOrderPh">
+      </div>
+      <div class="calc-field">
+        <label data-i18n="calc.stageLabel">🚀 Business stage</label>
+        <select id="businessStage">
+          <option value="startup" data-i18n="calc.stage.startup">🌱 Startup (first sales)</option>
+          <option value="growth" selected data-i18n="calc.stage.growth">📈 Growth (regular sales)</option>
+          <option value="leader" data-i18n="calc.stage.leader">🏆 Leader (stable flow)</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <label><span data-i18n="calc.adSplitLabel">📊 Ad budget split:</span> <span id="splitLabel">50% Google / 50% Meta</span></label>
+        <div class="range-slider">
+          <input type="range" id="googleSplit" min="0" max="100" value="50" step="10">
+          <div class="range-labels"><span>100% Meta</span><span>50/50</span><span>100% Google</span></div>
+        </div>
+      </div>
+      <label class="checkbox-modern">
+        <input type="checkbox" id="needEcommerce">
+        <span style="font-size:14px;font-weight:400;text-transform:none;letter-spacing:0;" data-i18n="calc.needStore">🛒 I need an online store (selling products)</span>
+      </label>
+      <button class="button purple" id="calcBtn" style="width:100%;">
+        <span data-i18n="calc.seeResult">See result</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <div id="calcResult" class="result-block" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="spacer-80"></div><div class="section-divider"></div><div class="spacer-80"></div>
+
+  <!-- ==================== CASES ==================== -->
+  <h2 class="grid-full section-opener" id="work" style="margin-bottom:8px;" data-i18n="work.h2">Selected work</h2>
+  <div class="spacer-40"></div>
+
+  <!-- CASE 01 — ASIA -->
+  <div class="grid-1-2" id="case01"><span class="marker-label" data-i18n="case01.marker">Case 01 &middot; Asia Family</span></div>
+  <div class="spacer-20"></div>
+  <h2 class="grid-1-2" data-i18n="case01.h2">Built from zero.<br>Sold. Then hired again.</h2>
+  <div class="spacer-40"></div>
+  <div class="grid-3-4 col-copy">
+    <h4 style="margin-bottom:12px;" data-i18n="case01.h4">Brand &amp; digital for a family-owned Uighur restaurant</h4>
+    <p data-i18n="case01.p">Asian and Halal cuisine, Middle-Eastern heritage, a family audience — and a brief to feel
+       luxurious and welcoming at the same time.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="case-tabs" id="tabs01"></div>
+    <div class="case-window">
+      <div class="case-scroll" id="scroll01"><img id="img01" src="asia-cover.webp" alt="Asia Family — Cover"></div>
+      <span class="case-hint" id="hint01" data-i18n="case.hintScroll">&#8597; scroll</span>
+    </div>
+    <p class="case-cap" id="cap01"></p>
+  </div>
+  <div class="spacer-80"></div>
+  <h3 class="grid-1-2" data-i18n="case01.h3">The result</h3>
+  <div class="spacer-20"></div>
+  <div class="grid-3-4 col-copy">
+    <p data-i18n="case01.p2">The restaurant launched strong and grew. The owners sold the business on good terms —
+       then started again with me. That next venture is <strong>Shar-Shara</strong>, a restaurant
+       group I still work with today.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="cards-row cards-3">
+      <div class="card pad-tick" style="--tick:var(--mint)"><span class="stat">2022</span><p data-i18n="case01.stat1">Working together since — and still</p></div>
+      <div class="card pad-tick" style="--tick:var(--pink)"><span class="stat">1</span><p data-i18n="case01.stat2">Business built from zero — and sold</p></div>
+      <div class="card pad-tick" style="--tick:var(--mint)"><span class="stat">4</span><p data-i18n="case01.stat3">Venues in the group we run today</p></div>
+    </div>
+  </div>
+  <div class="spacer-40"></div>
+  <p class="pull grid-2-3"><span class="pull-a" data-i18n="case01.pullA">The strongest reference I can give:</span>
+     <span class="pull-b" data-i18n="case01.pullB">a client who sold one business — and hired me again for the next.</span><a class="pull-arrow" href="#case02" aria-label="Go to case 02">&#8595;</a></p>
+
+  <div class="spacer-80"></div>
+
+  <!-- CASE 02 — SHAR-SHARA -->
+  <div class="grid-1-2" id="case02"><span class="marker-label" data-i18n="case02.marker">Case 02 &middot; Shar-Shara</span></div>
+  <div class="spacer-20"></div>
+  <h2 class="grid-1-2" data-i18n="case02.h2">Same owners.<br>Bigger stage.</h2>
+  <div class="spacer-40"></div>
+  <div class="grid-3-4 col-copy">
+    <h4 style="margin-bottom:12px;" data-i18n="case02.h4">A restaurant group — the whole guest system</h4>
+    <p data-i18n="case02.p">Two restaurants, a fast-casual kebab spot and a banquet hall. Uzbek and European cuisine.
+       <em>Shar-shara</em> means <em>waterfall</em>.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4 col-copy">
+    <p data-i18n="case02.p2">This time it wasn't one restaurant but a group — so we built a system instead of a website.
+       Every venue gets its own QR menu, the banquet hall its own, and the print carries the same
+       identity into the guest's hands. Then came the question that started everything: the
+       aggregators were taking a cut of every order and keeping the guests. So we prototyped a
+       delivery app the group would own outright — its own brand, its own customers, no commission.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="case-tabs" id="tabs02"></div>
+    <div class="case-window"><div class="case-live" id="live02"></div></div>
+    <p class="case-cap" id="cap02"></p>
+  </div>
+
+  <div class="spacer-80"></div>
+
+  <!-- OTHER PROJECTS -->
+  <!-- CASE 03 — HGK -->
+  <div class="grid-1-2" id="case03"><span class="marker-label" data-i18n="case03.marker">Case 03 &middot; HGK Engineering</span></div>
+  <div class="spacer-20"></div>
+  <h2 class="grid-1-2" data-i18n="case03.h2">A site that<br>doesn't sell.<br>It vouches.</h2>
+  <div class="spacer-40"></div>
+  <div class="grid-3-4 col-copy">
+    <h4 style="margin-bottom:12px;" data-i18n="case03.h4">No lead form, no stock hero — every decision spent on proving precision</h4>
+    <p data-i18n="case03.p">A structural-execution contractor working Istanbul to Dubai, whose clients arrive warm — by
+       reputation, not by advert. So this one needed the opposite of a sales page.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4 col-copy">
+    <p data-i18n="case03.p2">No lead form. No pop-up. Nothing on the page asks for an email, because nobody buys a
+       structural contractor from a banner — they check whether you look like you can be trusted
+       with a building. So every decision went into <strong>proof of precision</strong>: a live
+       structural wireframe instead of a stock hero, monospace type borrowed from drawings, and
+       numbers that count themselves up rather than adjectives that claim.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="case-tabs" id="tabs03"></div>
+    <div class="case-window"><div class="case-live" id="live03"></div></div>
+    <p class="case-cap" id="cap03"></p>
+  </div>
+
+  <div class="spacer-80"></div>
+
+  <!-- CASE 05 — SVARCOM -->
+  <div class="grid-1-2" id="case04"><span class="marker-label no-ring" data-i18n="case04.marker">Case 04 &middot; Svarcom</span></div>
+  <div class="spacer-20"></div>
+  <h2 class="grid-1-2" data-i18n="case04.h2">A catalogue<br>that had to be<br>found fast.</h2>
+  <div class="spacer-40"></div>
+  <div class="grid-3-4 col-copy">
+    <h4 style="margin-bottom:12px;" data-i18n="case04.h4">Rebuilt so one cylinder is found in seconds, not clicks</h4>
+    <p data-i18n="case04.p">Svarcom supplies technical, medical and food gases across St. Petersburg, and has since 1995.
+       Their customers are welders, factories and hospitals: they don't browse — they need a specific
+       gas today, and to know it will actually arrive.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4 col-copy">
+    <p data-i18n="case04.p2">So the redesign put the two things that matter above everything else: <strong>the catalogue and
+       urgent delivery</strong>, side by side in the first screen. Gazprom Arena, Pulkovo and the
+       Admiralty Shipyards sit under the fold as partners, because in B2B the client list argues better
+       than any slogan. Everything else got out of the way.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="case-tabs" id="tabs05"></div>
+    <div class="case-window">
+      <div class="case-scroll" id="win05"></div>
+      <span class="case-hint" id="hint05" data-i18n="case.hintScroll">&#8597; scroll</span>
+    </div>
+    <p class="case-cap" id="cap05"></p>
+  </div>
+
+  <div class="spacer-80"></div>
+
+  <!-- CASE 06 — ASPHALT -->
+  <div class="grid-1-2" id="case05"><span class="marker-label no-ring" data-i18n="case05.marker">Case 05 &middot; Asphalt Express</span></div>
+  <div class="spacer-20"></div>
+  <h2 class="grid-1-2" data-i18n="case05.h2">Price first.<br>Contacts later.</h2>
+  <div class="spacer-40"></div>
+  <div class="grid-3-4 col-copy">
+    <h4 style="margin-bottom:12px;" data-i18n="case05.h4">A lead magnet that gives the price away — and earns better leads for it</h4>
+    <p data-i18n="case05.p">Asphalt Express paves across Moscow. One landing page with one job: turn a stranger comparing
+       five contractors into a request.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4 col-copy">
+    <p data-i18n="case05.p2">The lever was the calculator. Most contractors make you hand over a phone number to learn a price
+       — so most people leave. Here the estimate comes <strong>before</strong> the form: answer a few
+       questions, see your budget, and only then decide to talk. It costs nothing to try, which is why
+       people try — and the leads that do arrive already know what they want.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="case-tabs" id="tabs06"></div>
+    <div class="case-window">
+      <div class="case-scroll" id="win06"></div>
+      <span class="case-hint" id="hint06" data-i18n="case.hintScroll">&#8597; scroll</span>
+    </div>
+    <p class="case-cap" id="cap06"></p>
+  </div>
+
+  <div class="spacer-80"></div>
+
+  <!-- AND MANY OTHERS -->
+  <h3 class="grid-1-2" data-i18n="more.h3">And many others</h3>
+  <div class="spacer-40"></div>
+  <div class="grid-2-4">
+    <div class="more-grid">
+      <div class="more-tile" style="--c:#e0f9f3" tabindex="0">
+        <img src="tile-twins.webp" alt="Twins">
+        <div class="veil"><h4 data-i18n="more.t1t">Freight &amp; logistics</h4><p data-i18n="more.t1d"><b>Twins</b> — Proof up front: 20+ years, 1,750 vetted agents, 3,540 delivery cities.</p></div>
+      </div>
+      <div class="more-tile" style="--c:#faeaf2" tabindex="0">
+        <img src="tile-samorodova.webp" alt="Samorodova">
+        <div class="veil"><h4 data-i18n="more.t2t">Course platform</h4><p data-i18n="more.t2d"><b>Samorodova</b> — Payments, automatic access, lessons with progress checks, groups, built-in CRM — plus the branding.</p></div>
+      </div>
+      <div class="more-tile" style="--c:#e0f9f3" tabindex="0">
+        <img src="tile-medivel.webp" alt="Medivel">
+        <div class="veil"><h4 data-i18n="more.t3t">Dental clinic</h4><p data-i18n="more.t3d"><b>Medivel</b> — 60+ services with published prices, doctor profiles, a live blog and reviews.</p></div>
+      </div>
+      <div class="more-tile" style="--c:#fff4d4" tabindex="0">
+        <img src="tile-gustau.webp" alt="Gustau">
+        <div class="veil"><h4 data-i18n="more.t4t">Premium home fragrance</h4><p data-i18n="more.t4d"><b>Gustau</b> — An editorial storefront — the photography leads, the interface steps back.</p></div>
+      </div>
+      <div class="more-tile" style="--c:#fff4d4" tabindex="0">
+        <img src="tile-baloons.webp" alt="Event decor">
+        <div class="veil"><h4 data-i18n="more.t5t">Children&rsquo;s parties</h4><p data-i18n="more.t5d"><b>Event decor</b> — A soft, pastel world with an online catalogue for choosing and ordering decorations.</p></div>
+      </div>
+      <div class="more-tile" style="--c:#faeaf2" tabindex="0">
+        <div class="nda-ph" data-i18n="more.nda">Under NDA</div>
+        <div class="veil"><h4 data-i18n="more.t6t">Confidential</h4><p data-i18n="more.t6d"><b>Under NDA</b> — investor-presentation platforms for Silicon Valley founders, closed education systems for private academies, product launches in luxury and tech.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer-80"></div><div class="section-divider"></div><div class="spacer-80"></div>
+
+  <!-- ==================== REVIEWS ==================== -->
+  <h2 class="grid-full section-opener reviews-opener" id="reviews" data-i18n="reviews.h2">Reviews</h2>
+  <div class="spacer-20"></div>
+  <div class="grid-1-2 col-copy">
+    <p data-i18n="reviews.p">Real messages and platform reviews, exactly as they were written — in Russian.
+       Hover any of them for the English.</p>
+  </div>
+  <div class="spacer-40"></div>
+  <div class="grid-full">
+    <div class="rev-wall">
+      <div class="rev" style="--c:#e0f9f3; width:275px" tabindex="0">
+        <img src="rev-leads.webp" alt="Client review (original, in Russian)">
+        <span class="flag">RU &middot; hover to translate</span>
+        <div class="tr"><p>&laquo;Guys, we can't keep up with the enquiries!!! It's honestly mad — we'd never put money into advertising before and we were not ready for this at all. Let's add a CRM and a bot, because there's no way we can process it all by hand.&raquo;</p><span class="who">Asphalt paving · weeks after launch</span></div>
+      </div>
+      <div class="rev" style="--c:#faeaf2; width:757px" tabindex="0">
+        <img src="rev-exceeded.webp" alt="Client review (original, in Russian)">
+        <span class="flag">RU &middot; hover to translate</span>
+        <div class="tr"><p>&laquo;The design, the build and the content were done to the highest standard. Every wish about colour, form and content was taken into account. <b>The finished site exceeded my expectations.</b> Nadia was always reachable, advised me and made her own corrections, which showed in the result. Done promptly and to a high professional standard.&raquo;</p><span class="who">Website build</span></div>
+      </div>
+      <div class="rev" style="--c:#e0f9f3; width:274px" tabindex="0">
+        <img src="rev-2050.webp" alt="Client review (original, in Russian)">
+        <span class="flag">RU &middot; hover to translate</span>
+        <div class="tr"><p>&laquo;Thank you so much! We've finally worked out what's what. As for the sales process — it's as if we'd been living in the stone age and just moved to 2050.&raquo;</p><span class="who">Sales process &amp; automation</span></div>
+      </div>
+      <div class="rev" style="--c:#faeaf2; width:311px" tabindex="0">
+        <img src="rev-fast.webp" alt="Client review (original, in Russian)">
+        <span class="flag">RU &middot; hover to translate</span>
+        <div class="tr"><p>&laquo;Excellent work. Nadia made the site in the shortest possible time. Visually and technically — even better than I had planned. Corrections went in fast, details were added.&raquo;</p><span class="who">Website build</span></div>
+      </div>
+      <div class="rev" style="--c:#fff4d4; width:294px" tabindex="0">
+        <img src="rev-effort.webp" alt="Client review (original, in Russian)">
+        <span class="flag">RU &middot; hover to translate</span>
+        <div class="tr"><p>&laquo;Thank you for not just taking our text and dropping it in — but putting your own effort in to make it something top. I really value that.&raquo;</p><span class="who">Brand &amp; content</span></div>
+      </div>
+      <div class="rev" style="--c:#fff4d4; width:757px" tabindex="0">
+        <img src="rev-5plus.webp" alt="Client review (original, in Russian)">
+        <span class="flag">RU &middot; hover to translate</span>
+        <div class="tr"><p>&laquo;Huge thanks to Nadia for the quality of the work. Every wish was taken into account, the right recommendations were given. Very high-quality design. It was a pleasure working with someone so attentive. 5+.&raquo;</p><span class="who">Website build</span></div>
+      </div>
+      <div class="rev" style="--c:#e0f9f3; width:325px; margin-left:auto; margin-right:100px;" tabindex="0">
+        <img src="rev-best.webp" alt="Client review (original, in Russian)">
+        <span class="flag">RU &middot; hover to translate</span>
+        <div class="tr"><p>&laquo;Thank you so much! Very happy! Huge thanks for your patience with me. You are the best specialist! I'll be back more than once.&raquo;</p><span class="who">Website build</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer-80"></div>
+
+  <!-- ==================== CTA ==================== -->
+  <div class="grid-full">
+    <div class="cta-band">
+      <span class="eyebrow" style="margin-bottom:18px;" data-i18n="cta.eyebrow">Let's work together</span>
+      <h2 style="max-width:16ch;margin-bottom:18px;" data-i18n="cta.h2">Got a project?</h2>
+      <p style="max-width:52ch;margin-bottom:28px;color:rgba(255,251,245,.8);" data-i18n="cta.p">Tell me about it and I'll show you how to do it at least 20% more effectively.</p>
+      <button class="button" onclick="openContactModal()" data-i18n="cta.button">Propose a collaboration</button>
+    </div>
+  </div>
+
+  <div class="spacer-80"></div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <h3 class="footer-heading" data-i18n="footer.heading">get in touch</h3>
+      <div class="footer-links">
+        <a href="mailto:nadiamachulskaya@gmail.com" class="footer-link">nadiamachulskaya@gmail.com</a>
+        <a href="tel:+38640773677" class="footer-link">+386 40 773 677</a>
+        <a href="https://t.me/nadinski" target="_blank" rel="noopener" class="footer-link">t.me/nadinski</a>
+        <a href="https://wa.me/79099737333" target="_blank" rel="noopener" class="footer-link">WhatsApp</a>
+        <a href="https://www.behance.net/8373a5c4" target="_blank" rel="noopener" class="footer-link">Behance ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <div style="grid-column:1 / -1;height:60px;"></div>
+</div>
+
+<!-- ==================== CONTACT MODAL ==================== -->
+<div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-dialog">
+    <button class="modal-close" onclick="closeContactModal()" aria-label="Close" data-i18n-attr="aria-label:modal.close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h2 class="modal-title" id="modalTitle" data-i18n="cover.ctaWrite">Write to me</h2>
+    <p class="modal-note" data-i18n="modal.note">Whichever's easiest — I usually reply the same day.</p>
+    <div class="modal-links">
+      <a href="https://t.me/nadinski" target="_blank" rel="noopener" class="modal-link">
+        <img src="telegram.svg" alt="" onerror="this.style.display='none'">
+        <span>Telegram</span>
+        <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="https://wa.me/79099737333" target="_blank" rel="noopener" class="modal-link">
+        <img src="whatsapp.svg" alt="" onerror="this.style.display='none'">
+        <span>WhatsApp</span>
+        <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="mailto:nadiamachulskaya@gmail.com" class="modal-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+        <span data-i18n="modal.email">Email</span>
+        <svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCRIPTS ==================== -->
+<!-- i18n — EN/RU. Loads first so every later script (case tabs, calculator)
+     can read the current `lang` and call `tr()`/`t()`. -->
+<script>
+  const I18N = {
+    en: {
+      pageTitle: `Nadezhda Machulskaia · Portfolio`,
+      "nav.about": `About me`, "nav.calc": `Calculator`,
+      "nav.projects": `Projects`, "nav.reviews": `Reviews`, "nav.write": `Write to me`, "nav.menu": `Menu`,
+
+      "cover.eyebrow": `Nadezhda Machulskaia &middot; design &amp; build`,
+      "cover.hookA1": `Aerospace engineer`, "cover.hookA2": `by training&nbsp;—`,
+      "cover.hookB1": `designer &amp; builder`, "cover.hookB2": `by trade`,
+      "cover.sub": `I build <b>websites, brands and digital products</b> for owner-run businesses —
+      with restaurants as my main focus right now. Proof first, then the ask.`,
+      "cover.ctaWrite": `Write to me`, "cover.ctaCalc": `Price calculator`, "cover.scroll": `Scroll`,
+
+      "hello.eyebrow": `Hello, I'm Nadia`,
+      "hello.h4": `Aerospace engineer by training —<br>designer &amp; builder by trade.`,
+      "hello.p1": `For over a decade I've helped businesses grow online — <strong>websites, digital products and
+         brand systems</strong> that are as considered as they are effective. I ran my own media agency;
+         since 2024 I work independently.`,
+      "hello.p2": `More than <strong>30 projects</strong> on, the ones I'm proudest of are restaurants I've stayed with
+         for years — long after the first website went live. Now I'm building my business, my team and my
+         life here in Slovenia. I'm here for the long run.`,
+            "hello.stat1": `Aerospace engineering — Moscow Aviation Institute`,
+      "hello.stat2": `Years in design &amp; digital`,
+      "hello.stat3": `Independent — ex media-agency founder`,
+      "hello.stat4": `Projects · multi-year restaurant partners`,
+
+      "tasks.eyebrow": `Current focus`,
+      "tasks.h2": `What people<br>come to me with`,
+      "tasks.c1t": `Launch something new`,
+      "tasks.c1d": `Turn an idea, a product or a brand-new company into a digital presence that holds up.`,
+      "tasks.c2t": `Show an existing business as it really is`,
+      "tasks.c2d": `Put the worth and the standing of the company into a clear, modern digital form.`,
+      "tasks.c3t": `Get more enquiries`,
+      "tasks.c3d": `Rebuild the site and the path through it so that digital actually helps you sell.`,
+      "tasks.c4t": `Relaunch for a new audience`,
+      "tasks.c4d": `Refresh the site, the positioning and the way you speak when you scale or enter a new market.`,
+      "tasks.c5t": `Build a complex digital product`,
+      "tasks.c5d": `Not just a website but a service, a client area, a catalogue, a system with integrations and automation.`,
+      "tasks.c6t": `Turn an idea into a working tool`,
+      "tasks.c6d": `Think through the structure, the experience and the technology where no ready-made template exists.`,
+
+
+      "calc.eyebrow": `Try it first`,
+      "calc.h2": `What kind of<br>website does my<br>business need?`,
+      "calc.p": `A fair question — the right site is an investment, and its scale depends entirely on your goals.
+         This quick calculator gives an approximate estimate tailored to your project. The number comes
+         before any form: no registration, no phone number.`,
+      "calc.revenueLabel": `🎯 Desired monthly revenue (EUR)`, "calc.revenuePh": `e.g. 15000`,
+      "calc.nicheLabel": `🏢 Business niche`,
+      "calc.niche.ecommerce": `🛍️ E-commerce (physical goods)`,
+      "calc.niche.services": `🔧 B2C Services (repair, cleaning, beauty)`,
+      "calc.niche.b2b": `🏭 B2B / Wholesale`,
+      "calc.niche.development": `💻 Development / IT / Agencies`,
+      "calc.niche.medicine": `🏥 Healthcare / Dentistry`,
+      "calc.niche.realestate": `🏠 Real Estate / Construction`,
+      "calc.avgOrderLabel": `💵 Average order value (EUR)`, "calc.avgOrderPh": `e.g. 120`,
+      "calc.stageLabel": `🚀 Business stage`,
+      "calc.stage.startup": `🌱 Startup (first sales)`,
+      "calc.stage.growth": `📈 Growth (regular sales)`,
+      "calc.stage.leader": `🏆 Leader (stable flow)`,
+      "calc.adSplitLabel": `📊 Ad budget split:`,
+      "calc.needStore": `🛒 I need an online store (selling products)`,
+      "calc.seeResult": `See result`,
+
+      "work.h2": `Selected work`,
+      "case.hintScroll": `&#8597; scroll`,
+
+      "case01.marker": `Case 01 &middot; Asia Family`,
+      "case01.h2": `Built from zero.<br>Sold. Then hired again.`,
+      "case01.h4": `Brand &amp; digital for a family-owned Uighur restaurant`,
+      "case01.p": `Asian and Halal cuisine, Middle-Eastern heritage, a family audience — and a brief to feel
+         luxurious and welcoming at the same time.`,
+      "case01.h3": `The result`,
+      "case01.p2": `The restaurant launched strong and grew. The owners sold the business on good terms —
+         then started again with me. That next venture is <strong>Shar-Shara</strong>, a restaurant
+         group I still work with today.`,
+      "case01.stat1": `Working together since — and still`,
+      "case01.stat2": `Business built from zero — and sold`,
+      "case01.stat3": `Venues in the group we run today`,
+      "case01.pullA": `The strongest reference I can give:`,
+      "case01.pullB": `a client who sold one business — and hired me again for the next.`,
+
+      "case02.marker": `Case 02 &middot; Shar-Shara`,
+      "case02.h2": `Same owners.<br>Bigger stage.`,
+      "case02.h4": `A restaurant group — the whole guest system`,
+      "case02.p": `Two restaurants, a fast-casual kebab spot and a banquet hall. Uzbek and European cuisine.
+         <em>Shar-shara</em> means <em>waterfall</em>.`,
+      "case02.p2": `This time it wasn't one restaurant but a group — so we built a system instead of a website.
+         Every venue gets its own QR menu, the banquet hall its own, and the print carries the same
+         identity into the guest's hands. Then came the question that started everything: the
+         aggregators were taking a cut of every order and keeping the guests. So we prototyped a
+         delivery app the group would own outright — its own brand, its own customers, no commission.`,
+
+      "otherProjects.h3": `Other projects`,
+
+      "case03.marker": `Case 03 &middot; HGK Engineering`,
+      "case03.h2": `A site that<br>doesn't sell.<br>It vouches.`,
+      "case03.h4": `No lead form, no stock hero — every decision spent on proving precision`,
+      "case03.p": `A structural-execution contractor working Istanbul to Dubai, whose clients arrive warm — by
+         reputation, not by advert. So this one needed the opposite of a sales page.`,
+      "case03.p2": `No lead form. No pop-up. Nothing on the page asks for an email, because nobody buys a
+         structural contractor from a banner — they check whether you look like you can be trusted
+         with a building. So every decision went into <strong>proof of precision</strong>: a live
+         structural wireframe instead of a stock hero, monospace type borrowed from drawings, and
+         numbers that count themselves up rather than adjectives that claim.`,
+
+      "case04.marker": `Case 04 &middot; Svarcom`,
+      "case04.h2": `A catalogue<br>that had to be<br>found fast.`,
+      "case04.h4": `Rebuilt so one cylinder is found in seconds, not clicks`,
+      "case04.p": `Svarcom supplies technical, medical and food gases across St. Petersburg, and has since 1995.
+         Their customers are welders, factories and hospitals: they don't browse — they need a specific
+         gas today, and to know it will actually arrive.`,
+      "case04.p2": `So the redesign put the two things that matter above everything else: <strong>the catalogue and
+         urgent delivery</strong>, side by side in the first screen. Gazprom Arena, Pulkovo and the
+         Admiralty Shipyards sit under the fold as partners, because in B2B the client list argues better
+         than any slogan. Everything else got out of the way.`,
+
+      "case05.marker": `Case 05 &middot; Asphalt Express`,
+      "case05.h2": `Price first.<br>Contacts later.`,
+      "case05.h4": `A lead magnet that gives the price away — and earns better leads for it`,
+      "case05.p": `Asphalt Express paves across Moscow. One landing page with one job: turn a stranger comparing
+         five contractors into a request.`,
+      "case05.p2": `The lever was the calculator. Most contractors make you hand over a phone number to learn a price
+         — so most people leave. Here the estimate comes <strong>before</strong> the form: answer a few
+         questions, see your budget, and only then decide to talk. It costs nothing to try, which is why
+         people try — and the leads that do arrive already know what they want.`,
+
+      "more.h3": `And many others`,
+      "more.t1t": `Freight &amp; logistics`, "more.t1d": `<b>Twins</b> — Proof up front: 20+ years, 1,750 vetted agents, 3,540 delivery cities.`,
+      "more.t2t": `Course platform`, "more.t2d": `<b>Samorodova</b> — Payments, automatic access, lessons with progress checks, groups, built-in CRM — plus the branding.`,
+      "more.t3t": `Dental clinic`, "more.t3d": `<b>Medivel</b> — 60+ services with published prices, doctor profiles, a live blog and reviews.`,
+      "more.t4t": `Premium home fragrance`, "more.t4d": `<b>Gustau</b> — An editorial storefront — the photography leads, the interface steps back.`,
+      "more.t5t": `Children&rsquo;s parties`, "more.t5d": `<b>Event decor</b> — A soft, pastel world with an online catalogue for choosing and ordering decorations.`,
+      "more.t6t": `Confidential`, "more.t6d": `<b>Under NDA</b> — investor-presentation platforms for Silicon Valley founders, closed education systems for private academies, product launches in luxury and tech.`,
+      "more.nda": `Under NDA`,
+
+      "reviews.h2": `Reviews`,
+      "reviews.p": `Real messages and platform reviews, exactly as they were written — in Russian.
+         Hover any of them for the English.`,
+
+      "cta.eyebrow": `Let's work together`, "cta.h2": `Got a project?`,
+      "cta.p": `Tell me about it and I'll show you how to do it at least 20% more effectively.`,
+      "cta.button": `Propose a collaboration`,
+
+      "footer.heading": `get in touch`,
+      "modal.note": `Whichever's easiest — I usually reply the same day.`,
+      "modal.email": `Email`, "modal.close": `Close`
+    },
+    ru: {
+      pageTitle: `Nadezhda Machulskaia · Портфолио`,
+      "nav.about": `Обо мне`, "nav.calc": `Калькулятор`,
+      "nav.projects": `Проекты`, "nav.reviews": `Отзывы`, "nav.write": `Написать мне`, "nav.menu": `Меню`,
+
+      "cover.eyebrow": `Nadezhda Machulskaia &middot; дизайн и разработка`,
+      "cover.hookA1": `Инженер`, "cover.hookA2": `по образованию&nbsp;—`,
+      "cover.hookB1": `дизайнер`, "cover.hookB2": `по призванию`,
+      "cover.sub": `<b>Сайты, фирменный стиль и цифровые продукты</b> для бизнеса, который растёт.`,
+      "cover.ctaWrite": `Написать мне`, "cover.ctaCalc": `Рассчитать стоимость`, "cover.scroll": `Листайте`,
+
+      "hello.eyebrow": `Привет, я Надя`,
+      "hello.h4": `Инженер по образованию —<br>дизайнер по призванию.`,
+      "hello.p1": `Больше десяти лет помогаю бизнесу расти в интернете: <strong>сайты, цифровые продукты,
+         фирменный стиль</strong>. Делаю так, чтобы было и красиво, и работало. Закрыла собственное
+         медиа-агентство и с 2024 года работаю сама на себя. За плечами больше тридцати проектов —
+         и горжусь я теми, кто остаётся со мной годами.`,
+            "hello.p2": ``,
+      "hello.stat1": `Ракетно-космическая техника, МАИ`,
+      "hello.stat2": `Лет в дизайне и цифре`,
+      "hello.stat3": `Сама на себя — до этого своё агентство`,
+      "hello.stat4": `Проектов · с постоянными заказчиками работаем годами`,
+
+      "tasks.eyebrow": `Текущая специализация`,
+      "tasks.h2": `Задачи, с которыми<br>ко мне приходят`,
+      "tasks.c1t": `Запустить новый бизнес`,
+      "tasks.c1d": `Превратить идею, продукт или новую компанию в полноценное digital-присутствие.`,
+      "tasks.c2t": `Упаковать существующий бизнес`,
+      "tasks.c2d": `Перевести ценность и уровень компании в понятный, современный digital-образ.`,
+      "tasks.c3t": `Увеличить количество заявок`,
+      "tasks.c3d": `Перестроить сайт и пользовательский путь так, чтобы digital действительно помогал продавать.`,
+      "tasks.c4t": `Перезапустить бизнес для новой аудитории`,
+      "tasks.c4d": `Обновить сайт, позиционирование и digital-коммуникацию при масштабировании или выходе на новый рынок.`,
+      "tasks.c5t": `Создать сложный digital-продукт`,
+      "tasks.c5d": `Разработать не просто сайт, а сервис, личный кабинет, каталог, систему с интеграциями или автоматизацией.`,
+      "tasks.c6t": `Превратить идею в работающий digital-инструмент`,
+      "tasks.c6d": `Продумать структуру, UX и технологическое решение там, где готового шаблона просто не существует.`,
+
+
+      "calc.eyebrow": `Сначала попробуйте`,
+      "calc.h2": `Какой сайт<br>нужен моему<br>бизнесу?`,
+      "calc.p": `Сайт — это вложение, и размер его зависит прежде всего от ваших целей. Калькулятор прикинет
+         сумму для вашего проекта, исходя из вашей сферы и желаемых результатов.`,
+      "calc.revenueLabel": `🎯 Желаемая выручка в месяц (EUR)`, "calc.revenuePh": `например, 15000`,
+      "calc.nicheLabel": `🏢 Ниша бизнеса`,
+      "calc.niche.ecommerce": `🛍️ Интернет-магазин (товары)`,
+      "calc.niche.services": `🔧 Услуги B2C (ремонт, клининг, красота)`,
+      "calc.niche.b2b": `🏭 B2B / Опт`,
+      "calc.niche.development": `💻 Разработка / IT / Агентства`,
+      "calc.niche.medicine": `🏥 Медицина / Стоматология`,
+      "calc.niche.realestate": `🏠 Недвижимость / Строительство`,
+      "calc.avgOrderLabel": `💵 Средний чек (EUR)`, "calc.avgOrderPh": `например, 120`,
+      "calc.stageLabel": `🚀 Стадия бизнеса`,
+      "calc.stage.startup": `🌱 Стартап (первые продажи)`,
+      "calc.stage.growth": `📈 Рост (регулярные продажи)`,
+      "calc.stage.leader": `🏆 Лидер (стабильный поток)`,
+      "calc.adSplitLabel": `📊 Разбивка рекламного бюджета:`,
+      "calc.needStore": `🛒 Мне нужен интернет-магазин (продажа товаров)`,
+      "calc.seeResult": `Показать результат`,
+
+      "work.h2": `Избранные работы`,
+      "case.hintScroll": `&#8597; листайте`,
+
+      "case01.marker": `Кейс 01 &middot; Asia Family`,
+      "case01.h2": `С нуля.<br>Продали. И позвали снова.`,
+      "case01.h4": `Фирменный стиль и всё цифровое для семейного уйгурского ресторана`,
+      "case01.p": `Азиатская и халяльная кухня, ближневосточные корни, гости с детьми — и просьба: чтобы
+         выглядело одновременно дорого и по-домашнему.`,
+      "case01.h3": `Что в итоге`,
+      "case01.p2": `Успешный запуск и рост выручки. Хозяева выгодно продали его и начали новое дело —
+         на этот раз сеть ресторанов <strong>Шар-Шара</strong>, с которой работаем до сих пор.`,
+      "case01.stat1": `Начали в этом году — и не расставались`,
+      "case01.stat2": `Дело, поднятое с нуля — и проданное`,
+      "case01.stat3": `Заведения в группе, которую ведём сейчас`,
+      "case01.pullA": `Моя лучшая рекомендация:`,
+      "case01.pullB": `клиент продал один бизнес — и позвал меня в следующий.`,
+
+      "case02.marker": `Кейс 02 &middot; Шар-Шара`,
+      "case02.h2": `Тот же заказчик,<br>больший размах.`,
+      "case02.h4": `Всё, с чем имеет дело гость, и не только`,
+      "case02.p": `Два ресторана, кебабная, банкетный зал и доставка.`,
+      "case02.p2": `Теперь это был не ресторан, а группа — поэтому мы делали не сайт, а систему.
+         У каждого заведения своё QR-меню, у банкетного зала — своё, и печать доносит тот же стиль
+         прямо до гостя. А потом встал вопрос, с которого всё и завертелось: агрегаторы брали процент
+         с каждого заказа и забирали себе гостей. Так появилось приложение доставки, которое
+         принадлежит группе целиком: свой бренд, свои клиенты, никакой комиссии.`,
+
+      "otherProjects.h3": `Другие проекты`,
+
+      "case03.marker": `Кейс 03 &middot; HGK Engineering`,
+      "case03.h2": `Не рекламный,<br>а имиджевый.`,
+      "case03.h4": `Ни формы заявки, ни картинок из фотобанка: всё работает на одно — доказать точность`,
+      "case03.p": `Подрядчик по строительным конструкциям, работает от Стамбула до Дубая. Клиенты приходят
+         к нему по репутации, а не по рекламе — значит, и сайт нужен обратный тому, что принято
+         называть продающим.`,
+      "case03.p2": `Ни формы заявки, ни всплывающих окон. Страница нигде не просит почту: подрядчика
+         по конструкциям не выбирают по баннеру — смотрят, можно ли доверить ему здание. Поэтому всё
+         на этой странице <strong>доказывает точность</strong>: живой каркас вместо картинки из
+         фотобанка, шрифт, взятый с чертежей, и цифры, которые отсчитывают себя сами — вместо
+         прилагательных, которые только обещают.`,
+
+      "case04.marker": `Кейс 04 &middot; Svarcom`,
+      "case04.h2": `Каталог,<br>в котором находят<br>за секунды.`,
+      "case04.h4": `Пересобрали так, чтобы нужный баллон находился за секунды`,
+      "case04.p": `Svarcom с 1995 года возит по Петербургу технические, медицинские и пищевые газы.
+         Его клиенты — сварщики, заводы, больницы. Они не разглядывают каталог: им нужен вот этот газ
+         сегодня и уверенность, что он доедет.`,
+      "case04.p2": `Поэтому в новом сайте наверх вышли две вещи: <strong>каталог и срочная доставка</strong>,
+         рядом, в первом же экране. Газпром Арена, Пулково и Адмиралтейские верфи стоят чуть ниже:
+         в опте список клиентов убеждает лучше любого слогана.`,
+
+      "case05.marker": `Кейс 05 &middot; Asphalt Express`,
+      "case05.h2": `Сначала цена.<br>Контакты потом.`,
+      "case05.h4": `Отдаём цену даром — и получаем заявки получше`,
+      "case05.p": `Asphalt Express кладёт асфальт по Москве. Одна страница с одной задачей: человек
+         сравнивает пятерых подрядчиков — надо, чтобы заявку он оставил здесь.`,
+      "case05.p2": `Всё решил калькулятор. Обычно, чтобы узнать цену, приходится оставить телефон. Здесь сумма
+         появляется <strong>раньше</strong> формы: человек отвечает на пару вопросов, видит сумму и только
+         потом решает, оставлять свои данные или нет. Узнать всё нужное ничего не стоит, поэтому
+         калькулятором пользуется гораздо больше людей — а те, кто оставляет заявку, уже точно знают,
+         что предложение им подходит.`,
+
+      "more.h3": `И многое другое`,
+      "more.t1t": `Грузоперевозки`, "more.t1d": `<b>Twins</b> — доказательства сразу: 20 лет на рынке, 1750 проверенных агентов, 3540 городов доставки.`,
+      "more.t2t": `Платформа для курсов`, "more.t2d": `<b>Самородова</b> — оплата, доступ без участия человека, уроки с проверкой, группы, своя CRM — и фирменный стиль в придачу.`,
+      "more.t3t": `Стоматология`, "more.t3d": `<b>Medivel</b> — больше 60 услуг с открытыми ценами, врачи, живой блог и отзывы.`,
+      "more.t4t": `Ароматы для дома`, "more.t4d": `<b>Gustau</b> — витрина, где ведёт фотография, а интерфейс отходит в сторону.`,
+      "more.t5t": `Детские праздники`, "more.t5d": `<b>Оформление праздников</b> — мягкий пастельный мир и каталог, где украшения выбирают и сразу заказывают.`,
+      "more.t6t": `Без имени`, "more.t6d": `<b>Под NDA</b> — платформы для встреч с инвесторами, закрытые школы для частных академий, запуски в люксе и технологиях.`,
+      "more.nda": `Под NDA`,
+
+      "reviews.h2": `Отзывы`,
+      "reviews.p": `Настоящие сообщения и отзывы с площадок — слово в слово, как их написали.`,
+
+      "cta.eyebrow": `Давайте работать вместе`, "cta.h2": `Есть проект?`,
+      "cta.p": `Расскажите про него мне, и я покажу, как можно реализовать его как минимум на 20% эффективнее.`,
+      "cta.button": `Предложить сотрудничество`,
+
+      "footer.heading": `на связи`,
+      "modal.note": `Как вам удобнее — обычно отвечаю в тот же день.`,
+      "modal.email": `Почта`, "modal.close": `Закрыть`
+    }
+  };
+
+  let lang = localStorage.getItem("nadinski-lang") || "en";
+
+  /* tr(v): resolves a value that may be a plain string or a {en,ru} object
+     against the current language — used by the case-tab / calculator data. */
+  function tr(v){ return (v && typeof v === "object") ? (v[lang] !== undefined ? v[lang] : v.en) : v; }
+  function t(key){ const d = I18N[lang] || I18N.en; return d[key] !== undefined ? d[key] : (I18N.en[key] !== undefined ? I18N.en[key] : key); }
+
+  const __rebuilders = [];              // dynamic sections register a refresh callback here
+  function onLangRebuild(fn){ __rebuilders.push(fn); }
+
+  function applyLang(){
+    document.documentElement.lang = lang;
+    document.title = t("pageTitle");
+    document.body.classList.toggle("lang-ru", lang === "ru");
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      const k = el.getAttribute("data-i18n");
+      const d = I18N[lang] || I18N.en;
+      if (d[k] !== undefined) el.innerHTML = d[k];
+    });
+    document.querySelectorAll("[data-i18n-attr]").forEach(function(el){
+      el.getAttribute("data-i18n-attr").split(";").forEach(function(pair){
+        const parts = pair.split(":"); const attr = parts[0], key = parts[1];
+        if (!attr || !key) return;
+        el.setAttribute(attr, t(key));
+      });
+    });
+    document.querySelectorAll(".lang-switch button").forEach(function(b){
+      b.classList.toggle("active", b.dataset.lang === lang);
+    });
+    __rebuilders.forEach(function(fn){ fn(); });
+  }
+
+  document.querySelectorAll(".lang-switch button").forEach(function(b){
+    b.addEventListener("click", function(){
+      if (b.dataset.lang === lang) return;
+      lang = b.dataset.lang;
+      localStorage.setItem("nadinski-lang", lang);
+      applyLang();
+    });
+  });
+
+  applyLang();   // static content first; dynamic sections re-run this once they mount
+</script>
+
+<script>
+  /* burger — panel slides in transparent, the page behind blurs (HGK's move) */
+  (function(){
+    var b  = document.getElementById("burger"),
+        nl = document.getElementById("navLinks"),
+        ov = document.getElementById("navOverlay");
+    function setOpen(open){
+      b.classList.toggle("active", open);
+      nl.classList.toggle("open", open);
+      ov.classList.toggle("active", open);
+      b.setAttribute("aria-expanded", open ? "true" : "false");
+      document.body.style.overflow = open ? "hidden" : "";
+    }
+    b.addEventListener("click", function(){ setOpen(!nl.classList.contains("open")); });
+    ov.addEventListener("click", function(){ setOpen(false); });
+    nl.querySelectorAll(".nav-link").forEach(function(a){
+      a.addEventListener("click", function(){ setOpen(false); });
+    });
+    document.addEventListener("keydown", function(e){
+      if (e.key === "Escape" && nl.classList.contains("open")) setOpen(false);
+    });
+  })();
+
+  /* contact modal */
+  var modal = document.getElementById("contactModal"), isOpen = false, lastFocus = null;
+  function openContactModal(){
+    if (isOpen) return; isOpen = true; lastFocus = document.activeElement;
+    modal.classList.add("active"); document.body.style.overflow = "hidden";
+    modal.querySelector(".modal-close").focus();
+    document.addEventListener("keydown", escClose);
+  }
+  function closeContactModal(){
+    if (!isOpen) return; isOpen = false;
+    modal.classList.remove("active"); document.body.style.overflow = "";
+    document.removeEventListener("keydown", escClose);
+    if (lastFocus) lastFocus.focus();
+  }
+  function escClose(e){ if (e.key === "Escape") closeContactModal(); }
+  modal.addEventListener("click", function(e){ if (e.target === modal) closeContactModal(); });
+  modal.querySelectorAll(".modal-link").forEach(function(l){
+    l.addEventListener("click", function(){ setTimeout(closeContactModal, 150); });
+  });
+</script>
+
+<!-- cover: a slow-turning artificial-gravity station over a quiet starfield.
+     Nadia is an aerospace engineer — a double spin-wheel with a faceted core,
+     laced by halo rings. Her own structure, cool palette only. -->
+<script>
+(function(){
+  const canvas = document.getElementById("cover-canvas");
+  const ctx = canvas.getContext("2d");
+  const cover = document.querySelector(".cover");
+  const TAU = Math.PI*2;
+  let W = 0, H = 0, dpr = 1;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const CREAM = [255,251,245];
+  const LAV   = [169,140,255];
+
+  /* pointer, normalised to [-1..1] from cover centre, plus raw px for the sky */
+  const m = { nx:0, ny:0, px:-9999, py:-9999, active:false };
+  let ex = 0, ey = 0;                 // eased pointer for parallax
+
+  /* ---------------- starfield (quiet backdrop) ---------------- */
+  let stars = [];
+  const REACH = 150;
+  function gauss(){ return (Math.random()+Math.random()+Math.random()+Math.random()-2)/2; }
+  function buildStars(){
+    const count = Math.round((W*H)/5200);
+    const angle = -0.42, cx = W*0.5, cy = H*0.42, bandW = Math.min(W,H)*0.34;
+    stars = [];
+    for (let i=0;i<count;i++){
+      let x, y;
+      if (Math.random() < 0.6){
+        const along = (Math.random()*2-1) * (Math.sqrt(W*W+H*H)*0.55);
+        const off = gauss() * bandW;
+        x = cx + along*Math.cos(angle) - off*Math.sin(angle);
+        y = cy + along*Math.sin(angle) + off*Math.cos(angle);
+      } else { x = Math.random()*W; y = Math.random()*H; }
+      if (x<-4||x>W+4||y<-4||y>H+4){ i--; continue; }
+      stars.push({
+        x, y,
+        r: 0.4 + Math.random()*1.1,
+        base: 0.11 + Math.random()*0.23,
+        amp:  0.05 + Math.random()*0.13,
+        speed:0.4 + Math.random()*1.3,
+        phase:Math.random()*Math.PI*2,
+        tint: Math.random() < 0.22 ? LAV : CREAM
+      });
+    }
+  }
+
+  /* ---------------- 3D helpers (arrays [x,y,z]) ---------------- */
+  function rot(x,y,z, rx,ry,rz){
+    let c,s,t1,t2;
+    c=Math.cos(rx);s=Math.sin(rx); t1=y*c - z*s; t2=y*s + z*c; y=t1; z=t2;
+    c=Math.cos(ry);s=Math.sin(ry); t1=x*c + z*s; t2=-x*s + z*c; x=t1; z=t2;
+    c=Math.cos(rz);s=Math.sin(rz); t1=x*c - y*s; t2=x*s + y*c; x=t1; y=t2;
+    return [x,y,z];
+  }
+  function merge(){
+    const nodes=[], edges=[];
+    for (let g=0; g<arguments.length; g++){
+      const gg=arguments[g], off=nodes.length;
+      for (const n of gg.nodes) nodes.push(n);
+      for (const e of gg.edges) edges.push([e[0]+off, e[1]+off, e[2]]);
+    }
+    return {nodes, edges};
+  }
+  function movG(g,dx,dy,dz){ return {nodes:g.nodes.map(n=>[n[0]+dx,n[1]+dy,n[2]+dz]), edges:g.edges}; }
+  function rotG(g,rx,ry,rz){ return {nodes:g.nodes.map(n=>rot(n[0],n[1],n[2],rx,ry,rz)), edges:g.edges}; }
+  function torus(R,r,seg,sides,kRing,kRail){
+    const nodes=[],edges=[];
+    for(let i=0;i<seg;i++){const u=i/seg*TAU,cu=Math.cos(u),su=Math.sin(u);
+      for(let j=0;j<sides;j++){const v=j/sides*TAU,cv=Math.cos(v),sv=Math.sin(v);
+        nodes.push([(R+r*cv)*cu,(R+r*cv)*su,r*sv]);}}
+    const id=(i,j)=>(i%seg)*sides+(j%sides);
+    for(let i=0;i<seg;i++)for(let j=0;j<sides;j++){
+      edges.push([id(i,j),id(i,j+1),kRing]); edges.push([id(i,j),id(i+1,j),kRail]);}
+    return {nodes,edges};
+  }
+  function ring(R,n,kind,tx,tz){
+    const nodes=[],edges=[];
+    for(let i=0;i<n;i++){const a=i/n*TAU; nodes.push(rot(R*Math.cos(a),R*Math.sin(a),0, tx,0,tz));}
+    for(let i=0;i<n;i++) edges.push([i,(i+1)%n,kind]);
+    return {nodes,edges};
+  }
+  function prism(R,h,sides,kind){
+    const nodes=[],edges=[];
+    for(let s=0;s<sides;s++){const a=s/sides*TAU; nodes.push([R*Math.cos(a),h/2,R*Math.sin(a)]);}
+    for(let s=0;s<sides;s++){const a=s/sides*TAU; nodes.push([R*Math.cos(a),-h/2,R*Math.sin(a)]);}
+    for(let s=0;s<sides;s++){
+      edges.push([s,(s+1)%sides,kind]); edges.push([sides+s,sides+(s+1)%sides,kind]); edges.push([s,sides+s,kind]);}
+    return {nodes,edges};
+  }
+  const PHI=(1+Math.sqrt(5))/2;
+  function dodeca(scale,kind){
+    const p=PHI, q=1/PHI;
+    const v=[[1,1,1],[1,1,-1],[1,-1,1],[1,-1,-1],[-1,1,1],[-1,1,-1],[-1,-1,1],[-1,-1,-1],
+      [0,q,p],[0,q,-p],[0,-q,p],[0,-q,-p],[q,p,0],[q,-p,0],[-q,p,0],[-q,-p,0],
+      [p,0,q],[p,0,-q],[-p,0,q],[-p,0,-q]];
+    const nodes=v.map(a=>[a[0]*scale,a[1]*scale,a[2]*scale]), edges=[];
+    for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[i][0]-nodes[j][0],dy=nodes[i][1]-nodes[j][1],dz=nodes[i][2]-nodes[j][2];
+      if(Math.sqrt(dx*dx+dy*dy+dz*dz) < 1.35*scale) edges.push([i,j,kind]);}
+    return {nodes,edges};
+  }
+  /* a spin-disc: rim (normal +Y) at height y, spokes converging to a faceted hub.
+     Facet count == spoke count, so every spoke lands on its own face. */
+  function wheel(R, hubR, nSpokes, y, seg, sides){
+    let g = rotG(torus(R,.08,seg,sides,'ring','ring2'), Math.PI/2,0,0);   // normal -> Y
+    g = {nodes:g.nodes.map(n=>[n[0],n[1]+y,n[2]]), edges:g.edges.slice()};
+    const base=g.nodes.length;
+    for(let k=0;k<nSpokes;k++){const a=k/nSpokes*TAU; g.nodes.push([hubR*Math.cos(a), y, hubR*Math.sin(a)]);}
+    for(let k=0;k<nSpokes;k++){
+      const rimIdx=(Math.round(k/nSpokes*seg)%seg)*sides;
+      g.edges.push([base+k, rimIdx, 'spoke']);
+    }
+    return g;
+  }
+  /* the hub itself: a short faceted drum, one facet per spoke, sitting at the
+     disc plane and stepping down toward the spine — a real hub, not a flat ring. */
+  function hubDrum(R, sides, yTop, thickness, kind){
+    const nodes=[], edges=[];
+    for(let s=0;s<sides;s++){const a=s/sides*TAU; nodes.push([R*Math.cos(a), yTop, R*Math.sin(a)]);}
+    for(let s=0;s<sides;s++){const a=s/sides*TAU; nodes.push([R*Math.cos(a), yTop-thickness, R*Math.sin(a)]);}
+    for(let s=0;s<sides;s++){
+      edges.push([s,(s+1)%sides,kind]); edges.push([sides+s,sides+(s+1)%sides,kind]); edges.push([s,sides+s,kind]);
+    }
+    return {nodes,edges};
+  }
+  /* the spine: a triangulated truss between the two hubs — reads as engineered,
+     not decorative. It stays stationary — the discs spin around it, the way a
+     real docking spindle would sit still against a rotating ring. */
+  function trussSpine(R, y0, y1, sides, bays, kRail, kWeb){
+    const nodes=[], edges=[];
+    const stations = bays+1;
+    for(let s=0;s<stations;s++){
+      const y = y0 + (y1-y0)*(s/bays);
+      for(let c=0;c<sides;c++){ const a=c/sides*TAU; nodes.push([R*Math.cos(a), y, R*Math.sin(a)]); }
+    }
+    const idx=(s,c)=>s*sides+c;
+    for(let s=0;s<bays;s++)for(let c=0;c<sides;c++){
+      edges.push([idx(s,c), idx(s+1,c), kRail]);                          // longeron
+      const c2=(c+1)%sides;
+      if((s+c)%2===0) edges.push([idx(s,c), idx(s+1,c2), kWeb]); else edges.push([idx(s,c2), idx(s+1,c), kWeb]);
+    }
+    return {nodes,edges};
+  }
+
+  /* ---------------- the station ---------------- */
+  /* two spoked spin-discs, counter-rotating, on a stationary truss spine —
+     hubs are faceted to match their spoke count, the spine is a real braced
+     truss between them, and it stays still while the discs turn either way. */
+  const R = 1.5, SEP = 0.8, HUBR = 0.24, SPOKES = 10, HUBH = 0.16, TRUSS_R = 0.18;
+  const TOP    = merge(wheel(R,HUBR,SPOKES, SEP,58,5), hubDrum(HUBR,SPOKES, SEP, HUBH,'core'));
+  const BOTTOM = merge(wheel(R,HUBR,SPOKES,-SEP,58,5), hubDrum(HUBR,SPOKES,-SEP,-HUBH,'core'));
+  const SPINE  = merge(
+    trussSpine(TRUSS_R, -SEP+HUBH, SEP-HUBH, 4, 3, 'rail','web'),
+    prism(TRUSS_R*0.85, 0.16, 6, 'core')            // stationary docking node, dead centre
+  );
+  const GROUPS = [ {g:TOP, spin:1}, {g:BOTTOM, spin:-1}, {g:SPINE, spin:0} ];   // counter-rotation
+  const STYLE = {
+    ring:[LAV,.56,1.25], ring2:[CREAM,.28,1.0],
+    spoke:[LAV,.48,1.15], core:[CREAM,.62,1.35],
+    rail:[CREAM,.50,1.2], web:[LAV,.34,1.0]
+  };
+
+  /* ---------------- layout / projection ---------------- */
+  let cxS=0, cyS=0, S=1;
+  const CAM = 16;
+  function layout(){
+    cxS = W*0.68;                                  // right of the copy
+    cyS = H*0.50;
+    S   = Math.min(H*0.258, W*0.202);              // as large as the frame takes
+  }
+
+  /* ---------------- pointer ---------------- */
+  cover.addEventListener("mousemove", function(e){
+    const r = cover.getBoundingClientRect();
+    m.px = e.clientX - r.left; m.py = e.clientY - r.top;
+    m.nx = (m.px/W - 0.5)*2; m.ny = (m.py/H - 0.5)*2; m.active = true;
+  });
+  cover.addEventListener("mouseleave", function(){
+    m.px = -9999; m.py = -9999; m.nx = 0; m.ny = 0; m.active = false;
+  });
+
+  function build(){
+    const rect = cover.getBoundingClientRect();
+    if (rect.width < 2 || rect.height < 2){ requestAnimationFrame(build); return; }
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = rect.width; H = rect.height;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    canvas.style.width = W+"px"; canvas.style.height = H+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    buildStars(); layout();
+  }
+
+  /* ---------------- frame ---------------- */
+  function draw(now){
+    const t = now/1000;
+    ctx.clearRect(0,0,W,H);
+
+    /* stars */
+    for (let i=0;i<stars.length;i++){
+      const s = stars[i];
+      let a = s.base + (reduced ? 0 : s.amp * Math.sin(t*s.speed + s.phase));
+      let r = s.r;
+      const dx = s.x - m.px, dy = s.y - m.py, d2 = dx*dx + dy*dy;
+      if (d2 < REACH*REACH){
+        const k = 1 - Math.sqrt(d2)/REACH;
+        a += k * (0.28 + 0.34*Math.sin(t*(s.speed*3.2) + s.phase));
+        r += k * 0.6;
+      }
+      if (a <= 0.02) continue;
+      a = Math.min(a, 1);
+      const c = s.tint;
+      ctx.beginPath(); ctx.arc(s.x, s.y, r, 0, Math.PI*2);
+      ctx.fillStyle = "rgba("+c[0]+","+c[1]+","+c[2]+","+a.toFixed(3)+")"; ctx.fill();
+    }
+
+    /* station — the two discs counter-rotate about the gravity axis (Y),
+       a stationary truss holds them apart, and the whole view carries a
+       slow independent wobble (precession) so the motion never reads as
+       a flat, mechanical loop. */
+    ex += (m.nx - ex)*0.06; ey += (m.ny - ey)*0.06;
+    const a    = reduced ? 0.7 : t*0.16;                        // slow, calm spin
+    const wob1 = reduced ? 0 : 0.05*Math.sin(t*0.11);
+    const wob2 = reduced ? 0 : 0.035*Math.sin(t*0.08 + 1.3);
+    const vx = 0.50 + ey*0.28 + wob1;                 // steady pitch + parallax + precession
+    const vy = ex*0.5;                                // yaw parallax
+    const vz = -0.08 + wob2;                          // slight roll + precession
+
+    const P = [], E = [];
+    let zmin=Infinity, zmax=-Infinity;
+    for (let gi=0; gi<GROUPS.length; gi++){
+      const grp = GROUPS[gi], off = P.length, ang = a*grp.spin;
+      for (let i=0;i<grp.g.nodes.length;i++){
+        const n = grp.g.nodes[i];
+        let p = rot(n[0],n[1],n[2], 0,ang,0);         // this group's own spin — counter-rotation lives here
+        p = rot(p[0],p[1],p[2], vx,vy,vz);            // shared view
+        const persp = CAM/(CAM - p[2]);
+        P.push({ X: cxS + p[0]*S*persp, Y: cyS + p[1]*S*persp, z:p[2] });
+        if (p[2]<zmin) zmin=p[2]; if (p[2]>zmax) zmax=p[2];
+      }
+      for (const e of grp.g.edges) E.push([e[0]+off, e[1]+off, e[2]]);
+    }
+    const zspan = (zmax-zmin) || 1;
+    const depth = z => 0.16 + 0.86*((z - zmin)/zspan);   // far side fades hard, near side pops
+
+    const sorted = E.slice().sort((e1,e2)=>
+      ((P[e1[0]].z+P[e1[1]].z) - (P[e2[0]].z+P[e2[1]].z)));
+    for (let k=0;k<sorted.length;k++){
+      const e = sorted[k], A1 = P[e[0]], B1 = P[e[1]], st = STYLE[e[2]] || STYLE.strut;
+      const dfade = depth((A1.z+B1.z)/2);
+      ctx.beginPath(); ctx.moveTo(A1.X,A1.Y); ctx.lineTo(B1.X,B1.Y);
+      ctx.strokeStyle = "rgba("+st[0][0]+","+st[0][1]+","+st[0][2]+","+(st[1]*dfade).toFixed(3)+")";
+      ctx.lineWidth = st[2]; ctx.stroke();
+    }
+    /* joints + cool cursor highlight */
+    for (let i=0;i<P.length;i++){
+      const p = P[i], dfade = depth(p.z);
+      ctx.beginPath(); ctx.arc(p.X, p.Y, 1.3*dfade+0.3, 0, Math.PI*2);
+      ctx.fillStyle = "rgba(255,251,245,"+(0.5*dfade).toFixed(3)+")"; ctx.fill();
+      if (m.active){
+        const dx = p.X - m.px, dy = p.Y - m.py, dd = Math.hypot(dx,dy);
+        if (dd < 110){
+          const k = 1 - dd/110;
+          ctx.beginPath(); ctx.arc(p.X, p.Y, 2 + k*3.5, 0, Math.PI*2);
+          ctx.fillStyle = "rgba(169,140,255,"+(0.10 + 0.42*k).toFixed(3)+")"; ctx.fill();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  build();
+  window.addEventListener("resize", build);
+  draw(performance.now());
+})();
+</script>
+
+<!-- case machinery -->
+<script>
+  function whenVisible(el, fn){
+    if (!("IntersectionObserver" in window)) { fn(); return; }
+    const io = new IntersectionObserver(function(entries){
+      if (entries.some(function(e){ return e.isIntersecting; })) { io.disconnect(); fn(); }
+    }, { rootMargin:"200px" });
+    io.observe(el);
+  }
+  function buildTabs(host, items, onPick){
+    const windowEl = host.nextElementSibling;   // .case-window always sits right after the tabs
+    items.forEach(function(t,i){
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "tab-card" + (i===0 ? " active" : "");
+      b.innerHTML = (t.n ? '<span class="num">'+t.n+'</span>' : "") + tr(t.label);
+      b.addEventListener("click", function(){
+        host.querySelectorAll(".tab-card").forEach(function(x){ x.classList.remove("active"); });
+        b.classList.add("active");
+        onPick(t);
+        if (windowEl){
+          // visible confirmation the click did something, independent of image load time —
+          // the tabs sit right above the window now (they're compact chips, not full-width
+          // blocks), so it stays in view on its own; no need to force-scroll to it.
+          windowEl.classList.remove("pulse"); void windowEl.offsetWidth; windowEl.classList.add("pulse");
+        }
+      });
+      host.appendChild(b);
+      b.__item = t;
+    });
+    // registered once per host — relabels tabs and re-renders the active one on language switch
+    if (!host.__i18nHooked){
+      host.__i18nHooked = true;
+      onLangRebuild(function(){
+        host.querySelectorAll(".tab-card").forEach(function(b){
+          const it = b.__item;
+          b.innerHTML = (it.n ? '<span class="num">'+it.n+'</span>' : "") + tr(it.label);
+        });
+        const active = host.querySelector(".tab-card.active");
+        if (active) onPick(active.__item);
+      });
+    }
+  }
+  function slotEl(file, label){
+    const wrap = document.createElement("div");
+    wrap.className = "slot";
+    wrap.innerHTML = '<div class="ph">loading…</div>';
+    const im = new Image();
+    im.alt = label;
+    im.onload = function(){ wrap.innerHTML = ""; wrap.appendChild(im); };
+    im.onerror = function(){ wrap.innerHTML = '<div class="ph"><b>'+label+'</b>drop <code>'+file+'</code> into code_sesto</div>'; };
+    im.src = file;
+    return wrap;
+  }
+
+  /* CASE 01 */
+  const T1 = [
+    { n:"",   label:{en:"Cover",ru:"Обложка"},               f:"asia-cover.webp",
+      c:{en:"The finished identity, in one frame.", ru:"Готовый фирменный стиль в одном кадре."} },
+    { n:"01", label:{en:"Overview",ru:"Обзор"},            f:"asia-overview.webp",
+      c:{en:"Who the client is, the brief, and the metrics we agreed to move.",
+         ru:"Кто клиент, о чём просил и какие цифры мы договорились сдвинуть."} },
+    { n:"02", label:{en:"Research & Strategy",ru:"Исследование и стратегия"}, f:"asia-research.webp",
+      c:{en:"<b>20 competitors analysed, 3 user personas, one brand essence</b> — strategy before pixels.",
+         ru:"<b>Разобрали 20 конкурентов, собрали 3 портрета гостя, нашли одну суть бренда</b> — сначала стратегия, потом пиксели."} },
+    { n:"03", label:{en:"Logo",ru:"Логотип"},                f:"asia-logo.webp",
+      c:{en:"The wordmark and the system built around it.", ru:"Логотип и система, построенная вокруг него."} },
+    { n:"04", label:{en:"Colours & Type",ru:"Цвет и шрифт"},     f:"asia-type.webp",
+      c:{en:"The palette and type scale that hold luxury and family warmth together.",
+         ru:"Палитра и шрифтовая шкала, которые держат вместе роскошь и семейное тепло."} },
+    { n:"05", label:{en:"Website",ru:"Сайт"},             f:"asia-website.webp",
+      c:{en:"The site and the ordering flow — menu, delivery, payments.",
+         ru:"Сайт и сценарий заказа — меню, доставка, оплата."} },
+    { n:"06", label:{en:"Menu",ru:"Меню"},                f:"asia-menu.webp",
+      c:{en:"The printed menu — the identity in the guest's hands.",
+         ru:"Печатное меню — фирменный стиль прямо в руках у гостя."} },
+    { n:"07", label:{en:"Results",ru:"Результаты"},             f:"asia-results.webp",
+      c:{en:"What actually changed for the business.", ru:"Что реально изменилось для бизнеса."} }
+  ];
+  const img01 = document.getElementById("img01"), scroll01 = document.getElementById("scroll01");
+  const cap01 = document.getElementById("cap01"), hint01 = document.getElementById("hint01");
+  function syncHint(){ hint01.classList.toggle("hidden", !(scroll01.scrollHeight > scroll01.clientHeight + 4)); }
+  img01.addEventListener("load", syncHint);
+  buildTabs(document.getElementById("tabs01"), T1, function(t){
+    img01.src = t.f; img01.alt = "Asia Family — " + tr(t.label); cap01.innerHTML = tr(t.c); scroll01.scrollTop = 0;
+  });
+  cap01.innerHTML = tr(T1[0].c); syncHint();
+
+  /* CASE 02 */
+  const live02 = document.getElementById("live02"), cap02 = document.getElementById("cap02");
+  const T2 = [
+    { n:"01", label:{en:"App & admin",ru:"Приложение и админка"}, mode:"duo-admin",
+      c:{en:"<b>The guest side and the restaurant side.</b> The clickable prototype Sesto grew out of — and the back office the kitchen actually runs on: orders moving New → Cooking → On the way, live.",
+         ru:"<b>Что видит гость и что видит ресторан.</b> Тот самый прототип, из которого вырос Sesto."} },
+    { n:"02", label:{en:"QR menus",ru:"QR-меню"}, mode:"duo-menus",
+      c:{en:"Both menus guests scan — the restaurant's, and the banquet hall's own. Same identity, different occasion.",
+         ru:"Оба меню, которые сканируют гости: ресторанное и отдельное банкетное. Стиль один, повод разный."} },
+    { n:"03", label:{en:"Menu in print",ru:"Меню в печати"}, mode:"slot", f:"shar-print-rest.webp",
+      c:{en:"The printed menu — the identity in the guest's hands.", ru:"Печатное меню — фирменный стиль прямо в руках у гостя."} },
+    { n:"04", label:{en:"Banquet in print",ru:"Банкетное меню в печати"}, mode:"slot", f:"shar-print-banquet.webp",
+      c:{en:"<b>The name made physical</b> — a die-cut hole in the cover, and the waterfall shows through it. <em>Shar-shara</em> means waterfall.",
+         ru:"<b>Название, которое можно потрогать</b> — в обложке прорезано окно, и сквозь него виден водопад. <em>Шар-шара</em> и значит водопад."} }
+  ];
+  function phoneEl(src, title){
+    const d = document.createElement("div");
+    d.className = "phone-chassis";
+    d.innerHTML = '<iframe src="'+src+'" title="'+title+'" loading="lazy"></iframe>';
+    return d;
+  }
+  function half(grow){
+    const d = document.createElement("div");
+    d.className = "duo-half" + (grow ? " grow" : "");
+    return d;
+  }
+  function mount02(t){
+    live02.className = "case-live mode-" + t.mode;
+    live02.replaceChildren();
+    if (t.mode === "duo-admin"){
+      const a = half(false); a.appendChild(phoneEl("shar-prototype.html?bare", "Shar-Shara — delivery app"));
+      const b = half(true);  b.appendChild(slotEl("shar-admin.webp", "Shar-Shara — restaurant admin"));
+      live02.append(a, b);
+    } else if (t.mode === "duo-menus"){
+      live02.append(
+        phoneEl("https://nadinski.github.io/shar-shara/", "Shar-Shara — QR menu"),
+        phoneEl("banket-menu.html", "Shar-Shara — banquet QR menu")
+      );
+    } else {
+      live02.appendChild(slotEl(t.f, "Shar-Shara — " + tr(t.label)));
+    }
+    cap02.innerHTML = tr(t.c);
+  }
+  buildTabs(document.getElementById("tabs02"), T2, mount02);
+  whenVisible(live02, function(){ mount02(T2[0]); });
+
+  /* CASE 03 — HGK */
+  const live03 = document.getElementById("live03"), cap03 = document.getElementById("cap03");
+  const HGK_COLOURS = { en:
+    '<div class="hgk"><h5>Palette</h5><div class="hgk-sw">' +
+      '<div style="background:#f7f5f0;color:#1c1c1e"><span>#F7F5F0</span><em>Paper</em></div>' +
+      '<div style="background:#e5e1d8;color:#1c1c1e"><span>#E5E1D8</span><em>Concrete</em></div>' +
+      '<div style="background:#c8a96e;color:#1c1c1e"><span>#C8A96E</span><em>Gold — the only accent</em></div>' +
+      '<div style="background:#1c1c1e;color:#d4cfc7;border:1px solid #2a2725"><span>#1C1C1E</span><em>Solid</em></div>' +
+    '</div><p>Four values, no more. The site is built from the materials of the job: paper and concrete dust for ' +
+    'the ground, one solid near-black for structure, and a single gold that is never used for decoration — ' +
+    'only to mark what matters. The whole palette inverts for dark mode, because a contractor is read at ' +
+    'night on a phone as often as at a desk.</p></div>',
+    ru:
+    '<div class="hgk"><h5>Палитра</h5><div class="hgk-sw">' +
+      '<div style="background:#f7f5f0;color:#1c1c1e"><span>#F7F5F0</span><em>Бумага</em></div>' +
+      '<div style="background:#e5e1d8;color:#1c1c1e"><span>#E5E1D8</span><em>Бетон</em></div>' +
+      '<div style="background:#c8a96e;color:#1c1c1e"><span>#C8A96E</span><em>Золото — единственный акцент</em></div>' +
+      '<div style="background:#1c1c1e;color:#d4cfc7;border:1px solid #2a2725"><span>#1C1C1E</span><em>Основа</em></div>' +
+    '</div><p>Четыре значения, не больше. Сайт построен из материалов самой работы: бумага и бетонная пыль для ' +
+    'фона, один плотный почти-чёрный для структуры, и единственное золото, которое никогда не используется для ' +
+    'украшения — только чтобы отметить важное. Вся палитра инвертируется в тёмном режиме, потому что подрядчика ' +
+    'читают ночью с телефона так же часто, как днём с компьютера.</p></div>'
+  };
+  const HGK_TYPE = { en:
+    '<div class="hgk"><h5>Typeface — Space Mono 400 / 700</h5><div class="hgk-type">Aa</div>' +
+    '<div class="hgk-scale"><span style="font-size:26px">0123456789</span>' +
+    '<span style="font-size:13px;letter-spacing:.24em">TOLERANCE ±0.5</span></div>' +
+    '<p>A monospace, on purpose. Engineers read drawings, schedules and tolerances — all of it set in fixed ' +
+    'width, where every digit lines up and nothing can be fudged. Borrowing that voice makes the page feel ' +
+    'measured rather than marketed. It is the one typographic decision that does the arguing for us.</p></div>',
+    ru:
+    '<div class="hgk"><h5>Шрифт — Space Mono 400 / 700</h5><div class="hgk-type">Aa</div>' +
+    '<div class="hgk-scale"><span style="font-size:26px">0123456789</span>' +
+    '<span style="font-size:13px;letter-spacing:.24em">ДОПУСК ±0.5</span></div>' +
+    '<p>Моноширинный — намеренно. Инженеры читают чертежи, графики и допуски — всё это набрано фиксированной ' +
+    'шириной, где каждая цифра выровнена и ничего нельзя подтасовать. Позаимствовав этот голос, страница звучит ' +
+    'взвешенно, а не рекламно. Это единственное типографическое решение, которое убеждает само за себя.</p></div>'
+  };
+  const HGK_DEC = { en:
+    '<div class="hgk"><div class="hgk-dec">' +
+      '<div><h5>01 — No lead form</h5><p>Clients arrive warm, by reputation. A capture form would ' +
+      'signal that we chase work. The absence of one signals that we do not need to.</p></div>' +
+      '<div><h5>02 — A structure that builds itself</h5><p>The hero is a live wireframe, not a stock ' +
+      'photograph. It is the only honest image for a company whose product is structural integrity.</p></div>' +
+      '<div><h5>03 — Numbers that count themselves</h5><p>300K+ m², 27 projects, 9.2 seismic, 24/7. ' +
+      'Counters tick up as you arrive. Verifiable figures instead of adjectives.</p></div>' +
+      '<div><h5>04 — Dark and light, both</h5><p>The palette inverts wholesale. Site visits happen on a ' +
+      'phone at dusk as often as on a desktop at nine.</p></div>' +
+    '</div></div>',
+    ru:
+    '<div class="hgk"><div class="hgk-dec">' +
+      '<div><h5>01 — Без формы заявки</h5><p>Клиенты приходят тёплыми, по репутации. Форма захвата ' +
+      'сигнализировала бы, что мы гонимся за заказами. Её отсутствие говорит, что нам это не нужно.</p></div>' +
+      '<div><h5>02 — Конструкция, которая строит себя сама</h5><p>Герой — живой каркас, а не стоковая ' +
+      'фотография. Это единственное честное изображение для компании, чей продукт — прочность конструкций.</p></div>' +
+      '<div><h5>03 — Цифры, которые считают сами себя</h5><p>300 000+ м², 27 проектов, 9.2 балла ' +
+      'сейсмостойкости, 24/7. Счётчики отсчитывают при заходе на сайт. Проверяемые цифры вместо прилагательных.</p></div>' +
+      '<div><h5>04 — И тёмная, и светлая</h5><p>Палитра инвертируется целиком. Сайт открывают с телефона ' +
+      'в сумерках так же часто, как с компьютера в девять утра.</p></div>' +
+    '</div></div>'
+  };
+  const T3 = [
+    { n:"",   label:{en:"Cover — live",ru:"Обложка — вживую"},  mode:"full", f:"hgk-hero.html",
+      c:{en:"<b>The real hero, running.</b> A live 3D structural wireframe — give it a moment to draw itself. Try the EN&nbsp;/&nbsp;TR switch.",
+         ru:"<b>Тот самый первый экран, живьём.</b> Каркас конструкции чертит себя сам — дайте ему секунду."} },
+    { n:"01", label:{en:"Colours",ru:"Цвета"},       mode:"html", f:HGK_COLOURS,
+      c:{en:"Four values, taken from the materials of the job.", ru:"Четыре цвета, взятые прямо из материалов стройки."} },
+    { n:"02", label:{en:"Typography",ru:"Типографика"},    mode:"html", f:HGK_TYPE,
+      c:{en:"Space Mono — the voice of drawings and tolerances.", ru:"Space Mono — голос чертежей и допусков."} },
+    { n:"03", label:{en:"Decisions",ru:"Решения"},     mode:"html", f:HGK_DEC,
+      c:{en:"Every choice argued from one question: would this earn a builder's trust?",
+         ru:"Каждый выбор проверен одним вопросом: заслужит ли это доверие строителя?"} }
+  ];
+  function mount03(t){
+    live03.className = "case-live " + ("mode-" + t.mode);
+    live03.innerHTML = t.mode === "full"
+      ? '<iframe src="'+t.f+'" title="HGK — '+tr(t.label)+'" loading="lazy"></iframe>'
+      : tr(t.f);
+    cap03.innerHTML = tr(t.c);
+  }
+  buildTabs(document.getElementById("tabs03"), T3, mount03);
+  whenVisible(live03, function(){ mount03(T3[0]); });
+
+  /* CASE 05 / 06 — scrolling image tabs */
+  function imageCase(tabsId, winId, capId, hintId, items, alt){
+    const win = document.getElementById(winId), cap = document.getElementById(capId);
+    const hint = document.getElementById(hintId);
+    function mount(t){
+      win.className = "case-scroll";
+      win.innerHTML = t.f.map(function(src){
+        return '<img src="'+src+'" alt="'+alt+' — '+tr(t.label)+'" />';
+      }).join("");
+      win.querySelectorAll("img").forEach(function(im){
+        im.addEventListener("load", function(){
+          hint.classList.toggle("hidden", !(win.scrollHeight > win.clientHeight + 4));
+        });
+      });
+      win.scrollTop = 0;
+      cap.innerHTML = tr(t.c);
+    }
+    buildTabs(document.getElementById(tabsId), items, mount);
+    mount(items[0]);
+  }
+  imageCase("tabs05", "win05", "cap05", "hint05", [
+    { n:"",   label:{en:"Cover",ru:"Обложка"},        f:["gas-cover.webp"],
+      c:{en:"Svarcom — technical, medical and food gases, supplying St. Petersburg since 1995.",
+         ru:"Svarcom — технические, медицинские и пищевые газы, поставки по Санкт-Петербургу с 1995 года."} },
+    { n:"01", label:{en:"Overview",ru:"Обзор"},     f:["gas-about.webp"],
+      c:{en:"Who they are and who trusts them — Gazprom Arena, Pulkovo, the Admiralty Shipyards. In B2B a client list argues better than any slogan.",
+         ru:"Кто они и кто им доверяет — Газпром Арена, Пулково, Адмиралтейские верфи. В B2B список клиентов убеждает лучше любого слогана."} },
+    { n:"02", label:{en:"Home",ru:"Главная"},         f:["gas-main.webp"],
+      c:{en:"<b>Catalogue and urgent delivery, side by side.</b> The two questions every customer arrives with, answered in the first screen.",
+         ru:"<b>Каталог и срочная доставка рядом.</b> С этими двумя вопросами приходит каждый — на них и отвечаем в первом же экране."} },
+    { n:"03", label:{en:"Inside pages",ru:"Внутренние страницы"}, f:["gas-pages.webp","gas-pages2.webp"],
+      c:{en:"Price catalogue, delivery, services — a deep B2B site that still lets you find one cylinder fast.",
+         ru:"Прайс-каталог, доставка, услуги — глубокий B2B-сайт, на котором всё равно можно быстро найти один баллон."} },
+    { n:"04", label:{en:"Mobile",ru:"Мобильная версия"},       f:["gas-mobile.webp"],
+      c:{en:"Half of these requests come from a phone on a site, in gloves. The catalogue had to survive that.",
+         ru:"Половина заказов приходит с телефона, прямо на объекте, в перчатках. Каталог должен был это выдержать."} },
+    { n:"05", label:{en:"Colours & type",ru:"Цвет и шрифт"}, f:["gas-type.webp"],
+      c:{en:"Industrial blue for the structure, one safety orange for every action. Nothing decorative.",
+         ru:"Промышленный синий для структуры, один защитный оранжевый для всех действий. Ничего декоративного."} },
+    { n:"06", label:{en:"In use",ru:"В деле"},       f:["gas-mockup.webp"],
+      c:{en:"How it actually lands on a desk.", ru:"Как это реально выглядит на столе."} },
+    { n:"07", label:{en:"Result",ru:"Результат"},       f:["gas-result.webp"],
+      c:{en:"What changed for the business.", ru:"Что изменилось для бизнеса."} }
+  ], "Svarcom");
+  imageCase("tabs06", "win06", "cap06", "hint06", [
+    { n:"",   label:{en:"Cover",ru:"Обложка"},        f:["asphalt-cover.webp"],
+      c:{en:"Asphalt Express — professional paving across Moscow, without delays and bureaucracy.",
+         ru:"Asphalt Express — профессиональная укладка асфальта по Москве, без задержек и бюрократии."} },
+    { n:"01", label:{en:"Overview",ru:"Обзор"},     f:["asphalt-about.webp"],
+      c:{en:"Who they are, in the fewest words that still earn belief — paving across Moscow, no delays, no bureaucracy.",
+         ru:"Кто они — в двух словах, которым веришь: кладут асфальт по Москве, без задержек и бюрократии."} },
+    { n:"02", label:{en:"Landing",ru:"Лендинг"},      f:["asphalt-main.webp"],
+      c:{en:"One page, one job: turn someone comparing five contractors into a request.",
+         ru:"Одна страница, одна задача: человек сравнивает пятерых подрядчиков — надо, чтобы заявку он оставил здесь."} },
+    { n:"03", label:{en:"Lead magnet",ru:"Лид-магнит"},  f:["asphalt-lead.webp"],
+      c:{en:"<b>The whole point of the redesign.</b> The estimate comes before the form: see your budget first, hand over a phone number only if you want to talk.",
+         ru:"<b>Ради этого всё и затевалось.</b> Цифра приходит раньше формы: сначала бюджет, а телефон — только если захотите поговорить."} },
+    { n:"04", label:{en:"Inside pages",ru:"Внутренние страницы"}, f:["asphalt-pages.webp"],
+      c:{en:"Services, projects, contacts — everything a client checks before trusting you with a car park.",
+         ru:"Услуги, проекты, контакты — всё, что клиент проверяет, прежде чем доверить вам парковку."} },
+    { n:"05", label:{en:"Colours & type",ru:"Цвет и шрифт"}, f:["asphalt-type.webp"],
+      c:{en:"Asphalt dark, machine yellow, and nothing else competing for attention.",
+         ru:"Тёмный асфальт, машинный жёлтый — и больше ничего не спорит за внимание."} },
+    { n:"06", label:{en:"In use",ru:"В деле"},       f:["asphalt-mockup.webp"],
+      c:{en:"How it actually lands.", ru:"Как это выглядит в деле."} },
+    { n:"07", label:{en:"Result",ru:"Результат"},       f:["asphalt-result.webp"],
+      c:{en:"What changed for the business.", ru:"Что изменилось для бизнеса."} }
+  ], "Asphalt Express");
+</script>
+
+<!-- calculator -->
+<script>
+(function(){
+  const AD_SPECIALIST_FEE = 1000;
+  const NICHE_CONFIG = {
+    ecommerce:  { name:{en:'E-commerce',ru:'Интернет-магазин'},      googleCPC:0.35, googleConv:2.5, metaCPM:18.00, metaCTR:1.80, metaConv:2.0, defaultCheck:45,   marginLow:0.25, marginHigh:0.45 },
+    services:   { name:{en:'B2C Services',ru:'Услуги B2C'},    googleCPC:1.20, googleConv:7.0, metaCPM:22.00, metaCTR:2.20, metaConv:5.5, defaultCheck:110,  marginLow:0.40, marginHigh:0.65 },
+    b2b:        { name:{en:'B2B / Wholesale',ru:'B2B / Опт'}, googleCPC:1.70, googleConv:4.5, metaCPM:38.00, metaCTR:1.50, metaConv:3.0, defaultCheck:600,  marginLow:0.30, marginHigh:0.50 },
+    development:{ name:{en:'Development / IT',ru:'Разработка / IT'}, googleCPC:2.50, googleConv:3.0, metaCPM:40.00, metaCTR:1.20, metaConv:2.5, defaultCheck:2000, marginLow:0.35, marginHigh:0.60 },
+    medicine:   { name:{en:'Healthcare',ru:'Медицина'},      googleCPC:3.40, googleConv:8.5, metaCPM:25.00, metaCTR:2.50, metaConv:7.0, defaultCheck:160,  marginLow:0.40, marginHigh:0.70 },
+    realestate: { name:{en:'Real Estate',ru:'Недвижимость'},     googleCPC:2.20, googleConv:2.0, metaCPM:35.00, metaCTR:1.60, metaConv:1.5, defaultCheck:2000, marginLow:0.20, marginHigh:0.40 }
+  };
+  const STAGE_CONV_COEFF = {
+    startup:{ name:{en:'Startup (months 1-3)',ru:'Стартап (1–3 месяца)'}, coeff:0.5,
+      desc:{en:'New audience, cold traffic, no brand recognition yet', ru:'Новая аудитория, холодный трафик, бренд ещё не узнают'}, priceMultiplier:0.5 },
+    growth: { name:{en:'Growth (months 4-8)',ru:'Рост (4–8 месяцев)'},  coeff:0.8,
+      desc:{en:'Retargeting active, first reviews, growing trust', ru:'Ретаргетинг работает, есть первые отзывы, доверие растёт'},    priceMultiplier:1.0 },
+    leader: { name:{en:'Leader (months 9+)',ru:'Лидер (9+ месяцев)'},   coeff:1.0,
+      desc:{en:'Brand known, word-of-mouth, warm audience', ru:'Бренд узнают, работает сарафанное радио, аудитория тёплая'},           priceMultiplier:1.5 }
+  };
+  const SITE_OPTIONS = {
+    subscription:   { name:{en:'Landing Page (Subscription)',ru:'Лендинг (подписка)'}, minPrice:70,   maxPrice:70,    avgPrice:70,    time:{en:'3–5 days',ru:'3–5 дней'},
+      desc:{en:'Rent a website with a buy‑out option. Minimal start‑up cost, ideal for testing a niche.', ru:'Сайт в аренду с правом выкупа. Минимальные вложения на старте, идеально для теста ниши.'} },
+    simpleEcommerce:{ name:{en:'Simple Online Store',ru:'Простой интернет-магазин'},         minPrice:550,  maxPrice:1400,  avgPrice:950,   time:{en:'1–2 weeks',ru:'1–2 недели'},
+      desc:{en:'Template solution for online sales. Cart, catalogue, payments — all the essentials for your first orders.', ru:'Готовое решение для онлайн-продаж. Корзина, каталог, оплата — всё необходимое для первых заказов.'} },
+    landing:        { name:{en:'Landing Page',ru:'Лендинг'},               minPrice:550,  maxPrice:1500,  avgPrice:1000,  time:{en:'2–3 weeks',ru:'2–3 недели'},
+      desc:{en:'High‑converting one‑pager for services. Fast launch, ideal for lead generation.', ru:'Конверсионный лендинг для услуг. Быстрый запуск, идеально для лидогенерации.'} },
+    multiPage:      { name:{en:'Multi‑page Website',ru:'Многостраничный сайт'},          minPrice:1600, maxPrice:3000,  avgPrice:2300,  time:{en:'4–6 weeks',ru:'4–6 недель'},
+      desc:{en:'Portfolio, services, blog. Builds trust and authority, works for SEO.', ru:'Портфолио, услуги, блог. Формирует доверие и экспертность, работает на SEO.'} },
+    ecommerce:      { name:{en:'Online Store',ru:'Интернет-магазин'},                minPrice:2400, maxPrice:5600,  avgPrice:4000,  time:{en:'2–3 months',ru:'2–3 месяца'},
+      desc:{en:'Full store: cart, accounts, CRM, delivery integrations, discount system.', ru:'Полноценный магазин: корзина, аккаунты, CRM, интеграции с доставкой, система скидок.'} },
+    portal:         { name:{en:'Portal / Marketplace',ru:'Портал / Маркетплейс'},        minPrice:4700, maxPrice:12800, avgPrice:8700,  time:{en:'4–6 months',ru:'4–6 месяцев'},
+      desc:{en:'Complex ecosystem with seller/buyer accounts, ratings, deep integrations.', ru:'Сложная экосистема с аккаунтами продавцов и покупателей, рейтингами, глубокими интеграциями.'} },
+    ecommercePlus:  { name:{en:'Store + Mobile App',ru:'Магазин + мобильное приложение'},          minPrice:8000, maxPrice:20000, avgPrice:14000, time:{en:'4–6 months',ru:'4–6 месяцев'},
+      desc:{en:'Web + native iOS/Android. For revenue above 15 000 EUR/month.', ru:'Веб + нативные iOS/Android. Для выручки выше 15 000 EUR/мес.'} }
+  };
+  const CALC_L = {
+    en:{ invalidRevenue:'Please enter a valid monthly revenue (min 100 EUR).', invalidOrder:'Average order must be at least 10 EUR.',
+      forecast:'FORECAST:', targetRevenue:'Target revenue:', google:'🎯 Google Ads', meta:'📱 Meta Ads',
+      visitors:'Visitors/mo:', adSpend:'Ad spend:', reach:'Reach (~):', totalBudget:'💰 Total monthly ad budget:',
+      adPlatforms:'Ad platforms:', specialistFee:'Specialist fee:', optimalSite:'💻 Optimal Website',
+      type:'Type:', budget:'Budget:', timeline:'Timeline:', forYourStage:'for your stage', keyMetrics:'⚡ Key Business Metrics',
+      cpo:'Cost per order (CPO):', cac:'Safe max CAC:', netProfit:'Net profit (after all costs):',
+      reviewNumbers:'⚠️ Review your numbers', payback:'Site payback period:', notProfitable:'Not profitable at current margins',
+      months:' months', insight:'Business insight:',
+      insightHealthy:(cpo,cac)=>`Your unit economics are healthy. With ${cpo} CPO against a safe CAC of ${cac}, each customer generates positive contribution margin. Focus on scaling volume while maintaining conversion rates.`,
+      insightThin:'Your current metrics show thin margins. Consider: (1) increasing average order value through upselling, (2) choosing a niche with better CPC/conversion ratio, or (3) adjusting the Google/Meta split to favour the cheaper channel.',
+      footnote:(fee,mult)=>`* Averaged Google & Meta rates for EU, 2026. Specialist fee: ${fee}/mo. Website prices adjusted for your business stage (×${mult}). Safe CAC = LTV × margin, LTV ≈ avg order × 3. Real results ±20%.`,
+      egPrefix:'e.g. ' },
+    ru:{ invalidRevenue:'Введите месячную выручку — хотя бы 100 EUR.', invalidOrder:'Средний чек должен быть не меньше 10 EUR.',
+      forecast:'ПРОГНОЗ:', targetRevenue:'Целевая выручка:', google:'🎯 Google Ads', meta:'📱 Meta Ads',
+      visitors:'Визитов/мес:', adSpend:'Расход на рекламу:', reach:'Охват (~):', totalBudget:'💰 Общий рекламный бюджет в месяц:',
+      adPlatforms:'Рекламные площадки:', specialistFee:'Услуги специалиста:', optimalSite:'💻 Оптимальный сайт',
+      type:'Тип:', budget:'Бюджет:', timeline:'Срок:', forYourStage:'для вашей стадии', keyMetrics:'⚡ Ключевые показатели бизнеса',
+      cpo:'Стоимость заказа (CPO):', cac:'Допустимый максимум CAC:', netProfit:'Чистая прибыль (после всех расходов):',
+      reviewNumbers:'⚠️ Проверьте цифры', payback:'Срок окупаемости сайта:', notProfitable:'Не окупается при текущей марже',
+      months:' мес.', insight:'Вывод:',
+      insightHealthy:(cpo,cac)=>`Экономика сходится: заказ обходится в ${cpo} при допустимых ${cac}, значит каждый клиент приносит прибыль. Наращивайте объём и не теряйте конверсию.`,
+      insightThin:'Маржа получается тонкая. Что тут можно сделать: поднять средний чек допродажами, уйти в нишу, где клик дешевле, а конверсия выше, или сместить рекламу в тот канал, который вам обходится дешевле.',
+      footnote:(fee,mult)=>`* Средние ставки Google и Meta по ЕС, 2026. Работа специалиста: ${fee}/мес. Цену сайта подогнали под вашу стадию (×${mult}). Допустимый CAC = LTV × маржа, LTV ≈ средний чек × 3. На деле цифры гуляют на ±20%.`,
+      egPrefix:'например, ' }
+  };
+  function cl(){ return CALC_L[lang] || CALC_L.en; }
+  function formatMoney(a){ if(a===Infinity||isNaN(a))return '—';
+    return new Intl.NumberFormat(lang==='ru'?'ru-RU':'en-US',{style:'currency',currency:'EUR',minimumFractionDigits:0}).format(a); }
+  function formatNumber(n){ if(isNaN(n))return '—'; return n.toLocaleString(lang==='ru'?'ru-RU':'en-US'); }
+  function applyStagePrice(p,m){ return Math.ceil(p*m); }
+  function recommendSiteType(budget, needEcommerce){
+    if (budget<=280) return 'subscription';
+    if (budget<=1600) return needEcommerce ? 'simpleEcommerce' : 'landing';
+    if (budget<=6700) return needEcommerce ? 'ecommerce' : 'multiPage';
+    return needEcommerce ? 'ecommercePlus' : 'portal';
+  }
+  function calculate(scroll){
+    const revenue = parseInt(document.getElementById('revenue').value.replace(/[^\d]/g,''));
+    let avgOrder = parseInt(document.getElementById('averageOrder').value.replace(/[^\d]/g,''));
+    const nicheKey = document.getElementById('niche').value;
+    const needEcommerce = document.getElementById('needEcommerce').checked;
+    const stageKey = document.getElementById('businessStage').value;
+    const googleSplit = parseInt(document.getElementById('googleSplit').value);
+    const config = NICHE_CONFIG[nicheKey], stage = STAGE_CONV_COEFF[stageKey], L = cl();
+    if (!revenue || revenue < 100) return alert(L.invalidRevenue);
+    if (!avgOrder || isNaN(avgOrder)) avgOrder = config.defaultCheck;
+    if (avgOrder < 10) return alert(L.invalidOrder);
+    const ordersNeeded = Math.ceil(revenue / avgOrder);
+    const googleConvRate = (config.googleConv/100)*stage.coeff;
+    const googleVisitors = Math.ceil(ordersNeeded / googleConvRate);
+    const googleAdSpend = Math.ceil(googleVisitors * config.googleCPC);
+    const metaConvRate = (config.metaConv/100)*stage.coeff;
+    const metaLeads = Math.ceil(ordersNeeded / metaConvRate);
+    const metaClicks = Math.ceil((metaLeads / config.metaCTR)*100);
+    const metaAdSpend = Math.ceil((metaClicks/1000)*config.metaCPM);
+    const googleShare = googleSplit/100, metaShare = 1-googleShare;
+    const blendedAdSpend = Math.ceil(googleAdSpend*googleShare + metaAdSpend*metaShare);
+    const totalAdBudget = blendedAdSpend + AD_SPECIALIST_FEE;
+    const blendedCPO = ordersNeeded>0 ? Math.ceil(totalAdBudget/ordersNeeded) : 0;
+    const monthlySiteBudget = Math.floor(revenue*0.15);
+    const optimalBudget = monthlySiteBudget*4;
+    const recommendedKey = recommendSiteType(optimalBudget, needEcommerce);
+    const siteBase = SITE_OPTIONS[recommendedKey];
+    const site = {
+      name:tr(siteBase.name),
+      minPrice:applyStagePrice(siteBase.minPrice, stage.priceMultiplier),
+      maxPrice:applyStagePrice(siteBase.maxPrice, stage.priceMultiplier),
+      avgPrice:applyStagePrice(siteBase.avgPrice, stage.priceMultiplier),
+      time:tr(siteBase.time), desc:tr(siteBase.desc)
+    };
+    const avgMargin = (config.marginLow+config.marginHigh)/2;
+    const grossProfit = Math.floor(revenue*avgMargin);
+    const netProfit = grossProfit - totalAdBudget;
+    const payback = netProfit>0 ? Math.round((site.avgPrice/netProfit)*10)/10 : Infinity;
+    const safeCAC = Math.floor(avgOrder*avgMargin*3);
+    const r = document.getElementById('calcResult');
+    r.style.display = 'block';
+    r.innerHTML =
+      '<div style="text-align:center;margin-bottom:22px;background:rgba(109,58,255,.14);padding:12px;border-radius:14px;">' +
+        '<span style="font-size:14px;font-weight:700;color:#a98cff;">'+L.forecast+' '+tr(stage.name)+'</span>' +
+        '<p style="font-size:11px;margin-top:4px;color:rgba(255,251,245,.7);">'+tr(stage.desc)+'. '+L.targetRevenue+' <strong style="color:#fffbf5">'+formatMoney(revenue)+'</strong></p>' +
+      '</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">' +
+        '<div class="result-block" style="margin-top:0;"><div style="font-weight:700;margin-bottom:8px;color:#fffbf5;">'+L.google+' ('+googleSplit+'%)</div>' +
+          '<div class="result-item"><span>'+L.visitors+'</span><strong>'+formatNumber(googleVisitors)+'</strong></div>' +
+          '<div class="result-item"><span>'+L.adSpend+'</span><strong>'+formatMoney(Math.ceil(googleAdSpend*googleShare))+'</strong></div></div>' +
+        '<div class="result-block" style="margin-top:0;"><div style="font-weight:700;margin-bottom:8px;color:#fffbf5;">'+L.meta+' ('+(100-googleSplit)+'%)</div>' +
+          '<div class="result-item"><span>'+L.reach+'</span><strong>'+formatNumber(metaLeads*20)+'</strong></div>' +
+          '<div class="result-item"><span>'+L.adSpend+'</span><strong>'+formatMoney(Math.ceil(metaAdSpend*metaShare))+'</strong></div></div>' +
+      '</div>' +
+      '<div style="text-align:center;font-size:13px;font-weight:600;margin-top:16px;color:rgba(255,251,245,.85);">'+L.totalBudget+' <span style="color:#a98cff;font-size:18px;">'+formatMoney(totalAdBudget)+'</span></div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:11px;color:rgba(255,251,245,.45);text-align:center;">' +
+        '<span>'+L.adPlatforms+' '+formatMoney(blendedAdSpend)+'</span><span>'+L.specialistFee+' '+formatMoney(AD_SPECIALIST_FEE)+'</span></div>' +
+      '<div class="result-block"><div style="font-weight:700;margin-bottom:8px;color:#fffbf5;">'+L.optimalSite+'</div>' +
+        '<div class="result-item"><span>'+L.type+'</span><strong>'+site.name+'</strong></div>' +
+        '<div class="result-item"><span>'+L.budget+'</span><strong>'+formatMoney(site.minPrice)+' – '+formatMoney(site.maxPrice)+'</strong></div>' +
+        '<div class="result-item"><span>'+L.timeline+'</span><strong>'+site.time+'</strong></div>' +
+        '<div style="font-size:12px;color:rgba(255,251,245,.6);margin-top:8px;">'+site.desc+' <em style="color:#a98cff;">(×'+stage.priceMultiplier+' '+L.forYourStage+')</em></div></div>' +
+      '<div class="result-block" style="background:#0d0b13;border-color:#2c2740;">' +
+        '<div style="font-weight:700;margin-bottom:12px;color:#fffbf5;">'+L.keyMetrics+'</div>' +
+        '<div class="result-item"><span>'+L.cpo+'</span><strong style="color:#ff914d;">'+formatMoney(blendedCPO)+'</strong></div>' +
+        '<div class="result-item"><span>'+L.cac+'</span><strong style="color:#aeeeda;">'+formatMoney(safeCAC)+'</strong></div>' +
+        '<div class="result-item"><span>'+L.netProfit+'</span><strong style="color:'+(netProfit>0?'#aeeeda':'#ff8a8a')+';">'+(netProfit>0?formatMoney(netProfit):L.reviewNumbers)+'</strong></div>' +
+        '<div class="result-item" style="border:none;"><span>'+L.payback+'</span><strong>'+(payback===Infinity?L.notProfitable:payback+L.months)+'</strong></div></div>' +
+      '<div style="margin-top:16px;padding:12px;background:'+(netProfit>0?'rgba(174,238,218,.12)':'rgba(255,228,168,.12)')+';border-radius:12px;font-size:12px;line-height:1.5;color:rgba(255,251,245,.82);">' +
+        '<strong>'+(netProfit>0?'✅':'⚠️')+' '+L.insight+'</strong> ' +
+        (netProfit>0 ? L.insightHealthy(formatMoney(blendedCPO), formatMoney(safeCAC)) : L.insightThin) +
+      '</div>' +
+      '<p style="margin-top:12px;font-size:10px;color:rgba(255,251,245,.4);text-align:center;">'+L.footnote(formatMoney(AD_SPECIALIST_FEE), stage.priceMultiplier)+'</p>';
+    if (scroll !== false) r.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+  document.getElementById('calcBtn').addEventListener('click', function(){ calculate(true); });
+  onLangRebuild(function(){
+    // a result already on screen should switch language in place, without jumping the page
+    const r = document.getElementById('calcResult');
+    if (r && r.style.display !== 'none') calculate(false);
+    // an untouched placeholder should follow the niche + language, same as before
+    const avgInput = document.getElementById('averageOrder');
+    if (!avgInput.value){
+      const config = NICHE_CONFIG[document.getElementById('niche').value];
+      avgInput.placeholder = cl().egPrefix + config.defaultCheck;
+    }
+  });
+  document.getElementById('niche').addEventListener('change', function(){
+    const config = NICHE_CONFIG[this.value];
+    const avgInput = document.getElementById('averageOrder');
+    if (!avgInput.value) avgInput.placeholder = cl().egPrefix + config.defaultCheck;
+  });
+  const slider = document.getElementById('googleSplit');
+  slider.addEventListener('input', function(){
+    const val = parseInt(this.value);
+    document.getElementById('splitLabel').textContent = val+'% Google / '+(100-val)+'% Meta';
+    this.style.background = 'linear-gradient(to right,#6d3aff 0%,#6d3aff '+val+'%,#2c2740 '+val+'%,#2c2740 100%)';
+  });
+})();
+</script>
+
+</body>
+</html>
